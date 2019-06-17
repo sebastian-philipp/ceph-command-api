@@ -34,8 +34,8 @@ class MonCommandApi(object):
     def auth_add(self, entity: str, caps: List[str]=None):
         """
         add auth info for <entity> from input file, or random key if no input is given, and/or any caps specified in the command
-        :param entity: CephString who=None req=True {}
-        :param caps: CephString who=None req=False {}
+        :param entity: CephString 
+        :param caps: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'auth add'
@@ -45,8 +45,8 @@ class MonCommandApi(object):
     def auth_caps(self, entity: str, caps: List[str]):
         """
         update caps for <name> from caps specified in the command
-        :param entity: CephString who=None req=True {}
-        :param caps: CephString who=None req=True {}
+        :param entity: CephString 
+        :param caps: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'auth caps'
@@ -57,7 +57,7 @@ class MonCommandApi(object):
     def auth_del(self, entity: str):
         """
         delete all caps for <name>
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rwx flags=deprecated
         """
         prefix = 'auth del'
@@ -67,7 +67,7 @@ class MonCommandApi(object):
     def auth_export(self, entity: str=None):
         """
         write keyring for requested entity, or master keyring if none given
-        :param entity: CephString who=None req=False {}
+        :param entity: CephString 
         module=auth perm=rx flags=
         """
         prefix = 'auth export'
@@ -77,7 +77,7 @@ class MonCommandApi(object):
     def auth_get(self, entity: str):
         """
         write keyring file with requested key
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rx flags=
         """
         prefix = 'auth get'
@@ -87,7 +87,7 @@ class MonCommandApi(object):
     def auth_get_key(self, entity: str):
         """
         display requested key
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rx flags=
         """
         prefix = 'auth get-key'
@@ -97,8 +97,8 @@ class MonCommandApi(object):
     def auth_get_or_create(self, entity: str, caps: List[str]=None):
         """
         add auth info for <entity> from input file, or random key if no input given, and/or any caps specified in the command
-        :param entity: CephString who=None req=True {}
-        :param caps: CephString who=None req=False {}
+        :param entity: CephString 
+        :param caps: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'auth get-or-create'
@@ -108,8 +108,8 @@ class MonCommandApi(object):
     def auth_get_or_create_key(self, entity: str, caps: List[str]=None):
         """
         get, or add, key for <name> from system/caps pairs specified in the command.  If key already exists, any given caps must match the existing caps for that key.
-        :param entity: CephString who=None req=True {}
-        :param caps: CephString who=None req=False {}
+        :param entity: CephString 
+        :param caps: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'auth get-or-create-key'
@@ -151,7 +151,7 @@ class MonCommandApi(object):
     def auth_print_key(self, entity: str):
         """
         display requested key
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rx flags=
         """
         prefix = 'auth print-key'
@@ -162,7 +162,7 @@ class MonCommandApi(object):
     def auth_print_key(self, entity: str):
         """
         display requested key
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rx flags=
         """
         prefix = 'auth print_key'
@@ -172,7 +172,7 @@ class MonCommandApi(object):
     def auth_rm(self, entity: str):
         """
         remove all caps for <name>
-        :param entity: CephString who=None req=True {}
+        :param entity: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'auth rm'
@@ -182,7 +182,7 @@ class MonCommandApi(object):
     def balancer_dump(self, plan: str):
         """
         Show an optimization plan
-        :param plan: CephString who=None req=True {}
+        :param plan: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'balancer dump'
@@ -192,7 +192,7 @@ class MonCommandApi(object):
     def balancer_eval(self, option: str=None):
         """
         Evaluate data distribution for the current cluster or specific pool or specific plan
-        :param option: CephString who=None req=False {}
+        :param option: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'balancer eval'
@@ -202,7 +202,7 @@ class MonCommandApi(object):
     def balancer_eval_verbose(self, option: str=None):
         """
         Evaluate data distribution for the current cluster or specific pool or specific plan (verbosely)
-        :param option: CephString who=None req=False {}
+        :param option: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'balancer eval-verbose'
@@ -212,7 +212,7 @@ class MonCommandApi(object):
     def balancer_execute(self, plan: str):
         """
         Execute an optimization plan
-        :param plan: CephString who=None req=True {}
+        :param plan: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer execute'
@@ -232,7 +232,7 @@ class MonCommandApi(object):
     def balancer_mode(self, mode: str):
         """
         Set balancer mode
-        :param mode: CephChoices who=None req=True {u'strings': u'none|crush-compat|upmap'}
+        :param mode: CephChoices strings=none|crush-compat|upmap 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer mode'
@@ -262,8 +262,8 @@ class MonCommandApi(object):
     def balancer_optimize(self, plan: str, pools: List[str]=None):
         """
         Run optimizer to create a new plan
-        :param plan: CephString who=None req=True {}
-        :param pools: CephString who=None req=False {}
+        :param plan: CephString 
+        :param pools: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer optimize'
@@ -273,7 +273,7 @@ class MonCommandApi(object):
     def balancer_pool_add(self, pools: List[str]):
         """
         Enable automatic balancing for specific pools
-        :param pools: CephString who=None req=True {}
+        :param pools: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer pool add'
@@ -293,7 +293,7 @@ class MonCommandApi(object):
     def balancer_pool_rm(self, pools: List[str]):
         """
         Disable automatic balancing for specific pools
-        :param pools: CephString who=None req=True {}
+        :param pools: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer pool rm'
@@ -313,7 +313,7 @@ class MonCommandApi(object):
     def balancer_rm(self, plan: str):
         """
         Discard an optimization plan
-        :param plan: CephString who=None req=True {}
+        :param plan: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'balancer rm'
@@ -323,7 +323,7 @@ class MonCommandApi(object):
     def balancer_show(self, plan: str):
         """
         Show details of an optimization plan
-        :param plan: CephString who=None req=True {}
+        :param plan: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'balancer show'
@@ -384,8 +384,8 @@ class MonCommandApi(object):
     def config_get(self, who: str, key: str):
         """
         Show configuration option(s) for an entity
-        :param who: CephString who=None req=True {}
-        :param key: CephString who=None req=True {}
+        :param who: CephString 
+        :param key: CephString 
         module=config perm=r flags=
         """
         prefix = 'config get'
@@ -395,7 +395,7 @@ class MonCommandApi(object):
     def config_help(self, key: str):
         """
         Describe a configuration option
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=config perm=r flags=
         """
         prefix = 'config help'
@@ -405,7 +405,7 @@ class MonCommandApi(object):
     def config_log(self, num: int):
         """
         Show recent history of config changes
-        :param num: CephInt who=None req=True {}
+        :param num: CephInt 
         module=config perm=r flags=
         """
         prefix = 'config log'
@@ -425,7 +425,7 @@ class MonCommandApi(object):
     def config_reset(self, num: int):
         """
         Revert configuration to a historical version specified by <num>
-        :param num: CephInt who=None req=True {u'range': u'0'}
+        :param num: CephInt ragne=0 
         module=config perm=rw flags=
         """
         prefix = 'config reset'
@@ -435,8 +435,8 @@ class MonCommandApi(object):
     def config_rm(self, who: str, name: str):
         """
         Clear a configuration option for one or more entities
-        :param who: CephString who=None req=True {}
-        :param name: CephString who=None req=True {}
+        :param who: CephString 
+        :param name: CephString 
         module=config perm=rw flags=
         """
         prefix = 'config rm'
@@ -446,10 +446,10 @@ class MonCommandApi(object):
     def config_set(self, who: str, name: str, value: str, force: bool=None):
         """
         Set a configuration option for one or more entities
-        :param who: CephString who=None req=True {}
-        :param name: CephString who=None req=True {}
-        :param value: CephString who=None req=True {}
-        :param force: CephBool who=None req=False {}
+        :param who: CephString 
+        :param name: CephString 
+        :param value: CephString 
+        :param force: CephBool 
         module=config perm=rw flags=
         """
         prefix = 'config set'
@@ -459,8 +459,8 @@ class MonCommandApi(object):
     def config_show(self, who: str, key: str):
         """
         Show running configuration
-        :param who: CephString who=None req=True {}
-        :param key: CephString who=None req=True {}
+        :param who: CephString 
+        :param key: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'config show'
@@ -470,7 +470,7 @@ class MonCommandApi(object):
     def config_show_with_defaults(self, who: str):
         """
         Show running configuration (including compiled-in defaults)
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'config show-with-defaults'
@@ -481,7 +481,7 @@ class MonCommandApi(object):
     def config_key_del(self, key: str):
         """
         delete <key>
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=config-key perm=rw flags=deprecated
         """
         prefix = 'config-key del'
@@ -491,7 +491,7 @@ class MonCommandApi(object):
     def config_key_dump(self, key: str=None):
         """
         dump keys and values (with optional prefix)
-        :param key: CephString who=None req=False {}
+        :param key: CephString 
         module=config-key perm=r flags=
         """
         prefix = 'config-key dump'
@@ -501,7 +501,7 @@ class MonCommandApi(object):
     def config_key_exists(self, key: str):
         """
         check for <key>'s existence
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=config-key perm=r flags=
         """
         prefix = 'config-key exists'
@@ -511,7 +511,7 @@ class MonCommandApi(object):
     def config_key_get(self, key: str):
         """
         get <key>
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=config-key perm=r flags=
         """
         prefix = 'config-key get'
@@ -543,8 +543,8 @@ class MonCommandApi(object):
     def config_key_put(self, key: str, val: str=None):
         """
         put <key>, value <val>
-        :param key: CephString who=None req=True {}
-        :param val: CephString who=None req=False {}
+        :param key: CephString 
+        :param val: CephString 
         module=config-key perm=rw flags=deprecated
         """
         prefix = 'config-key put'
@@ -554,7 +554,7 @@ class MonCommandApi(object):
     def config_key_rm(self, key: str):
         """
         rm <key>
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=config-key perm=rw flags=
         """
         prefix = 'config-key rm'
@@ -564,8 +564,8 @@ class MonCommandApi(object):
     def config_key_set(self, key: str, val: str=None):
         """
         set <key> to value <val>
-        :param key: CephString who=None req=True {}
-        :param val: CephString who=None req=False {}
+        :param key: CephString 
+        :param val: CephString 
         module=config-key perm=rw flags=
         """
         prefix = 'config-key set'
@@ -575,7 +575,7 @@ class MonCommandApi(object):
     def crash_info(self, id_: str):
         """
         show crash dump metadata
-        :param id_: CephString who=None req=True {}
+        :param id_: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'crash info'
@@ -585,7 +585,7 @@ class MonCommandApi(object):
     def crash_json_report(self, hours: str):
         """
         Crashes in the last <hours> hours
-        :param hours: CephString who=None req=True {}
+        :param hours: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'crash json_report'
@@ -615,7 +615,7 @@ class MonCommandApi(object):
     def crash_prune(self, keep: str):
         """
         Remove crashes older than <keep> days
-        :param keep: CephString who=None req=True {}
+        :param keep: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'crash prune'
@@ -625,7 +625,7 @@ class MonCommandApi(object):
     def crash_rm(self, id_: str):
         """
         Remove a saved crash <id>
-        :param id_: CephString who=None req=True {}
+        :param id_: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'crash rm'
@@ -645,9 +645,9 @@ class MonCommandApi(object):
     def dashboard_ac_role_add_scope_perms(self, rolename: str, scopename: str, permissions: List[str]):
         """
         Add the scope permissions for a role
-        :param rolename: CephString who=None req=True {}
-        :param scopename: CephString who=None req=True {}
-        :param permissions: CephString who=None req=True {}
+        :param rolename: CephString 
+        :param scopename: CephString 
+        :param permissions: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-role-add-scope-perms'
@@ -657,8 +657,8 @@ class MonCommandApi(object):
     def dashboard_ac_role_create(self, rolename: str, description: str=None):
         """
         Create a new access control role
-        :param rolename: CephString who=None req=True {}
-        :param description: CephString who=None req=False {}
+        :param rolename: CephString 
+        :param description: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-role-create'
@@ -668,8 +668,8 @@ class MonCommandApi(object):
     def dashboard_ac_role_del_scope_perms(self, rolename: str, scopename: str):
         """
         Delete the scope permissions for a role
-        :param rolename: CephString who=None req=True {}
-        :param scopename: CephString who=None req=True {}
+        :param rolename: CephString 
+        :param scopename: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-role-del-scope-perms'
@@ -679,7 +679,7 @@ class MonCommandApi(object):
     def dashboard_ac_role_delete(self, rolename: str):
         """
         Delete an access control role
-        :param rolename: CephString who=None req=True {}
+        :param rolename: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-role-delete'
@@ -689,7 +689,7 @@ class MonCommandApi(object):
     def dashboard_ac_role_show(self, rolename: str=None):
         """
         Show role info
-        :param rolename: CephString who=None req=False {}
+        :param rolename: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'dashboard ac-role-show'
@@ -699,8 +699,8 @@ class MonCommandApi(object):
     def dashboard_ac_user_add_roles(self, username: str, roles: List[str]):
         """
         Add roles to user
-        :param username: CephString who=None req=True {}
-        :param roles: CephString who=None req=True {}
+        :param username: CephString 
+        :param roles: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-add-roles'
@@ -710,11 +710,11 @@ class MonCommandApi(object):
     def dashboard_ac_user_create(self, username: str, password: str=None, rolename: str=None, name: str=None, email: str=None):
         """
         Create a user
-        :param username: CephString who=None req=True {}
-        :param password: CephString who=None req=False {}
-        :param rolename: CephString who=None req=False {}
-        :param name: CephString who=None req=False {}
-        :param email: CephString who=None req=False {}
+        :param username: CephString 
+        :param password: CephString 
+        :param rolename: CephString 
+        :param name: CephString 
+        :param email: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-create'
@@ -724,8 +724,8 @@ class MonCommandApi(object):
     def dashboard_ac_user_del_roles(self, username: str, roles: List[str]):
         """
         Delete roles from user
-        :param username: CephString who=None req=True {}
-        :param roles: CephString who=None req=True {}
+        :param username: CephString 
+        :param roles: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-del-roles'
@@ -735,7 +735,7 @@ class MonCommandApi(object):
     def dashboard_ac_user_delete(self, username: str):
         """
         Delete user
-        :param username: CephString who=None req=True {}
+        :param username: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-delete'
@@ -745,9 +745,9 @@ class MonCommandApi(object):
     def dashboard_ac_user_set_info(self, username: str, name: str, email: str):
         """
         Set user info
-        :param username: CephString who=None req=True {}
-        :param name: CephString who=None req=True {}
-        :param email: CephString who=None req=True {}
+        :param username: CephString 
+        :param name: CephString 
+        :param email: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-set-info'
@@ -757,8 +757,8 @@ class MonCommandApi(object):
     def dashboard_ac_user_set_password(self, username: str, password: str):
         """
         Set user password
-        :param username: CephString who=None req=True {}
-        :param password: CephString who=None req=True {}
+        :param username: CephString 
+        :param password: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-set-password'
@@ -768,8 +768,8 @@ class MonCommandApi(object):
     def dashboard_ac_user_set_roles(self, username: str, roles: List[str]):
         """
         Set user roles
-        :param username: CephString who=None req=True {}
-        :param roles: CephString who=None req=True {}
+        :param username: CephString 
+        :param roles: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard ac-user-set-roles'
@@ -779,7 +779,7 @@ class MonCommandApi(object):
     def dashboard_ac_user_show(self, username: str=None):
         """
         Show user info
-        :param username: CephString who=None req=False {}
+        :param username: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'dashboard ac-user-show'
@@ -799,8 +799,8 @@ class MonCommandApi(object):
     def dashboard_feature(self, action: str, features: List[str]=None):
         """
         Enable or disable features in Ceph-Mgr Dashboard
-        :param action: CephChoices who=None req=True {u'strings': u'disable|enable|status'}
-        :param features: CephChoices who=None req=False {u'strings': u'cephfs|iscsi|mirroring|rbd|rgw'}
+        :param action: CephChoices strings=disable|enable|status 
+        :param features: CephChoices strings=cephfs|iscsi|mirroring|rbd|rgw 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'dashboard feature'
@@ -1010,7 +1010,7 @@ class MonCommandApi(object):
     def dashboard_iscsi_gateway_add(self, service_url: str):
         """
         Add iSCSI gateway configuration
-        :param service_url: CephString who=None req=True {}
+        :param service_url: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard iscsi-gateway-add'
@@ -1030,7 +1030,7 @@ class MonCommandApi(object):
     def dashboard_iscsi_gateway_rm(self, name: str):
         """
         Remove iSCSI gateway configuration
-        :param name: CephString who=None req=True {}
+        :param name: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard iscsi-gateway-rm'
@@ -1230,7 +1230,7 @@ class MonCommandApi(object):
     def dashboard_set_alertmanager_api_host(self, value: str):
         """
         Set the ALERTMANAGER_API_HOST option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-alertmanager-api-host'
@@ -1240,7 +1240,7 @@ class MonCommandApi(object):
     def dashboard_set_audit_api_enabled(self, value: str):
         """
         Set the AUDIT_API_ENABLED option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-audit-api-enabled'
@@ -1250,7 +1250,7 @@ class MonCommandApi(object):
     def dashboard_set_audit_api_log_payload(self, value: str):
         """
         Set the AUDIT_API_LOG_PAYLOAD option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-audit-api-log-payload'
@@ -1260,7 +1260,7 @@ class MonCommandApi(object):
     def dashboard_set_enable_browsable_api(self, value: str):
         """
         Set the ENABLE_BROWSABLE_API option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-enable-browsable-api'
@@ -1270,7 +1270,7 @@ class MonCommandApi(object):
     def dashboard_set_ganesha_clusters_rados_pool_namespace(self, value: str):
         """
         Set the GANESHA_CLUSTERS_RADOS_POOL_NAMESPACE option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-ganesha-clusters-rados-pool-namespace'
@@ -1280,7 +1280,7 @@ class MonCommandApi(object):
     def dashboard_set_grafana_api_password(self, value: str):
         """
         Set the GRAFANA_API_PASSWORD option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-grafana-api-password'
@@ -1290,7 +1290,7 @@ class MonCommandApi(object):
     def dashboard_set_grafana_api_url(self, value: str):
         """
         Set the GRAFANA_API_URL option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-grafana-api-url'
@@ -1300,7 +1300,7 @@ class MonCommandApi(object):
     def dashboard_set_grafana_api_username(self, value: str):
         """
         Set the GRAFANA_API_USERNAME option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-grafana-api-username'
@@ -1310,7 +1310,7 @@ class MonCommandApi(object):
     def dashboard_set_iscsi_api_ssl_verification(self, value: str):
         """
         Set the ISCSI_API_SSL_VERIFICATION option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-iscsi-api-ssl-verification'
@@ -1320,7 +1320,7 @@ class MonCommandApi(object):
     def dashboard_set_jwt_token_ttl(self, seconds: int):
         """
         Set the JWT token TTL in seconds
-        :param seconds: CephInt who=None req=True {}
+        :param seconds: CephInt 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-jwt-token-ttl'
@@ -1330,8 +1330,8 @@ class MonCommandApi(object):
     def dashboard_set_login_credentials(self, username: str, password: str):
         """
         Set the login credentials
-        :param username: CephString who=None req=True {}
-        :param password: CephString who=None req=True {}
+        :param username: CephString 
+        :param password: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-login-credentials'
@@ -1341,7 +1341,7 @@ class MonCommandApi(object):
     def dashboard_set_prometheus_api_host(self, value: str):
         """
         Set the PROMETHEUS_API_HOST option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-prometheus-api-host'
@@ -1351,7 +1351,7 @@ class MonCommandApi(object):
     def dashboard_set_rest_requests_timeout(self, value: int):
         """
         Set the REST_REQUESTS_TIMEOUT option value
-        :param value: CephInt who=None req=True {}
+        :param value: CephInt 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rest-requests-timeout'
@@ -1361,7 +1361,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_access_key(self, value: str):
         """
         Set the RGW_API_ACCESS_KEY option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-access-key'
@@ -1371,7 +1371,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_admin_resource(self, value: str):
         """
         Set the RGW_API_ADMIN_RESOURCE option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-admin-resource'
@@ -1381,7 +1381,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_host(self, value: str):
         """
         Set the RGW_API_HOST option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-host'
@@ -1391,7 +1391,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_port(self, value: int):
         """
         Set the RGW_API_PORT option value
-        :param value: CephInt who=None req=True {}
+        :param value: CephInt 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-port'
@@ -1401,7 +1401,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_scheme(self, value: str):
         """
         Set the RGW_API_SCHEME option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-scheme'
@@ -1411,7 +1411,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_secret_key(self, value: str):
         """
         Set the RGW_API_SECRET_KEY option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-secret-key'
@@ -1421,7 +1421,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_ssl_verify(self, value: str):
         """
         Set the RGW_API_SSL_VERIFY option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-ssl-verify'
@@ -1431,7 +1431,7 @@ class MonCommandApi(object):
     def dashboard_set_rgw_api_user_id(self, value: str):
         """
         Set the RGW_API_USER_ID option value
-        :param value: CephString who=None req=True {}
+        :param value: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard set-rgw-api-user-id'
@@ -1461,12 +1461,12 @@ class MonCommandApi(object):
     def dashboard_sso_setup_saml2(self, ceph_dashboard_base_url: str, idp_metadata: str, idp_username_attribute: str=None, idp_entity_id: str=None, sp_x_509_cert: str=None, sp_private_key: str=None):
         """
         Setup SAML2 Single Sign-On
-        :param ceph_dashboard_base_url: CephString who=None req=True {}
-        :param idp_metadata: CephString who=None req=True {}
-        :param idp_username_attribute: CephString who=None req=False {}
-        :param idp_entity_id: CephString who=None req=False {}
-        :param sp_x_509_cert: CephString who=None req=False {}
-        :param sp_private_key: CephString who=None req=False {}
+        :param ceph_dashboard_base_url: CephString 
+        :param idp_metadata: CephString 
+        :param idp_username_attribute: CephString 
+        :param idp_entity_id: CephString 
+        :param sp_x_509_cert: CephString 
+        :param sp_private_key: CephString 
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard sso setup saml2'
@@ -1496,8 +1496,8 @@ class MonCommandApi(object):
     def deepsea_config_set(self, key: str, value: str):
         """
         Set a configuration value
-        :param key: CephString who=None req=True {}
-        :param value: CephString who=None req=True {}
+        :param key: CephString 
+        :param value: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'deepsea config-set'
@@ -1547,8 +1547,8 @@ class MonCommandApi(object):
     def device_get_health_metrics(self, devid: str, sample: str):
         """
         Show stored device metrics for the device
-        :param devid: CephString who=None req=True {}
-        :param sample: CephString who=None req=True {}
+        :param devid: CephString 
+        :param sample: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device get-health-metrics'
@@ -1558,7 +1558,7 @@ class MonCommandApi(object):
     def device_info(self, devid: str):
         """
         Show information about a device
-        :param devid: CephString who=None req=True {}
+        :param devid: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device info'
@@ -1578,7 +1578,7 @@ class MonCommandApi(object):
     def device_ls_by_daemon(self, who: str):
         """
         Show devices associated with a daemon
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device ls-by-daemon'
@@ -1588,7 +1588,7 @@ class MonCommandApi(object):
     def device_ls_by_host(self, host: str):
         """
         Show devices on a host
-        :param host: CephString who=None req=True {}
+        :param host: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device ls-by-host'
@@ -1618,7 +1618,7 @@ class MonCommandApi(object):
     def device_predict_life_expectancy(self, devid: str):
         """
         Predict life expectancy with local predictor
-        :param devid: CephString who=None req=True {}
+        :param devid: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device predict-life-expectancy'
@@ -1628,7 +1628,7 @@ class MonCommandApi(object):
     def device_query_daemon_health_metrics(self, who: str):
         """
         Get device health metrics for a given daemon
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device query-daemon-health-metrics'
@@ -1638,7 +1638,7 @@ class MonCommandApi(object):
     def device_rm_life_expectancy(self, devid: str):
         """
         Clear predicted device life expectancy
-        :param devid: CephString who=None req=True {}
+        :param devid: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'device rm-life-expectancy'
@@ -1648,7 +1648,7 @@ class MonCommandApi(object):
     def device_scrape_daemon_health_metrics(self, who: str):
         """
         Scrape and store device health metrics for a given daemon
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device scrape-daemon-health-metrics'
@@ -1658,7 +1658,7 @@ class MonCommandApi(object):
     def device_scrape_health_metrics(self, devid: str):
         """
         Scrape and store health metrics
-        :param devid: CephString who=None req=True {}
+        :param devid: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'device scrape-health-metrics'
@@ -1668,11 +1668,11 @@ class MonCommandApi(object):
     def device_set_cloud_prediction_config(self, server: str, user: str, password: str, certfile: str, port: str=None):
         """
         Configure Disk Prediction service
-        :param server: CephString who=None req=True {}
-        :param user: CephString who=None req=True {}
-        :param password: CephString who=None req=True {}
-        :param certfile: CephString who=None req=True {}
-        :param port: CephString who=None req=False {}
+        :param server: CephString 
+        :param user: CephString 
+        :param password: CephString 
+        :param certfile: CephString 
+        :param port: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'device set-cloud-prediction-config'
@@ -1682,9 +1682,9 @@ class MonCommandApi(object):
     def device_set_life_expectancy(self, devid: str, from_: str, to: str):
         """
         Set predicted device life expectancy
-        :param devid: CephString who=None req=True {}
-        :param from_: CephString who=None req=True {}
-        :param to: CephString who=None req=True {}
+        :param devid: CephString 
+        :param from_: CephString 
+        :param to: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'device set-life-expectancy'
@@ -1704,7 +1704,7 @@ class MonCommandApi(object):
     def df(self, detail: str=None):
         """
         show cluster free space stats
-        :param detail: CephChoices who=None req=False {u'strings': u'detail'}
+        :param detail: CephChoices strings=detail 
         module=mon perm=r flags=
         """
         prefix = 'df'
@@ -1734,8 +1734,8 @@ class MonCommandApi(object):
     def fs_add_data_pool(self, fs_name: str, pool: str):
         """
         add data pool <pool>
-        :param fs_name: CephString who=None req=True {}
-        :param pool: CephString who=None req=True {}
+        :param fs_name: CephString 
+        :param pool: CephString 
         module=mds perm=rw flags=
         """
         prefix = 'fs add_data_pool'
@@ -1745,9 +1745,9 @@ class MonCommandApi(object):
     def fs_authorize(self, filesystem: str, entity: str, caps: List[str]):
         """
         add auth for <entity> to access file system <filesystem> based on following directory and permissions pairs
-        :param filesystem: CephString who=None req=True {}
-        :param entity: CephString who=None req=True {}
-        :param caps: CephString who=None req=True {}
+        :param filesystem: CephString 
+        :param entity: CephString 
+        :param caps: CephString 
         module=auth perm=rwx flags=
         """
         prefix = 'fs authorize'
@@ -1757,7 +1757,7 @@ class MonCommandApi(object):
     def fs_dump(self, epoch: int=None):
         """
         dump all CephFS status, optionally from epoch
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mds perm=r flags=
         """
         prefix = 'fs dump'
@@ -1767,7 +1767,7 @@ class MonCommandApi(object):
     def fs_fail(self, fs_name: str):
         """
         bring the file system down and all of its ranks
-        :param fs_name: CephString who=None req=True {}
+        :param fs_name: CephString 
         module=fs perm=rw flags=
         """
         prefix = 'fs fail'
@@ -1777,9 +1777,9 @@ class MonCommandApi(object):
     def fs_flag_set(self, flag_name: str, val: str, yes_i_really_mean_it: bool=None):
         """
         Set a global CephFS flag
-        :param flag_name: CephChoices who=None req=True {u'strings': u'enable_multiple'}
-        :param val: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param flag_name: CephChoices strings=enable_multiple 
+        :param val: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=fs perm=rw flags=
         """
         prefix = 'fs flag set'
@@ -1789,7 +1789,7 @@ class MonCommandApi(object):
     def fs_get(self, fs_name: str):
         """
         get info about one filesystem
-        :param fs_name: CephString who=None req=True {}
+        :param fs_name: CephString 
         module=fs perm=r flags=
         """
         prefix = 'fs get'
@@ -1809,11 +1809,11 @@ class MonCommandApi(object):
     def fs_new(self, fs_name: str, metadata: str, data: str, force: bool=None, allow_dangerous_metadata_overlay: bool=None):
         """
         make new filesystem using named pools <metadata> and <data>
-        :param fs_name: CephString who=None req=True {}
-        :param metadata: CephString who=None req=True {}
-        :param data: CephString who=None req=True {}
-        :param force: CephBool who=None req=False {}
-        :param allow_dangerous_metadata_overlay: CephBool who=None req=False {}
+        :param fs_name: CephString 
+        :param metadata: CephString 
+        :param data: CephString 
+        :param force: CephBool 
+        :param allow_dangerous_metadata_overlay: CephBool 
         module=fs perm=rw flags=
         """
         prefix = 'fs new'
@@ -1823,8 +1823,8 @@ class MonCommandApi(object):
     def fs_reset(self, fs_name: str, yes_i_really_mean_it: bool=None):
         """
         disaster recovery only: reset to a single-MDS map
-        :param fs_name: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param fs_name: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=fs perm=rw flags=
         """
         prefix = 'fs reset'
@@ -1834,8 +1834,8 @@ class MonCommandApi(object):
     def fs_rm(self, fs_name: str, yes_i_really_mean_it: bool=None):
         """
         disable the named filesystem
-        :param fs_name: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param fs_name: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=fs perm=rw flags=
         """
         prefix = 'fs rm'
@@ -1845,8 +1845,8 @@ class MonCommandApi(object):
     def fs_rm_data_pool(self, fs_name: str, pool: str):
         """
         remove data pool <pool>
-        :param fs_name: CephString who=None req=True {}
-        :param pool: CephString who=None req=True {}
+        :param fs_name: CephString 
+        :param pool: CephString 
         module=mds perm=rw flags=
         """
         prefix = 'fs rm_data_pool'
@@ -1856,10 +1856,10 @@ class MonCommandApi(object):
     def fs_set(self, fs_name: str, var: str, val: str, yes_i_really_mean_it: bool=None):
         """
         set fs parameter <var> to <val>
-        :param fs_name: CephString who=None req=True {}
-        :param var: CephChoices who=None req=True {u'strings': u'max_mds|max_file_size|allow_new_snaps|inline_data|cluster_down|allow_dirfrags|balancer|standby_count_wanted|session_timeout|session_autoclose|allow_standby_replay|down|joinable|min_compat_client'}
-        :param val: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param fs_name: CephString 
+        :param var: CephChoices strings=max_mds|max_file_size|allow_new_snaps|inline_data|cluster_down|allow_dirfrags|balancer|standby_count_wanted|session_timeout|session_autoclose|allow_standby_replay|down|joinable|min_compat_client 
+        :param val: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=mds perm=rw flags=
         """
         prefix = 'fs set'
@@ -1870,7 +1870,7 @@ class MonCommandApi(object):
     def fs_set_default(self, fs_name: str):
         """
         set the default to the named filesystem
-        :param fs_name: CephString who=None req=True {}
+        :param fs_name: CephString 
         module=fs perm=rw flags=
         """
         prefix = 'fs set-default'
@@ -1882,7 +1882,7 @@ class MonCommandApi(object):
     def fs_set_default(self, fs_name: str):
         """
         set the default to the named filesystem
-        :param fs_name: CephString who=None req=True {}
+        :param fs_name: CephString 
         module=fs perm=rw flags=deprecated
         """
         prefix = 'fs set_default'
@@ -1892,7 +1892,7 @@ class MonCommandApi(object):
     def fs_status(self, fs: str=None):
         """
         Show the status of a CephFS filesystem
-        :param fs: CephString who=None req=False {}
+        :param fs: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'fs status'
@@ -1902,10 +1902,10 @@ class MonCommandApi(object):
     def fs_subvolume_create(self, vol_name: str, sub_name: str, size: int=None, group_name: str=None):
         """
         Create a CephFS subvolume in a volume, and optionally, with a specific size (in bytes) and in a specific subvolume group
-        :param vol_name: CephString who=None req=True {}
-        :param sub_name: CephString who=None req=True {}
-        :param size: CephInt who=None req=False {}
-        :param group_name: CephString who=None req=False {}
+        :param vol_name: CephString 
+        :param sub_name: CephString 
+        :param size: CephInt 
+        :param group_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolume create'
@@ -1915,9 +1915,9 @@ class MonCommandApi(object):
     def fs_subvolume_getpath(self, vol_name: str, sub_name: str, group_name: str=None):
         """
         Get the mountpath of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
-        :param vol_name: CephString who=None req=True {}
-        :param sub_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=False {}
+        :param vol_name: CephString 
+        :param sub_name: CephString 
+        :param group_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolume getpath'
@@ -1927,10 +1927,10 @@ class MonCommandApi(object):
     def fs_subvolume_rm(self, vol_name: str, sub_name: str, group_name: str=None, force: bool=None):
         """
         Delete a CephFS subvolume in a volume, and optionally, in a specific subvolume group
-        :param vol_name: CephString who=None req=True {}
-        :param sub_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=False {}
-        :param force: CephBool who=None req=False {}
+        :param vol_name: CephString 
+        :param sub_name: CephString 
+        :param group_name: CephString 
+        :param force: CephBool 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolume rm'
@@ -1940,10 +1940,10 @@ class MonCommandApi(object):
     def fs_subvolume_snapshot_create(self, vol_name: str, sub_name: str, snap_name: str, group_name: str=None):
         """
         Create a snapshot of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
-        :param vol_name: CephString who=None req=True {}
-        :param sub_name: CephString who=None req=True {}
-        :param snap_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=False {}
+        :param vol_name: CephString 
+        :param sub_name: CephString 
+        :param snap_name: CephString 
+        :param group_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolume snapshot create'
@@ -1953,11 +1953,11 @@ class MonCommandApi(object):
     def fs_subvolume_snapshot_rm(self, vol_name: str, sub_name: str, snap_name: str, group_name: str=None, force: bool=None):
         """
         Delete a snapshot of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
-        :param vol_name: CephString who=None req=True {}
-        :param sub_name: CephString who=None req=True {}
-        :param snap_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=False {}
-        :param force: CephBool who=None req=False {}
+        :param vol_name: CephString 
+        :param sub_name: CephString 
+        :param snap_name: CephString 
+        :param group_name: CephString 
+        :param force: CephBool 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolume snapshot rm'
@@ -1967,8 +1967,8 @@ class MonCommandApi(object):
     def fs_subvolumegroup_create(self, vol_name: str, group_name: str):
         """
         Create a CephFS subvolume group in a volume
-        :param vol_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=True {}
+        :param vol_name: CephString 
+        :param group_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolumegroup create'
@@ -1978,9 +1978,9 @@ class MonCommandApi(object):
     def fs_subvolumegroup_rm(self, vol_name: str, group_name: str, force: bool=None):
         """
         Delete a CephFS subvolume group in a volume
-        :param vol_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=True {}
-        :param force: CephBool who=None req=False {}
+        :param vol_name: CephString 
+        :param group_name: CephString 
+        :param force: CephBool 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolumegroup rm'
@@ -1990,9 +1990,9 @@ class MonCommandApi(object):
     def fs_subvolumegroup_snapshot_create(self, vol_name: str, group_name: str, snap_name: str):
         """
         Create a snapshot of a CephFS subvolume group in a volume
-        :param vol_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=True {}
-        :param snap_name: CephString who=None req=True {}
+        :param vol_name: CephString 
+        :param group_name: CephString 
+        :param snap_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolumegroup snapshot create'
@@ -2002,10 +2002,10 @@ class MonCommandApi(object):
     def fs_subvolumegroup_snapshot_rm(self, vol_name: str, group_name: str, snap_name: str, force: bool=None):
         """
         Delete a snapshot of a CephFS subvolume group in a volume
-        :param vol_name: CephString who=None req=True {}
-        :param group_name: CephString who=None req=True {}
-        :param snap_name: CephString who=None req=True {}
-        :param force: CephBool who=None req=False {}
+        :param vol_name: CephString 
+        :param group_name: CephString 
+        :param snap_name: CephString 
+        :param force: CephBool 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs subvolumegroup snapshot rm'
@@ -2015,8 +2015,8 @@ class MonCommandApi(object):
     def fs_volume_create(self, name: str, size: str=None):
         """
         Create a CephFS volume
-        :param name: CephString who=None req=True {}
-        :param size: CephString who=None req=False {}
+        :param name: CephString 
+        :param size: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs volume create'
@@ -2036,7 +2036,7 @@ class MonCommandApi(object):
     def fs_volume_rm(self, vol_name: str):
         """
         Delete a CephFS volume
-        :param vol_name: CephString who=None req=True {}
+        :param vol_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'fs volume rm'
@@ -2056,7 +2056,7 @@ class MonCommandApi(object):
     def health(self, detail: str=None):
         """
         show cluster health
-        :param detail: CephChoices who=None req=False {u'strings': u'detail'}
+        :param detail: CephChoices strings=detail 
         module=mon perm=r flags=
         """
         prefix = 'health'
@@ -2066,7 +2066,7 @@ class MonCommandApi(object):
     def heap(self, heapcmd: str):
         """
         show heap usage info (available only if compiled with tcmalloc)
-        :param heapcmd: CephChoices who=None req=True {u'strings': u'dump|start_profiler|stop_profiler|release|stats'}
+        :param heapcmd: CephChoices strings=dump|start_profiler|stop_profiler|release|stats 
         module=mon perm=rw flags=no_forward
         """
         prefix = 'heap'
@@ -2076,7 +2076,7 @@ class MonCommandApi(object):
     def hello(self, person_name: str=None):
         """
         Prints hello world to mgr.x.log
-        :param person_name: CephString who=None req=False {}
+        :param person_name: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'hello'
@@ -2086,8 +2086,8 @@ class MonCommandApi(object):
     def influx_config_set(self, key: str, value: str):
         """
         Set a configuration value
-        :param key: CephString who=None req=True {}
-        :param value: CephString who=None req=True {}
+        :param key: CephString 
+        :param value: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'influx config-set'
@@ -2117,7 +2117,7 @@ class MonCommandApi(object):
     def injectargs(self, injected_args: List[str]):
         """
         inject config arguments into monitor
-        :param injected_args: CephString who=None req=True {}
+        :param injected_args: CephString 
         module=mon perm=rw flags=no_forward
         """
         prefix = 'injectargs'
@@ -2137,7 +2137,7 @@ class MonCommandApi(object):
     def insights_prune_health(self, hours: str):
         """
         Remove health history older than <hours> hours
-        :param hours: CephString who=None req=True {}
+        :param hours: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'insights prune-health'
@@ -2157,7 +2157,7 @@ class MonCommandApi(object):
     def log(self, logtext: List[str]):
         """
         log supplied text to the monitor log
-        :param logtext: CephString who=None req=True {}
+        :param logtext: CephString 
         module=mon perm=rw flags=
         """
         prefix = 'log'
@@ -2167,9 +2167,9 @@ class MonCommandApi(object):
     def log_last(self, num: int=None, level: str=None, channel: str=None):
         """
         print last few lines of the cluster log
-        :param num: CephInt who=None req=False {u'range': u'1'}
-        :param level: CephChoices who=None req=False {u'strings': u'debug|info|sec|warn|error'}
-        :param channel: CephChoices who=None req=False {u'strings': u'*|cluster|audit'}
+        :param num: CephInt ragne=1 
+        :param level: CephChoices strings=debug|info|sec|warn|error 
+        :param channel: CephChoices strings=*|cluster|audit 
         module=mon perm=r flags=
         """
         prefix = 'log last'
@@ -2180,7 +2180,7 @@ class MonCommandApi(object):
     def mds_add_data_pool(self, pool: str):
         """
         add data pool <pool>
-        :param pool: CephString who=None req=True {}
+        :param pool: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds add_data_pool'
@@ -2212,7 +2212,7 @@ class MonCommandApi(object):
     def mds_compat_rm_compat(self, feature: int):
         """
         remove compatible feature
-        :param feature: CephInt who=None req=True {u'range': u'0'}
+        :param feature: CephInt ragne=0 
         module=mds perm=rw flags=
         """
         prefix = 'mds compat rm_compat'
@@ -2222,7 +2222,7 @@ class MonCommandApi(object):
     def mds_compat_rm_incompat(self, feature: int):
         """
         remove incompatible feature
-        :param feature: CephInt who=None req=True {u'range': u'0'}
+        :param feature: CephInt ragne=0 
         module=mds perm=rw flags=
         """
         prefix = 'mds compat rm_incompat'
@@ -2242,7 +2242,7 @@ class MonCommandApi(object):
     def mds_count_metadata(self, property: str):
         """
         count MDSs by metadata field property
-        :param property: CephString who=None req=True {}
+        :param property: CephString 
         module=mds perm=r flags=
         """
         prefix = 'mds count-metadata'
@@ -2253,7 +2253,7 @@ class MonCommandApi(object):
     def mds_deactivate(self, role: str):
         """
         clean up specified MDS rank (use with `set max_mds` to shrink cluster)
-        :param role: CephString who=None req=True {}
+        :param role: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds deactivate'
@@ -2264,7 +2264,7 @@ class MonCommandApi(object):
     def mds_dump(self, epoch: int=None):
         """
         dump legacy MDS cluster info, optionally from epoch
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mds perm=r flags=obsolete
         """
         prefix = 'mds dump'
@@ -2274,7 +2274,7 @@ class MonCommandApi(object):
     def mds_fail(self, role_or_gid: str):
         """
         Mark MDS failed: trigger a failover if a standby is available
-        :param role_or_gid: CephString who=None req=True {}
+        :param role_or_gid: CephString 
         module=mds perm=rw flags=
         """
         prefix = 'mds fail'
@@ -2284,8 +2284,8 @@ class MonCommandApi(object):
     def mds_freeze(self, role_or_gid: str, val: str):
         """
         freeze MDS yes/no
-        :param role_or_gid: CephString who=None req=True {}
-        :param val: CephString who=None req=True {}
+        :param role_or_gid: CephString 
+        :param val: CephString 
         module=mds perm=rw flags=hidden
         """
         prefix = 'mds freeze'
@@ -2296,7 +2296,7 @@ class MonCommandApi(object):
     def mds_getmap(self, epoch: int=None):
         """
         get MDS map, optionally from epoch
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mds perm=r flags=obsolete
         """
         prefix = 'mds getmap'
@@ -2306,7 +2306,7 @@ class MonCommandApi(object):
     def mds_metadata(self, who: str=None):
         """
         fetch metadata for mds <role>
-        :param who: CephString who=None req=False {}
+        :param who: CephString 
         module=mds perm=r flags=
         """
         prefix = 'mds metadata'
@@ -2317,9 +2317,9 @@ class MonCommandApi(object):
     def mds_newfs(self, metadata: int, data: int, yes_i_really_mean_it: bool=None):
         """
         make new filesystem using pools <metadata> and <data>
-        :param metadata: CephInt who=None req=True {u'range': u'0'}
-        :param data: CephInt who=None req=True {u'range': u'0'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param metadata: CephInt ragne=0 
+        :param data: CephInt ragne=0 
+        :param yes_i_really_mean_it: CephBool 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds newfs'
@@ -2329,7 +2329,7 @@ class MonCommandApi(object):
     def mds_ok_to_stop(self, ids: List[str]):
         """
         check whether stopping the specified MDS would reduce immediate availability
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=mds perm=r flags=
         """
         prefix = 'mds ok-to-stop'
@@ -2340,7 +2340,7 @@ class MonCommandApi(object):
     def mds_remove_data_pool(self, pool: str):
         """
         remove data pool <pool>
-        :param pool: CephString who=None req=True {}
+        :param pool: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds remove_data_pool'
@@ -2350,7 +2350,7 @@ class MonCommandApi(object):
     def mds_repaired(self, role: str):
         """
         mark a damaged MDS rank as no longer damaged
-        :param role: CephString who=None req=True {}
+        :param role: CephString 
         module=mds perm=rw flags=
         """
         prefix = 'mds repaired'
@@ -2360,7 +2360,7 @@ class MonCommandApi(object):
     def mds_rm(self, gid: int):
         """
         remove nonactive mds
-        :param gid: CephInt who=None req=True {u'range': u'0'}
+        :param gid: CephInt ragne=0 
         module=mds perm=rw flags=
         """
         prefix = 'mds rm'
@@ -2371,7 +2371,7 @@ class MonCommandApi(object):
     def mds_rm_data_pool(self, pool: str):
         """
         remove data pool <pool>
-        :param pool: CephString who=None req=True {}
+        :param pool: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds rm_data_pool'
@@ -2381,8 +2381,8 @@ class MonCommandApi(object):
     def mds_rmfailed(self, role: str, yes_i_really_mean_it: bool=None):
         """
         remove failed rank
-        :param role: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param role: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=mds perm=rw flags=hidden
         """
         prefix = 'mds rmfailed'
@@ -2393,9 +2393,9 @@ class MonCommandApi(object):
     def mds_set(self, var: str, val: str, yes_i_really_mean_it: bool=None):
         """
         set mds parameter <var> to <val>
-        :param var: CephChoices who=None req=True {u'strings': u'max_mds|max_file_size|inline_data|allow_new_snaps|allow_multimds|allow_multimds_snaps|allow_dirfrags'}
-        :param val: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param var: CephChoices strings=max_mds|max_file_size|inline_data|allow_new_snaps|allow_multimds|allow_multimds_snaps|allow_dirfrags 
+        :param val: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds set'
@@ -2406,7 +2406,7 @@ class MonCommandApi(object):
     def mds_set_max_mds(self, maxmds: int):
         """
         set max MDS index
-        :param maxmds: CephInt who=None req=True {u'range': u'0'}
+        :param maxmds: CephInt ragne=0 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds set_max_mds'
@@ -2416,8 +2416,8 @@ class MonCommandApi(object):
     def mds_set_state(self, gid: int, state: int):
         """
         set mds state of <gid> to <numeric-state>
-        :param gid: CephInt who=None req=True {u'range': u'0'}
-        :param state: CephInt who=None req=True {u'range': u'0|20'}
+        :param gid: CephInt ragne=0 
+        :param state: CephInt ragne=0|20 
         module=mds perm=rw flags=hidden
         """
         prefix = 'mds set_state'
@@ -2438,7 +2438,7 @@ class MonCommandApi(object):
     def mds_stop(self, role: str):
         """
         stop mds
-        :param role: CephString who=None req=True {}
+        :param role: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds stop'
@@ -2449,8 +2449,8 @@ class MonCommandApi(object):
     def mds_tell(self, who: str, args: List[str]):
         """
         send command to particular mds
-        :param who: CephString who=None req=True {}
-        :param args: CephString who=None req=True {}
+        :param who: CephString 
+        :param args: CephString 
         module=mds perm=rw flags=obsolete
         """
         prefix = 'mds tell'
@@ -2470,7 +2470,7 @@ class MonCommandApi(object):
     def mgr_count_metadata(self, property: str):
         """
         count ceph-mgr daemons by metadata field property
-        :param property: CephString who=None req=True {}
+        :param property: CephString 
         module=mgr perm=r flags=
         """
         prefix = 'mgr count-metadata'
@@ -2480,7 +2480,7 @@ class MonCommandApi(object):
     def mgr_dump(self, epoch: int=None):
         """
         dump the latest MgrMap
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mgr perm=r flags=
         """
         prefix = 'mgr dump'
@@ -2490,7 +2490,7 @@ class MonCommandApi(object):
     def mgr_fail(self, who: str):
         """
         treat the named manager daemon as failed
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=mgr perm=rw flags=
         """
         prefix = 'mgr fail'
@@ -2500,7 +2500,7 @@ class MonCommandApi(object):
     def mgr_metadata(self, who: str=None):
         """
         dump metadata for all daemons or a specific daemon
-        :param who: CephString who=None req=False {}
+        :param who: CephString 
         module=mgr perm=r flags=
         """
         prefix = 'mgr metadata'
@@ -2510,7 +2510,7 @@ class MonCommandApi(object):
     def mgr_module_disable(self, module: str):
         """
         disable mgr module
-        :param module: CephString who=None req=True {}
+        :param module: CephString 
         module=mgr perm=rw flags=
         """
         prefix = 'mgr module disable'
@@ -2520,8 +2520,8 @@ class MonCommandApi(object):
     def mgr_module_enable(self, module: str, force: str=None):
         """
         enable mgr module
-        :param module: CephString who=None req=True {}
-        :param force: CephChoices who=None req=False {u'strings': u'--force'}
+        :param module: CephString 
+        :param force: CephChoices strings=--force 
         module=mgr perm=rw flags=
         """
         prefix = 'mgr module enable'
@@ -2541,7 +2541,7 @@ class MonCommandApi(object):
     def mgr_self_test_background_start(self, workload: str):
         """
         Activate a background workload (one of command_spam, throw_exception)
-        :param workload: CephString who=None req=True {}
+        :param workload: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test background start'
@@ -2561,9 +2561,9 @@ class MonCommandApi(object):
     def mgr_self_test_cluster_log(self, channel: str, priority: str, message: str):
         """
         Create an audit log record.
-        :param channel: CephString who=None req=True {}
-        :param priority: CephString who=None req=True {}
-        :param message: CephString who=None req=True {}
+        :param channel: CephString 
+        :param priority: CephString 
+        :param message: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test cluster-log'
@@ -2573,7 +2573,7 @@ class MonCommandApi(object):
     def mgr_self_test_config_get(self, key: str):
         """
         Peek at a configuration value
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test config get'
@@ -2583,7 +2583,7 @@ class MonCommandApi(object):
     def mgr_self_test_config_get_localized(self, key: str):
         """
         Peek at a configuration value (localized variant)
-        :param key: CephString who=None req=True {}
+        :param key: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test config get_localized'
@@ -2593,7 +2593,7 @@ class MonCommandApi(object):
     def mgr_self_test_health_clear(self, checks: List[str]):
         """
         Clear health checks by name. If no names provided, clear all.
-        :param checks: CephString who=None req=True {}
+        :param checks: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test health clear'
@@ -2603,7 +2603,7 @@ class MonCommandApi(object):
     def mgr_self_test_health_set(self, checks: str):
         """
         Set a health check from a JSON-formatted description.
-        :param checks: CephString who=None req=True {}
+        :param checks: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test health set'
@@ -2613,7 +2613,7 @@ class MonCommandApi(object):
     def mgr_self_test_insights_set_now_offset(self, hours: str):
         """
         Set the now time for the insights module.
-        :param hours: CephString who=None req=True {}
+        :param hours: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test insights_set_now_offset'
@@ -2623,7 +2623,7 @@ class MonCommandApi(object):
     def mgr_self_test_module(self, module: str):
         """
         Run another module's self_test() method
-        :param module: CephString who=None req=True {}
+        :param module: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'mgr self-test module'
@@ -2673,8 +2673,8 @@ class MonCommandApi(object):
     def mon_add(self, name: str, addr: str):
         """
         add new monitor named <name> at <addr>
-        :param name: CephString who=None req=True {}
-        :param addr: CephIPAddr who=None req=True {}
+        :param name: CephString 
+        :param addr: CephIPAddr 
         module=mon perm=rw flags=
         """
         prefix = 'mon add'
@@ -2694,7 +2694,7 @@ class MonCommandApi(object):
     def mon_count_metadata(self, property: str):
         """
         count mons by metadata field property
-        :param property: CephString who=None req=True {}
+        :param property: CephString 
         module=mon perm=r flags=
         """
         prefix = 'mon count-metadata'
@@ -2704,7 +2704,7 @@ class MonCommandApi(object):
     def mon_dump(self, epoch: int=None):
         """
         dump formatted monmap (optionally from epoch)
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mon perm=r flags=
         """
         prefix = 'mon dump'
@@ -2724,7 +2724,7 @@ class MonCommandApi(object):
     def mon_feature_ls(self, with_value: str=None):
         """
         list available mon map features to be set/unset
-        :param with_value: CephChoices who=None req=False {u'strings': u'--with-value'}
+        :param with_value: CephChoices strings=--with-value 
         module=mon perm=r flags=
         """
         prefix = 'mon feature ls'
@@ -2734,8 +2734,8 @@ class MonCommandApi(object):
     def mon_feature_set(self, feature_name: str, yes_i_really_mean_it: bool=None):
         """
         set provided feature on mon map
-        :param feature_name: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param feature_name: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=mon perm=rw flags=
         """
         prefix = 'mon feature set'
@@ -2745,7 +2745,7 @@ class MonCommandApi(object):
     def mon_getmap(self, epoch: int=None):
         """
         get monmap
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=mon perm=r flags=
         """
         prefix = 'mon getmap'
@@ -2755,7 +2755,7 @@ class MonCommandApi(object):
     def mon_metadata(self, id_: str=None):
         """
         fetch metadata for mon <id>
-        :param id_: CephString who=None req=False {}
+        :param id_: CephString 
         module=mon perm=r flags=
         """
         prefix = 'mon metadata'
@@ -2775,7 +2775,7 @@ class MonCommandApi(object):
     def mon_ok_to_rm(self, id_: str):
         """
         check whether removing the specified mon would break quorum
-        :param id_: CephString who=None req=True {}
+        :param id_: CephString 
         module=mon perm=r flags=
         """
         prefix = 'mon ok-to-rm'
@@ -2785,7 +2785,7 @@ class MonCommandApi(object):
     def mon_ok_to_stop(self, ids: List[str]):
         """
         check whether mon(s) can be safely stopped without reducing immediate availability
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=mon perm=r flags=
         """
         prefix = 'mon ok-to-stop'
@@ -2796,7 +2796,7 @@ class MonCommandApi(object):
     def mon_remove(self, name: str):
         """
         remove monitor named <name>
-        :param name: CephString who=None req=True {}
+        :param name: CephString 
         module=mon perm=rw flags=deprecated
         """
         prefix = 'mon remove'
@@ -2806,7 +2806,7 @@ class MonCommandApi(object):
     def mon_rm(self, name: str):
         """
         remove monitor named <name>
-        :param name: CephString who=None req=True {}
+        :param name: CephString 
         module=mon perm=rw flags=
         """
         prefix = 'mon rm'
@@ -2826,8 +2826,8 @@ class MonCommandApi(object):
     def mon_set_addrs(self, name: str, addrs: str):
         """
         set the addrs (IPs and ports) a specific monitor binds to
-        :param name: CephString who=None req=True {}
-        :param addrs: CephString who=None req=True {}
+        :param name: CephString 
+        :param addrs: CephString 
         module=mon perm=rw flags=
         """
         prefix = 'mon set-addrs'
@@ -2837,8 +2837,8 @@ class MonCommandApi(object):
     def mon_set_rank(self, name: str, rank: int):
         """
         set the rank for the specified mon
-        :param name: CephString who=None req=True {}
-        :param rank: CephInt who=None req=True {}
+        :param name: CephString 
+        :param rank: CephInt 
         module=mon perm=rw flags=
         """
         prefix = 'mon set-rank'
@@ -2848,8 +2848,8 @@ class MonCommandApi(object):
     def mon_set_weight(self, name: str, weight: int):
         """
         set the weight for the specified mon
-        :param name: CephString who=None req=True {}
-        :param weight: CephInt who=None req=True {u'range': u'0|65535'}
+        :param name: CephString 
+        :param weight: CephInt ragne=0|65535 
         module=mon perm=rw flags=
         """
         prefix = 'mon set-weight'
@@ -2869,8 +2869,8 @@ class MonCommandApi(object):
     def mon_sync_force(self, yes_i_really_mean_it: bool=None, i_know_what_i_am_doing: bool=None):
         """
         force sync of and clear monitor store
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
-        :param i_know_what_i_am_doing: CephBool who=None req=False {}
+        :param yes_i_really_mean_it: CephBool 
+        :param i_know_what_i_am_doing: CephBool 
         module=mon perm=rw flags=no_forward
         """
         prefix = 'mon sync force'
@@ -2900,7 +2900,7 @@ class MonCommandApi(object):
     def node_ls(self, type: str=None):
         """
         list all nodes in cluster [type]
-        :param type: CephChoices who=None req=False {u'strings': u'all|osd|mon|mds|mgr'}
+        :param type: CephChoices strings=all|osd|mon|mds|mgr 
         module=mon perm=r flags=
         """
         prefix = 'node ls'
@@ -2910,9 +2910,9 @@ class MonCommandApi(object):
     def orchestrator_device_ls(self, host: List[str]=None, format: str=None, refresh: bool=None):
         """
         List devices on a node
-        :param host: CephString who=None req=False {}
-        :param format: CephChoices who=None req=False {u'strings': u'json|plain'}
-        :param refresh: CephBool who=None req=False {}
+        :param host: CephString 
+        :param format: CephChoices strings=json|plain 
+        :param refresh: CephBool 
         module=mgr perm=r flags=mgr
         """
         prefix = 'orchestrator device ls'
@@ -2922,7 +2922,7 @@ class MonCommandApi(object):
     def orchestrator_host_add(self, host: str):
         """
         Add a host
-        :param host: CephString who=None req=True {}
+        :param host: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator host add'
@@ -2942,7 +2942,7 @@ class MonCommandApi(object):
     def orchestrator_host_rm(self, host: str):
         """
         Remove a host
-        :param host: CephString who=None req=True {}
+        :param host: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator host rm'
@@ -2952,7 +2952,7 @@ class MonCommandApi(object):
     def orchestrator_mds_add(self, svc_arg: str):
         """
         Create an MDS service
-        :param svc_arg: CephString who=None req=True {}
+        :param svc_arg: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator mds add'
@@ -2962,7 +2962,7 @@ class MonCommandApi(object):
     def orchestrator_mds_rm(self, svc_id: str):
         """
         Remove an MDS service
-        :param svc_id: CephString who=None req=True {}
+        :param svc_id: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator mds rm'
@@ -2972,8 +2972,8 @@ class MonCommandApi(object):
     def orchestrator_mgr_update(self, num: int, hosts: List[str]=None):
         """
         Update the number of manager instances
-        :param num: CephInt who=None req=True {}
-        :param hosts: CephString who=None req=False {}
+        :param num: CephInt 
+        :param hosts: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator mgr update'
@@ -2983,8 +2983,8 @@ class MonCommandApi(object):
     def orchestrator_mon_update(self, num: int, hosts: List[str]=None):
         """
         Update the number of monitor instances
-        :param num: CephInt who=None req=True {}
-        :param hosts: CephString who=None req=False {}
+        :param num: CephInt 
+        :param hosts: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator mon update'
@@ -2994,9 +2994,9 @@ class MonCommandApi(object):
     def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace: str=None):
         """
         Create an NFS service
-        :param svc_arg: CephString who=None req=True {}
-        :param pool: CephString who=None req=True {}
-        :param namespace: CephString who=None req=False {}
+        :param svc_arg: CephString 
+        :param pool: CephString 
+        :param namespace: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator nfs add'
@@ -3006,7 +3006,7 @@ class MonCommandApi(object):
     def orchestrator_nfs_rm(self, svc_id: str):
         """
         Remove an NFS service
-        :param svc_id: CephString who=None req=True {}
+        :param svc_id: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator nfs rm'
@@ -3016,8 +3016,8 @@ class MonCommandApi(object):
     def orchestrator_nfs_update(self, svc_id: str, num: int):
         """
         Scale an NFS service
-        :param svc_id: CephString who=None req=True {}
-        :param num: CephInt who=None req=True {}
+        :param svc_id: CephString 
+        :param num: CephInt 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator nfs update'
@@ -3027,7 +3027,7 @@ class MonCommandApi(object):
     def orchestrator_osd_create(self, svc_arg: str=None):
         """
         Create an OSD service. Either --svc_arg=host:drives or -i <drive_group>
-        :param svc_arg: CephString who=None req=False {}
+        :param svc_arg: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator osd create'
@@ -3037,7 +3037,7 @@ class MonCommandApi(object):
     def orchestrator_osd_rm(self, svc_id: List[str]):
         """
         Remove OSD services
-        :param svc_id: CephString who=None req=True {}
+        :param svc_id: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator osd rm'
@@ -3047,7 +3047,7 @@ class MonCommandApi(object):
     def orchestrator_rgw_add(self, svc_arg: str):
         """
         Create an RGW service
-        :param svc_arg: CephString who=None req=True {}
+        :param svc_arg: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator rgw add'
@@ -3057,7 +3057,7 @@ class MonCommandApi(object):
     def orchestrator_rgw_rm(self, svc_id: str):
         """
         Remove an RGW service
-        :param svc_id: CephString who=None req=True {}
+        :param svc_id: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator rgw rm'
@@ -3067,9 +3067,9 @@ class MonCommandApi(object):
     def orchestrator_service(self, action: str, svc_type: str, svc_name: str):
         """
         Start, stop or reload an entire service (i.e. all daemons)
-        :param action: CephChoices who=None req=True {u'strings': u'start|stop|reload'}
-        :param svc_type: CephString who=None req=True {}
-        :param svc_name: CephString who=None req=True {}
+        :param action: CephChoices strings=start|stop|reload 
+        :param svc_type: CephString 
+        :param svc_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator service'
@@ -3079,10 +3079,10 @@ class MonCommandApi(object):
     def orchestrator_service_ls(self, host: str=None, svc_type: str=None, svc_id: str=None, format: str=None):
         """
         List services known to orchestrator
-        :param host: CephString who=None req=False {}
-        :param svc_type: CephChoices who=None req=False {u'strings': u'mon|mgr|osd|mds|nfs|rgw|rbd-mirror'}
-        :param svc_id: CephString who=None req=False {}
-        :param format: CephChoices who=None req=False {u'strings': u'json|plain'}
+        :param host: CephString 
+        :param svc_type: CephChoices strings=mon|mgr|osd|mds|nfs|rgw|rbd-mirror 
+        :param svc_id: CephString 
+        :param format: CephChoices strings=json|plain 
         module=mgr perm=r flags=mgr
         """
         prefix = 'orchestrator service ls'
@@ -3092,9 +3092,9 @@ class MonCommandApi(object):
     def orchestrator_service_instance(self, action: str, svc_type: str, svc_id: str):
         """
         Start, stop or reload a specific service instance
-        :param action: CephChoices who=None req=True {u'strings': u'start|stop|reload'}
-        :param svc_type: CephString who=None req=True {}
-        :param svc_id: CephString who=None req=True {}
+        :param action: CephChoices strings=start|stop|reload 
+        :param svc_type: CephString 
+        :param svc_id: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator service-instance'
@@ -3104,7 +3104,7 @@ class MonCommandApi(object):
     def orchestrator_set_backend(self, module_name: str):
         """
         Select orchestrator module backend
-        :param module_name: CephString who=None req=True {}
+        :param module_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'orchestrator set backend'
@@ -3124,7 +3124,7 @@ class MonCommandApi(object):
     def osd_add_nodown(self, ids: List[str]):
         """
         mark osd(s) <id> [<id>...] as nodown, or use <all|any> to mark all osds as nodown
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd add-nodown'
@@ -3134,7 +3134,7 @@ class MonCommandApi(object):
     def osd_add_noin(self, ids: List[str]):
         """
         mark osd(s) <id> [<id>...] as noin, or use <all|any> to mark all osds as noin
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd add-noin'
@@ -3144,7 +3144,7 @@ class MonCommandApi(object):
     def osd_add_noout(self, ids: List[str]):
         """
         mark osd(s) <id> [<id>...] as noout, or use <all|any> to mark all osds as noout
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd add-noout'
@@ -3154,7 +3154,7 @@ class MonCommandApi(object):
     def osd_add_noup(self, ids: List[str]):
         """
         mark osd(s) <id> [<id>...] as noup, or use <all|any> to mark all osds as noup
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd add-noup'
@@ -3164,9 +3164,9 @@ class MonCommandApi(object):
     def osd_blacklist(self, blacklistop: str, addr: str, expire: float=None):
         """
         add (optionally until <expire> seconds from now) or remove <addr> from blacklist
-        :param blacklistop: CephChoices who=None req=True {u'strings': u'add|rm'}
-        :param addr: CephEntityAddr who=None req=True {}
-        :param expire: CephFloat who=None req=False {u'range': u'0.0'}
+        :param blacklistop: CephChoices strings=add|rm 
+        :param addr: CephEntityAddr 
+        :param expire: CephFloat ragne=0.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd blacklist'
@@ -3206,7 +3206,7 @@ class MonCommandApi(object):
     def osd_count_metadata(self, property: str):
         """
         count OSDs by metadata field property
-        :param property: CephString who=None req=True {}
+        :param property: CephString 
         module=osd perm=r flags=
         """
         prefix = 'osd count-metadata'
@@ -3217,8 +3217,8 @@ class MonCommandApi(object):
     def osd_create(self, uuid: str=None, id_: str=None):
         """
         create new osd (with optional UUID and ID)
-        :param uuid: CephUUID who=None req=False {}
-        :param id_: CephOsdName who=None req=False {}
+        :param uuid: CephUUID 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd create'
@@ -3228,9 +3228,9 @@ class MonCommandApi(object):
     def osd_crush_add(self, id_: str, weight: float, args: List[str]):
         """
         add or update crushmap position and weight for <name> with <weight> and location <args>
-        :param id_: CephOsdName who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
-        :param args: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param id_: CephOsdName 
+        :param weight: CephFloat ragne=0.0 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush add'
@@ -3240,9 +3240,9 @@ class MonCommandApi(object):
     def osd_crush_add_bucket(self, name: str, type: str, args: List[str]=None):
         """
         add no-parent (probably root) crush bucket <name> of type <type> to location <args>
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param type: CephString who=None req=True {}
-        :param args: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param type: CephString 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush add-bucket'
@@ -3252,7 +3252,7 @@ class MonCommandApi(object):
     def osd_crush_class_create(self, class_: str):
         """
         create crush device class <class>
-        :param class_: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_]'}
+        :param class_: CephString goodchars=[A-Za-z0-9-_] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush class create'
@@ -3272,7 +3272,7 @@ class MonCommandApi(object):
     def osd_crush_class_ls_osd(self, class_: str):
         """
         list all osds belonging to the specific <class>
-        :param class_: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_]'}
+        :param class_: CephString goodchars=[A-Za-z0-9-_] 
         module=osd perm=r flags=
         """
         prefix = 'osd crush class ls-osd'
@@ -3282,8 +3282,8 @@ class MonCommandApi(object):
     def osd_crush_class_rename(self, srcname: str, dstname: str):
         """
         rename crush device class <srcname> to <dstname>
-        :param srcname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_]'}
-        :param dstname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_]'}
+        :param srcname: CephString goodchars=[A-Za-z0-9-_] 
+        :param dstname: CephString goodchars=[A-Za-z0-9-_] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush class rename'
@@ -3293,7 +3293,7 @@ class MonCommandApi(object):
     def osd_crush_class_rm(self, class_: str):
         """
         remove crush device class <class>
-        :param class_: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_]'}
+        :param class_: CephString goodchars=[A-Za-z0-9-_] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush class rm'
@@ -3303,9 +3303,9 @@ class MonCommandApi(object):
     def osd_crush_create_or_move(self, id_: str, weight: float, args: List[str]):
         """
         create entry or move existing entry for <name> <weight> at/to location <args>
-        :param id_: CephOsdName who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
-        :param args: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param id_: CephOsdName 
+        :param weight: CephFloat ragne=0.0 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush create-or-move'
@@ -3325,7 +3325,7 @@ class MonCommandApi(object):
     def osd_crush_get_device_class(self, ids: List[str]):
         """
         get classes of specified osd(s) <id> [<id>...]
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=r flags=
         """
         prefix = 'osd crush get-device-class'
@@ -3335,7 +3335,7 @@ class MonCommandApi(object):
     def osd_crush_get_tunable(self, tunable: str):
         """
         get crush tunable <tunable>
-        :param tunable: CephChoices who=None req=True {u'strings': u'straw_calc_version'}
+        :param tunable: CephChoices strings=straw_calc_version 
         module=osd perm=r flags=
         """
         prefix = 'osd crush get-tunable'
@@ -3345,8 +3345,8 @@ class MonCommandApi(object):
     def osd_crush_link(self, name: str, args: List[str]):
         """
         link existing entry for <name> under location <args>
-        :param name: CephString who=None req=True {}
-        :param args: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param name: CephString 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush link'
@@ -3356,7 +3356,7 @@ class MonCommandApi(object):
     def osd_crush_ls(self, node: str):
         """
         list items beneath a node in the CRUSH tree
-        :param node: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param node: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=r flags=
         """
         prefix = 'osd crush ls'
@@ -3366,8 +3366,8 @@ class MonCommandApi(object):
     def osd_crush_move(self, name: str, args: List[str]):
         """
         move existing entry for <name> to location <args>
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param args: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush move'
@@ -3378,8 +3378,8 @@ class MonCommandApi(object):
     def osd_crush_remove(self, name: str, ancestor: str=None):
         """
         remove <name> from crush map (everywhere, or just at <ancestor>)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param ancestor: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param ancestor: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd crush remove'
@@ -3389,8 +3389,8 @@ class MonCommandApi(object):
     def osd_crush_rename_bucket(self, srcname: str, dstname: str):
         """
         rename bucket <srcname> to <dstname>
-        :param srcname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param dstname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param srcname: CephString goodchars=[A-Za-z0-9-_.] 
+        :param dstname: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rename-bucket'
@@ -3400,8 +3400,8 @@ class MonCommandApi(object):
     def osd_crush_reweight(self, name: str, weight: float):
         """
         change <name>'s weight to <weight> in crush map
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param weight: CephFloat ragne=0.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush reweight'
@@ -3421,8 +3421,8 @@ class MonCommandApi(object):
     def osd_crush_reweight_subtree(self, name: str, weight: float):
         """
         change all leaf items beneath <name> to <weight> in crush map
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param weight: CephFloat ragne=0.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush reweight-subtree'
@@ -3432,8 +3432,8 @@ class MonCommandApi(object):
     def osd_crush_rm(self, name: str, ancestor: str=None):
         """
         remove <name> from crush map (everywhere, or just at <ancestor>)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param ancestor: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param ancestor: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rm'
@@ -3443,7 +3443,7 @@ class MonCommandApi(object):
     def osd_crush_rm_device_class(self, ids: List[str]):
         """
         remove class of the osd(s) <id> [<id>...],or use <all|any> to remove all.
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rm-device-class'
@@ -3453,8 +3453,8 @@ class MonCommandApi(object):
     def osd_crush_rule_create_erasure(self, name: str, profile: str=None):
         """
         create crush rule <name> for erasure coded pool created with <profile> (default default)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param profile: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param profile: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rule create-erasure'
@@ -3464,10 +3464,10 @@ class MonCommandApi(object):
     def osd_crush_rule_create_replicated(self, name: str, root: str, type: str, class_: str=None):
         """
         create crush rule <name> for replicated pool to start from <root>, replicate across buckets of type <type>, use devices of type <class> (ssd or hdd)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param root: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param type: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param class_: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param root: CephString goodchars=[A-Za-z0-9-_.] 
+        :param type: CephString goodchars=[A-Za-z0-9-_.] 
+        :param class_: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rule create-replicated'
@@ -3477,10 +3477,10 @@ class MonCommandApi(object):
     def osd_crush_rule_create_simple(self, name: str, root: str, type: str, mode: str=None):
         """
         create crush rule <name> to start from <root>, replicate across buckets of type <type>, using a choose mode of <firstn|indep> (default firstn; indep best for erasure pools)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param root: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param type: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param mode: CephChoices who=None req=False {u'strings': u'firstn|indep'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param root: CephString goodchars=[A-Za-z0-9-_.] 
+        :param type: CephString goodchars=[A-Za-z0-9-_.] 
+        :param mode: CephChoices strings=firstn|indep 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rule create-simple'
@@ -3490,7 +3490,7 @@ class MonCommandApi(object):
     def osd_crush_rule_dump(self, name: str=None):
         """
         dump crush rule <name> (default all)
-        :param name: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=r flags=
         """
         prefix = 'osd crush rule dump'
@@ -3521,7 +3521,7 @@ class MonCommandApi(object):
     def osd_crush_rule_ls_by_class(self, class_: str):
         """
         list all crush rules that reference the same <class>
-        :param class_: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param class_: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=r flags=
         """
         prefix = 'osd crush rule ls-by-class'
@@ -3531,8 +3531,8 @@ class MonCommandApi(object):
     def osd_crush_rule_rename(self, srcname: str, dstname: str):
         """
         rename crush rule <srcname> to <dstname>
-        :param srcname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param dstname: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param srcname: CephString goodchars=[A-Za-z0-9-_.] 
+        :param dstname: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rule rename'
@@ -3542,7 +3542,7 @@ class MonCommandApi(object):
     def osd_crush_rule_rm(self, name: str):
         """
         remove crush rule <name>
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush rule rm'
@@ -3553,7 +3553,7 @@ class MonCommandApi(object):
     def osd_crush_set(self, prior_version: int=None):
         """
         set crush map from input file
-        :param prior_version: CephInt who=None req=False {}
+        :param prior_version: CephInt 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush set'
@@ -3564,9 +3564,9 @@ class MonCommandApi(object):
     def osd_crush_set(self, id_: str, weight: float, args: List[str]):
         """
         update crushmap position and weight for <name> to <weight> with location <args>
-        :param id_: CephOsdName who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
-        :param args: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param id_: CephOsdName 
+        :param weight: CephFloat ragne=0.0 
+        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush set'
@@ -3586,8 +3586,8 @@ class MonCommandApi(object):
     def osd_crush_set_device_class(self, class_: str, ids: List[str]):
         """
         set the <class> of the osd(s) <id> [<id>...],or use <all|any> to set all.
-        :param class_: CephString who=None req=True {}
-        :param ids: CephString who=None req=True {}
+        :param class_: CephString 
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush set-device-class'
@@ -3597,8 +3597,8 @@ class MonCommandApi(object):
     def osd_crush_set_tunable(self, tunable: str, value: int):
         """
         set crush tunable <tunable> to <value>
-        :param tunable: CephChoices who=None req=True {u'strings': u'straw_calc_version'}
-        :param value: CephInt who=None req=True {}
+        :param tunable: CephChoices strings=straw_calc_version 
+        :param value: CephInt 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush set-tunable'
@@ -3618,9 +3618,9 @@ class MonCommandApi(object):
     def osd_crush_swap_bucket(self, source: str, dest: str, yes_i_really_mean_it: bool=None):
         """
         swap existing bucket contents from (orphan) bucket <source> and <target>
-        :param source: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param dest: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param source: CephString goodchars=[A-Za-z0-9-_.] 
+        :param dest: CephString goodchars=[A-Za-z0-9-_.] 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush swap-bucket'
@@ -3630,7 +3630,7 @@ class MonCommandApi(object):
     def osd_crush_tree(self, shadow: str=None):
         """
         dump crush buckets and items in a tree view
-        :param shadow: CephChoices who=None req=False {u'strings': u'--show-shadow'}
+        :param shadow: CephChoices strings=--show-shadow 
         module=osd perm=r flags=
         """
         prefix = 'osd crush tree'
@@ -3640,7 +3640,7 @@ class MonCommandApi(object):
     def osd_crush_tunables(self, profile: str):
         """
         set crush tunables values to <profile>
-        :param profile: CephChoices who=None req=True {u'strings': u'legacy|argonaut|bobtail|firefly|hammer|jewel|optimal|default'}
+        :param profile: CephChoices strings=legacy|argonaut|bobtail|firefly|hammer|jewel|optimal|default 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush tunables'
@@ -3650,8 +3650,8 @@ class MonCommandApi(object):
     def osd_crush_unlink(self, name: str, ancestor: str=None):
         """
         unlink <name> from crush map (everywhere, or just at <ancestor>)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param ancestor: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param ancestor: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush unlink'
@@ -3661,8 +3661,8 @@ class MonCommandApi(object):
     def osd_crush_weight_set_create(self, pool: str, mode: str):
         """
         create a weight-set for a given pool
-        :param pool: CephPoolname who=None req=True {}
-        :param mode: CephChoices who=None req=True {u'strings': u'flat|positional'}
+        :param pool: CephPoolname 
+        :param mode: CephChoices strings=flat|positional 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush weight-set create'
@@ -3702,9 +3702,9 @@ class MonCommandApi(object):
     def osd_crush_weight_set_reweight(self, pool: str, item: str, weight: List[float]):
         """
         set weight for an item (bucket or osd) in a pool's weight-set
-        :param pool: CephPoolname who=None req=True {}
-        :param item: CephString who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
+        :param pool: CephPoolname 
+        :param item: CephString 
+        :param weight: CephFloat ragne=0.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush weight-set reweight'
@@ -3714,8 +3714,8 @@ class MonCommandApi(object):
     def osd_crush_weight_set_reweight_compat(self, item: str, weight: List[float]):
         """
         set weight for an item (bucket or osd) in the backward-compatible weight-set
-        :param item: CephString who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0'}
+        :param item: CephString 
+        :param weight: CephFloat ragne=0.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush weight-set reweight-compat'
@@ -3725,7 +3725,7 @@ class MonCommandApi(object):
     def osd_crush_weight_set_rm(self, pool: str):
         """
         remove the weight-set for a given pool
-        :param pool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
         module=osd perm=rw flags=
         """
         prefix = 'osd crush weight-set rm'
@@ -3745,7 +3745,7 @@ class MonCommandApi(object):
     def osd_deep_scrub(self, who: str):
         """
         initiate deep scrub on osd <who>, or use <all|any> to deep scrub all
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd deep-scrub'
@@ -3755,9 +3755,9 @@ class MonCommandApi(object):
     def osd_destroy(self, id_: str, force: bool=None, yes_i_really_mean_it: bool=None):
         """
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but removes cephx keys, config-key data and lockbox keys, rendering data permanently unreadable.
-        :param id_: CephOsdName who=None req=True {}
-        :param force: CephBool who=None req=False {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param force: CephBool 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd destroy'
@@ -3767,8 +3767,8 @@ class MonCommandApi(object):
     def osd_destroy_actual(self, id_: str, yes_i_really_mean_it: bool=None):
         """
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but removes cephx keys, config-key data and lockbox keys, rendering data permanently unreadable.
-        :param id_: CephOsdName who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=hidden
         """
         prefix = 'osd destroy-actual'
@@ -3778,9 +3778,9 @@ class MonCommandApi(object):
     def osd_df(self, output_method: str=None, filter_by: str=None, filter: str=None):
         """
         show OSD utilization
-        :param output_method: CephChoices who=None req=False {u'strings': u'plain|tree'}
-        :param filter_by: CephChoices who=None req=False {u'strings': u'class|name'}
-        :param filter: CephString who=None req=False {}
+        :param output_method: CephChoices strings=plain|tree 
+        :param filter_by: CephChoices strings=class|name 
+        :param filter: CephString 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd df'
@@ -3790,7 +3790,7 @@ class MonCommandApi(object):
     def osd_down(self, ids: List[str]):
         """
         set osd(s) <id> [<id>...] down, or use <any|all> to set all osds down
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd down'
@@ -3800,7 +3800,7 @@ class MonCommandApi(object):
     def osd_dump(self, epoch: int=None):
         """
         print summary of OSD map
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=osd perm=r flags=
         """
         prefix = 'osd dump'
@@ -3810,7 +3810,7 @@ class MonCommandApi(object):
     def osd_erasure_code_profile_get(self, name: str):
         """
         get erasure code profile <name>
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=r flags=
         """
         prefix = 'osd erasure-code-profile get'
@@ -3830,7 +3830,7 @@ class MonCommandApi(object):
     def osd_erasure_code_profile_rm(self, name: str):
         """
         remove erasure code profile <name>
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
         module=osd perm=rw flags=
         """
         prefix = 'osd erasure-code-profile rm'
@@ -3840,9 +3840,9 @@ class MonCommandApi(object):
     def osd_erasure_code_profile_set(self, name: str, profile: List[str]=None, force: bool=None):
         """
         create erasure code profile <name> with [<key[=value]> ...] pairs. Add a --force at the end to override an existing profile (VERY DANGEROUS)
-        :param name: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param profile: CephString who=None req=False {}
-        :param force: CephBool who=None req=False {}
+        :param name: CephString goodchars=[A-Za-z0-9-_.] 
+        :param profile: CephString 
+        :param force: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd erasure-code-profile set'
@@ -3852,7 +3852,7 @@ class MonCommandApi(object):
     def osd_find(self, id_: str):
         """
         find osd <id> in the CRUSH map and show its location
-        :param id_: CephOsdName who=None req=True {}
+        :param id_: CephOsdName 
         module=osd perm=r flags=
         """
         prefix = 'osd find'
@@ -3862,8 +3862,8 @@ class MonCommandApi(object):
     def osd_force_create_pg(self, pgid: str, yes_i_really_mean_it: bool=None):
         """
         force creation of pg <pgid>
-        :param pgid: CephPgid who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param pgid: CephPgid 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd force-create-pg'
@@ -3883,7 +3883,7 @@ class MonCommandApi(object):
     def osd_getcrushmap(self, epoch: int=None):
         """
         get CRUSH map
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=osd perm=r flags=
         """
         prefix = 'osd getcrushmap'
@@ -3893,7 +3893,7 @@ class MonCommandApi(object):
     def osd_getmap(self, epoch: int=None):
         """
         get OSD map
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=osd perm=r flags=
         """
         prefix = 'osd getmap'
@@ -3913,7 +3913,7 @@ class MonCommandApi(object):
     def osd_in(self, ids: List[str]):
         """
         set osd(s) <id> [<id>...] in, can use <any|all> to automatically set all previously out osds in
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd in'
@@ -3923,7 +3923,7 @@ class MonCommandApi(object):
     def osd_last_stat_seq(self, id_: str):
         """
         get the last pg stats sequence number reported for this osd
-        :param id_: CephOsdName who=None req=True {}
+        :param id_: CephOsdName 
         module=osd perm=r flags=
         """
         prefix = 'osd last-stat-seq'
@@ -3933,8 +3933,8 @@ class MonCommandApi(object):
     def osd_lost(self, id_: str, yes_i_really_mean_it: bool=None):
         """
         mark osd as permanently lost. THIS DESTROYS DATA IF NO MORE REPLICAS EXIST, BE CAREFUL
-        :param id_: CephOsdName who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd lost'
@@ -3944,7 +3944,7 @@ class MonCommandApi(object):
     def osd_ls(self, epoch: int=None):
         """
         show all OSD ids
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param epoch: CephInt ragne=0 
         module=osd perm=r flags=
         """
         prefix = 'osd ls'
@@ -3954,8 +3954,8 @@ class MonCommandApi(object):
     def osd_ls_tree(self, name: str, epoch: int=None):
         """
         show OSD ids under bucket <name> in the CRUSH map
-        :param name: CephString who=None req=True {}
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
+        :param name: CephString 
+        :param epoch: CephInt ragne=0 
         module=osd perm=r flags=
         """
         prefix = 'osd ls-tree'
@@ -3976,9 +3976,9 @@ class MonCommandApi(object):
     def osd_map(self, pool: str, object: str, nspace: str=None):
         """
         find pg for <object> in <pool> with [namespace]
-        :param pool: CephPoolname who=None req=True {}
-        :param object: CephObjectname who=None req=True {}
-        :param nspace: CephString who=None req=False {}
+        :param pool: CephPoolname 
+        :param object: CephObjectname 
+        :param nspace: CephString 
         module=osd perm=r flags=
         """
         prefix = 'osd map'
@@ -3988,7 +3988,7 @@ class MonCommandApi(object):
     def osd_metadata(self, id_: str=None):
         """
         fetch metadata for osd {id} (default all)
-        :param id_: CephOsdName who=None req=False {}
+        :param id_: CephOsdName 
         module=osd perm=r flags=
         """
         prefix = 'osd metadata'
@@ -3998,8 +3998,8 @@ class MonCommandApi(object):
     def osd_new(self, uuid: str, id_: str=None):
         """
         Create a new OSD. If supplied, the `id` to be replaced needs to exist and have been previously destroyed. Reads secrets from JSON file via `-i <file>` (see man page).
-        :param uuid: CephUUID who=None req=True {}
-        :param id_: CephOsdName who=None req=False {}
+        :param uuid: CephUUID 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=
         """
         prefix = 'osd new'
@@ -4019,7 +4019,7 @@ class MonCommandApi(object):
     def osd_ok_to_stop(self, ids: List[str]):
         """
         check whether osd(s) can be safely stopped without reducing immediate data availability
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd ok-to-stop'
@@ -4029,7 +4029,7 @@ class MonCommandApi(object):
     def osd_out(self, ids: List[str]):
         """
         set osd(s) <id> [<id>...] out, or use <any|all> to set all osds out
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd out'
@@ -4059,7 +4059,7 @@ class MonCommandApi(object):
     def osd_perf_counters_get(self, query_id: int):
         """
         fetch osd perf counters
-        :param query_id: CephInt who=None req=True {}
+        :param query_id: CephInt 
         module=mgr perm=w flags=mgr
         """
         prefix = 'osd perf counters get'
@@ -4069,7 +4069,7 @@ class MonCommandApi(object):
     def osd_perf_query_add(self, query: str):
         """
         add osd perf query
-        :param query: CephChoices who=None req=True {u'strings': u'client_id|rbd_image_id|all_subkeys'}
+        :param query: CephChoices strings=client_id|rbd_image_id|all_subkeys 
         module=mgr perm=w flags=mgr
         """
         prefix = 'osd perf query add'
@@ -4079,7 +4079,7 @@ class MonCommandApi(object):
     def osd_perf_query_remove(self, query_id: int):
         """
         remove osd perf query
-        :param query_id: CephInt who=None req=True {}
+        :param query_id: CephInt 
         module=mgr perm=w flags=mgr
         """
         prefix = 'osd perf query remove'
@@ -4089,8 +4089,8 @@ class MonCommandApi(object):
     def osd_pg_temp(self, pgid: str, id_: List[str]=None):
         """
         set pg_temp mapping pgid:[<id> [<id>...]] (developers only)
-        :param pgid: CephPgid who=None req=True {}
-        :param id_: CephOsdName who=None req=False {}
+        :param pgid: CephPgid 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=
         """
         prefix = 'osd pg-temp'
@@ -4100,8 +4100,8 @@ class MonCommandApi(object):
     def osd_pg_upmap(self, pgid: str, id_: List[str]):
         """
         set pg_upmap mapping <pgid>:[<id> [<id>...]] (developers only)
-        :param pgid: CephPgid who=None req=True {}
-        :param id_: CephOsdName who=None req=True {}
+        :param pgid: CephPgid 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=
         """
         prefix = 'osd pg-upmap'
@@ -4111,8 +4111,8 @@ class MonCommandApi(object):
     def osd_pg_upmap_items(self, pgid: str, id_: List[str]):
         """
         set pg_upmap_items mapping <pgid>:{<id> to <id>, [...]} (developers only)
-        :param pgid: CephPgid who=None req=True {}
-        :param id_: CephOsdName who=None req=True {}
+        :param pgid: CephPgid 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=
         """
         prefix = 'osd pg-upmap-items'
@@ -4122,9 +4122,9 @@ class MonCommandApi(object):
     def osd_pool_application_disable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
         """
         disables use of an application <app> on pool <poolname>
-        :param pool: CephPoolname who=None req=True {}
-        :param app: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param app: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool application disable'
@@ -4134,9 +4134,9 @@ class MonCommandApi(object):
     def osd_pool_application_enable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
         """
         enable use of an application <app> [cephfs,rbd,rgw] on pool <poolname>
-        :param pool: CephPoolname who=None req=True {}
-        :param app: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param app: CephString goodchars=[A-Za-z0-9-_.] 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool application enable'
@@ -4146,9 +4146,9 @@ class MonCommandApi(object):
     def osd_pool_application_get(self, pool: str, app: str=None, key: str=None):
         """
         get value of key <key> of application <app> on pool <poolname>
-        :param pool: CephPoolname who=None req=True {}
-        :param app: CephString who=None req=False {}
-        :param key: CephString who=None req=False {}
+        :param pool: CephPoolname 
+        :param app: CephString 
+        :param key: CephString 
         module=osd perm=r flags=
         """
         prefix = 'osd pool application get'
@@ -4158,9 +4158,9 @@ class MonCommandApi(object):
     def osd_pool_application_rm(self, pool: str, app: str, key: str):
         """
         removes application <app> metadata key <key> on pool <poolname>
-        :param pool: CephPoolname who=None req=True {}
-        :param app: CephString who=None req=True {}
-        :param key: CephString who=None req=True {}
+        :param pool: CephPoolname 
+        :param app: CephString 
+        :param key: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool application rm'
@@ -4170,10 +4170,10 @@ class MonCommandApi(object):
     def osd_pool_application_set(self, pool: str, app: str, key: str, value: str):
         """
         sets application <app> metadata key <key> to <value> on pool <poolname>
-        :param pool: CephPoolname who=None req=True {}
-        :param app: CephString who=None req=True {}
-        :param key: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param value: CephString who=None req=True {u'goodchars': u'[A-Za-z0-9-_.=]'}
+        :param pool: CephPoolname 
+        :param app: CephString 
+        :param key: CephString goodchars=[A-Za-z0-9-_.] 
+        :param value: CephString goodchars=[A-Za-z0-9-_.=] 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool application set'
@@ -4193,7 +4193,7 @@ class MonCommandApi(object):
     def osd_pool_cancel_force_backfill(self, who: List[str]):
         """
         restore normal recovery priority of specified pool <who>
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool cancel-force-backfill'
@@ -4203,7 +4203,7 @@ class MonCommandApi(object):
     def osd_pool_cancel_force_recovery(self, who: List[str]):
         """
         restore normal recovery priority of specified pool <who>
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool cancel-force-recovery'
@@ -4213,17 +4213,17 @@ class MonCommandApi(object):
     def osd_pool_create(self, pool: str, pg_num: int, pgp_num: int=None, pool_type: str=None, erasure_code_profile: str=None, rule: str=None, expected_num_objects: int=None, size: int=None, pg_num_min: int=None, target_size_bytes: int=None, target_size_ratio: float=None):
         """
         create pool
-        :param pool: CephPoolname who=None req=True {}
-        :param pg_num: CephInt who=None req=True {u'range': u'0'}
-        :param pgp_num: CephInt who=None req=False {u'range': u'0'}
-        :param pool_type: CephChoices who=None req=False {u'strings': u'replicated|erasure'}
-        :param erasure_code_profile: CephString who=None req=False {u'goodchars': u'[A-Za-z0-9-_.]'}
-        :param rule: CephString who=None req=False {}
-        :param expected_num_objects: CephInt who=None req=False {}
-        :param size: CephInt who=None req=False {}
-        :param pg_num_min: CephInt who=None req=False {u'range': u'0'}
-        :param target_size_bytes: CephInt who=None req=False {u'range': u'0'}
-        :param target_size_ratio: CephFloat who=None req=False {u'range': u'0|1'}
+        :param pool: CephPoolname 
+        :param pg_num: CephInt ragne=0 
+        :param pgp_num: CephInt ragne=0 
+        :param pool_type: CephChoices strings=replicated|erasure 
+        :param erasure_code_profile: CephString goodchars=[A-Za-z0-9-_.] 
+        :param rule: CephString 
+        :param expected_num_objects: CephInt 
+        :param size: CephInt 
+        :param pg_num_min: CephInt ragne=0 
+        :param target_size_bytes: CephInt ragne=0 
+        :param target_size_ratio: CephFloat ragne=0|1 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool create'
@@ -4233,7 +4233,7 @@ class MonCommandApi(object):
     def osd_pool_deep_scrub(self, who: List[str]):
         """
         initiate deep-scrub on pool <who>
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool deep-scrub'
@@ -4244,10 +4244,10 @@ class MonCommandApi(object):
     def osd_pool_delete(self, pool: str, pool2: str=None, yes_i_really_really_mean_it: bool=None, yes_i_really_really_mean_it_not_faking: bool=None):
         """
         delete pool
-        :param pool: CephPoolname who=None req=True {}
-        :param pool2: CephPoolname who=None req=False {}
-        :param yes_i_really_really_mean_it: CephBool who=None req=False {}
-        :param yes_i_really_really_mean_it_not_faking: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param pool2: CephPoolname 
+        :param yes_i_really_really_mean_it: CephBool 
+        :param yes_i_really_really_mean_it_not_faking: CephBool 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd pool delete'
@@ -4257,7 +4257,7 @@ class MonCommandApi(object):
     def osd_pool_force_backfill(self, who: List[str]):
         """
         force backfill of specified pool <who> first
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool force-backfill'
@@ -4267,7 +4267,7 @@ class MonCommandApi(object):
     def osd_pool_force_recovery(self, who: List[str]):
         """
         force recovery of specified pool <who> first
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool force-recovery'
@@ -4277,8 +4277,8 @@ class MonCommandApi(object):
     def osd_pool_get(self, pool: str, var: str):
         """
         get pool parameter <var>
-        :param pool: CephPoolname who=None req=True {}
-        :param var: CephChoices who=None req=True {u'strings': u'size|min_size|pg_num|pgp_num|crush_rule|hashpspool|nodelete|nopgchange|nosizechange|write_fadvise_dontneed|noscrub|nodeep-scrub|hit_set_type|hit_set_period|hit_set_count|hit_set_fpp|use_gmt_hitset|target_max_objects|target_max_bytes|cache_target_dirty_ratio|cache_target_dirty_high_ratio|cache_target_full_ratio|cache_min_flush_age|cache_min_evict_age|erasure_code_profile|min_read_recency_for_promote|all|min_write_recency_for_promote|fast_read|hit_set_grade_decay_rate|hit_set_search_last_n|scrub_min_interval|scrub_max_interval|deep_scrub_interval|recovery_priority|recovery_op_priority|scrub_priority|compression_mode|compression_algorithm|compression_required_ratio|compression_max_blob_size|compression_min_blob_size|csum_type|csum_min_block|csum_max_block|allow_ec_overwrites|fingerprint_algorithm|pg_autoscale_mode|pg_autoscale_bias|pg_num_min|target_size_bytes|target_size_ratio'}
+        :param pool: CephPoolname 
+        :param var: CephChoices strings=size|min_size|pg_num|pgp_num|crush_rule|hashpspool|nodelete|nopgchange|nosizechange|write_fadvise_dontneed|noscrub|nodeep-scrub|hit_set_type|hit_set_period|hit_set_count|hit_set_fpp|use_gmt_hitset|target_max_objects|target_max_bytes|cache_target_dirty_ratio|cache_target_dirty_high_ratio|cache_target_full_ratio|cache_min_flush_age|cache_min_evict_age|erasure_code_profile|min_read_recency_for_promote|all|min_write_recency_for_promote|fast_read|hit_set_grade_decay_rate|hit_set_search_last_n|scrub_min_interval|scrub_max_interval|deep_scrub_interval|recovery_priority|recovery_op_priority|scrub_priority|compression_mode|compression_algorithm|compression_required_ratio|compression_max_blob_size|compression_min_blob_size|csum_type|csum_min_block|csum_max_block|allow_ec_overwrites|fingerprint_algorithm|pg_autoscale_mode|pg_autoscale_bias|pg_num_min|target_size_bytes|target_size_ratio 
         module=osd perm=r flags=
         """
         prefix = 'osd pool get'
@@ -4288,7 +4288,7 @@ class MonCommandApi(object):
     def osd_pool_get_quota(self, pool: str):
         """
         obtain object or byte limits for pool
-        :param pool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
         module=osd perm=r flags=
         """
         prefix = 'osd pool get-quota'
@@ -4298,7 +4298,7 @@ class MonCommandApi(object):
     def osd_pool_ls(self, detail: str=None):
         """
         list pools
-        :param detail: CephChoices who=None req=False {u'strings': u'detail'}
+        :param detail: CephChoices strings=detail 
         module=osd perm=r flags=
         """
         prefix = 'osd pool ls'
@@ -4308,8 +4308,8 @@ class MonCommandApi(object):
     def osd_pool_mksnap(self, pool: str, snap: str):
         """
         make snapshot <snap> in <pool>
-        :param pool: CephPoolname who=None req=True {}
-        :param snap: CephString who=None req=True {}
+        :param pool: CephPoolname 
+        :param snap: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool mksnap'
@@ -4319,8 +4319,8 @@ class MonCommandApi(object):
     def osd_pool_rename(self, srcpool: str, destpool: str):
         """
         rename <srcpool> to <destpool>
-        :param srcpool: CephPoolname who=None req=True {}
-        :param destpool: CephPoolname who=None req=True {}
+        :param srcpool: CephPoolname 
+        :param destpool: CephPoolname 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool rename'
@@ -4330,7 +4330,7 @@ class MonCommandApi(object):
     def osd_pool_repair(self, who: List[str]):
         """
         initiate repair on pool <who>
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool repair'
@@ -4340,10 +4340,10 @@ class MonCommandApi(object):
     def osd_pool_rm(self, pool: str, pool2: str=None, yes_i_really_really_mean_it: bool=None, yes_i_really_really_mean_it_not_faking: bool=None):
         """
         remove pool
-        :param pool: CephPoolname who=None req=True {}
-        :param pool2: CephPoolname who=None req=False {}
-        :param yes_i_really_really_mean_it: CephBool who=None req=False {}
-        :param yes_i_really_really_mean_it_not_faking: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param pool2: CephPoolname 
+        :param yes_i_really_really_mean_it: CephBool 
+        :param yes_i_really_really_mean_it_not_faking: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool rm'
@@ -4353,8 +4353,8 @@ class MonCommandApi(object):
     def osd_pool_rmsnap(self, pool: str, snap: str):
         """
         remove snapshot <snap> from <pool>
-        :param pool: CephPoolname who=None req=True {}
-        :param snap: CephString who=None req=True {}
+        :param pool: CephPoolname 
+        :param snap: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool rmsnap'
@@ -4364,7 +4364,7 @@ class MonCommandApi(object):
     def osd_pool_scrub(self, who: List[str]):
         """
         initiate scrub on pool <who>
-        :param who: CephPoolname who=None req=True {}
+        :param who: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd pool scrub'
@@ -4374,10 +4374,10 @@ class MonCommandApi(object):
     def osd_pool_set(self, pool: str, var: str, val: str, yes_i_really_mean_it: bool=None):
         """
         set pool parameter <var> to <val>
-        :param pool: CephPoolname who=None req=True {}
-        :param var: CephChoices who=None req=True {u'strings': u'size|min_size|pg_num|pgp_num|pgp_num_actual|crush_rule|hashpspool|nodelete|nopgchange|nosizechange|write_fadvise_dontneed|noscrub|nodeep-scrub|hit_set_type|hit_set_period|hit_set_count|hit_set_fpp|use_gmt_hitset|target_max_bytes|target_max_objects|cache_target_dirty_ratio|cache_target_dirty_high_ratio|cache_target_full_ratio|cache_min_flush_age|cache_min_evict_age|min_read_recency_for_promote|min_write_recency_for_promote|fast_read|hit_set_grade_decay_rate|hit_set_search_last_n|scrub_min_interval|scrub_max_interval|deep_scrub_interval|recovery_priority|recovery_op_priority|scrub_priority|compression_mode|compression_algorithm|compression_required_ratio|compression_max_blob_size|compression_min_blob_size|csum_type|csum_min_block|csum_max_block|allow_ec_overwrites|fingerprint_algorithm|pg_autoscale_mode|pg_autoscale_bias|pg_num_min|target_size_bytes|target_size_ratio'}
-        :param val: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param var: CephChoices strings=size|min_size|pg_num|pgp_num|pgp_num_actual|crush_rule|hashpspool|nodelete|nopgchange|nosizechange|write_fadvise_dontneed|noscrub|nodeep-scrub|hit_set_type|hit_set_period|hit_set_count|hit_set_fpp|use_gmt_hitset|target_max_bytes|target_max_objects|cache_target_dirty_ratio|cache_target_dirty_high_ratio|cache_target_full_ratio|cache_min_flush_age|cache_min_evict_age|min_read_recency_for_promote|min_write_recency_for_promote|fast_read|hit_set_grade_decay_rate|hit_set_search_last_n|scrub_min_interval|scrub_max_interval|deep_scrub_interval|recovery_priority|recovery_op_priority|scrub_priority|compression_mode|compression_algorithm|compression_required_ratio|compression_max_blob_size|compression_min_blob_size|csum_type|csum_min_block|csum_max_block|allow_ec_overwrites|fingerprint_algorithm|pg_autoscale_mode|pg_autoscale_bias|pg_num_min|target_size_bytes|target_size_ratio 
+        :param val: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool set'
@@ -4387,9 +4387,9 @@ class MonCommandApi(object):
     def osd_pool_set_quota(self, pool: str, field: str, val: str):
         """
         set object or byte limit on pool
-        :param pool: CephPoolname who=None req=True {}
-        :param field: CephChoices who=None req=True {u'strings': u'max_objects|max_bytes'}
-        :param val: CephString who=None req=True {}
+        :param pool: CephPoolname 
+        :param field: CephChoices strings=max_objects|max_bytes 
+        :param val: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd pool set-quota'
@@ -4399,7 +4399,7 @@ class MonCommandApi(object):
     def osd_pool_stats(self, pool_name: str=None):
         """
         obtain stats from all pools, or from specified pool
-        :param pool_name: CephPoolname who=None req=False {}
+        :param pool_name: CephPoolname 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd pool stats'
@@ -4409,8 +4409,8 @@ class MonCommandApi(object):
     def osd_primary_affinity(self, id_: str, weight: float):
         """
         adjust osd primary-affinity from 0.0 <= <weight> <= 1.0
-        :param id_: CephOsdName who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0|1.0'}
+        :param id_: CephOsdName 
+        :param weight: CephFloat ragne=0.0|1.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd primary-affinity'
@@ -4420,8 +4420,8 @@ class MonCommandApi(object):
     def osd_primary_temp(self, pgid: str, id_: str):
         """
         set primary_temp mapping pgid:<id>|-1 (developers only)
-        :param pgid: CephPgid who=None req=True {}
-        :param id_: CephOsdName who=None req=True {}
+        :param pgid: CephPgid 
+        :param id_: CephOsdName 
         module=osd perm=rw flags=
         """
         prefix = 'osd primary-temp'
@@ -4431,9 +4431,9 @@ class MonCommandApi(object):
     def osd_purge(self, id_: str, force: bool=None, yes_i_really_mean_it: bool=None):
         """
         purge all osd data from the monitors including the OSD id and CRUSH position
-        :param id_: CephOsdName who=None req=True {}
-        :param force: CephBool who=None req=False {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param force: CephBool 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd purge'
@@ -4443,8 +4443,8 @@ class MonCommandApi(object):
     def osd_purge_actual(self, id_: str, yes_i_really_mean_it: bool=None):
         """
         purge all osd data from the monitors. Combines `osd destroy`, `osd rm`, and `osd crush rm`.
-        :param id_: CephOsdName who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=hidden
         """
         prefix = 'osd purge-actual'
@@ -4454,8 +4454,8 @@ class MonCommandApi(object):
     def osd_purge_new(self, id_: str, yes_i_really_mean_it: bool=None):
         """
         purge all traces of an OSD that was partially created but never started
-        :param id_: CephOsdName who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param id_: CephOsdName 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd purge-new'
@@ -4465,7 +4465,7 @@ class MonCommandApi(object):
     def osd_repair(self, who: str):
         """
         initiate repair on osd <who>, or use <all|any> to repair all
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd repair'
@@ -4475,8 +4475,8 @@ class MonCommandApi(object):
     def osd_require_osd_release(self, release: str, yes_i_really_mean_it: bool=None):
         """
         set the minimum allowed OSD release to participate in the cluster
-        :param release: CephChoices who=None req=True {u'strings': u'luminous|mimic|nautilus|octopus'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param release: CephChoices strings=luminous|mimic|nautilus|octopus 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd require-osd-release'
@@ -4486,8 +4486,8 @@ class MonCommandApi(object):
     def osd_reweight(self, id_: str, weight: float):
         """
         reweight osd to 0.0 < <weight> < 1.0
-        :param id_: CephOsdName who=None req=True {}
-        :param weight: CephFloat who=None req=True {u'range': u'0.0|1.0'}
+        :param id_: CephOsdName 
+        :param weight: CephFloat ragne=0.0|1.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd reweight'
@@ -4497,10 +4497,10 @@ class MonCommandApi(object):
     def osd_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds: int=None, pools: List[str]=None):
         """
         reweight OSDs by PG distribution [overload-percentage-for-consideration, default 120]
-        :param oload: CephInt who=None req=False {}
-        :param max_change: CephFloat who=None req=False {}
-        :param max_osds: CephInt who=None req=False {}
-        :param pools: CephPoolname who=None req=False {}
+        :param oload: CephInt 
+        :param max_change: CephFloat 
+        :param max_osds: CephInt 
+        :param pools: CephPoolname 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd reweight-by-pg'
@@ -4510,10 +4510,10 @@ class MonCommandApi(object):
     def osd_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds: int=None, no_increasing: str=None):
         """
         reweight OSDs by utilization [overload-percentage-for-consideration, default 120]
-        :param oload: CephInt who=None req=False {}
-        :param max_change: CephFloat who=None req=False {}
-        :param max_osds: CephInt who=None req=False {}
-        :param no_increasing: CephChoices who=None req=False {u'strings': u'--no-increasing'}
+        :param oload: CephInt 
+        :param max_change: CephFloat 
+        :param max_osds: CephInt 
+        :param no_increasing: CephChoices strings=--no-increasing 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd reweight-by-utilization'
@@ -4523,7 +4523,7 @@ class MonCommandApi(object):
     def osd_reweightn(self, weights: str):
         """
         reweight osds with {<id>: <weight>,...})
-        :param weights: CephString who=None req=True {}
+        :param weights: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd reweightn'
@@ -4534,7 +4534,7 @@ class MonCommandApi(object):
     def osd_rm(self, ids: List[str]):
         """
         remove osd(s) <id> [<id>...], or use <any|all> to remove all osds
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd rm'
@@ -4544,7 +4544,7 @@ class MonCommandApi(object):
     def osd_rm_nodown(self, ids: List[str]):
         """
         allow osd(s) <id> [<id>...] to be marked down (if they are currently marked as nodown), can use <all|any> to automatically filter out all nodown osds
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-nodown'
@@ -4554,7 +4554,7 @@ class MonCommandApi(object):
     def osd_rm_noin(self, ids: List[str]):
         """
         allow osd(s) <id> [<id>...] to be marked in (if they are currently marked as noin), can use <all|any> to automatically filter out all noin osds
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-noin'
@@ -4564,7 +4564,7 @@ class MonCommandApi(object):
     def osd_rm_noout(self, ids: List[str]):
         """
         allow osd(s) <id> [<id>...] to be marked out (if they are currently marked as noout), can use <all|any> to automatically filter out all noout osds
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-noout'
@@ -4574,7 +4574,7 @@ class MonCommandApi(object):
     def osd_rm_noup(self, ids: List[str]):
         """
         allow osd(s) <id> [<id>...] to be marked up (if they are currently marked as noup), can use <all|any> to automatically filter out all noup osds
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-noup'
@@ -4584,7 +4584,7 @@ class MonCommandApi(object):
     def osd_rm_pg_upmap(self, pgid: str):
         """
         clear pg_upmap mapping for <pgid> (developers only)
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-pg-upmap'
@@ -4594,7 +4594,7 @@ class MonCommandApi(object):
     def osd_rm_pg_upmap_items(self, pgid: str):
         """
         clear pg_upmap_items mapping for <pgid> (developers only)
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=osd perm=rw flags=
         """
         prefix = 'osd rm-pg-upmap-items'
@@ -4604,7 +4604,7 @@ class MonCommandApi(object):
     def osd_safe_to_destroy(self, ids: List[str]):
         """
         check whether osd(s) can be safely destroyed without reducing data durability
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd safe-to-destroy'
@@ -4614,7 +4614,7 @@ class MonCommandApi(object):
     def osd_scrub(self, who: str):
         """
         initiate scrub on osd <who>, or use <all|any> to scrub all
-        :param who: CephString who=None req=True {}
+        :param who: CephString 
         module=osd perm=rw flags=mgr
         """
         prefix = 'osd scrub'
@@ -4624,8 +4624,8 @@ class MonCommandApi(object):
     def osd_set(self, key: str, yes_i_really_mean_it: bool=None):
         """
         set <key>
-        :param key: CephChoices who=None req=True {u'strings': u'full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim|pglog_hardlimit'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param key: CephChoices strings=full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim|pglog_hardlimit 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd set'
@@ -4635,7 +4635,7 @@ class MonCommandApi(object):
     def osd_set_backfillfull_ratio(self, ratio: float):
         """
         set usage ratio at which OSDs are marked too full to backfill
-        :param ratio: CephFloat who=None req=True {u'range': u'0.0|1.0'}
+        :param ratio: CephFloat ragne=0.0|1.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd set-backfillfull-ratio'
@@ -4645,7 +4645,7 @@ class MonCommandApi(object):
     def osd_set_full_ratio(self, ratio: float):
         """
         set usage ratio at which OSDs are marked full
-        :param ratio: CephFloat who=None req=True {u'range': u'0.0|1.0'}
+        :param ratio: CephFloat ragne=0.0|1.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd set-full-ratio'
@@ -4655,7 +4655,7 @@ class MonCommandApi(object):
     def osd_set_nearfull_ratio(self, ratio: float):
         """
         set usage ratio at which OSDs are marked near-full
-        :param ratio: CephFloat who=None req=True {u'range': u'0.0|1.0'}
+        :param ratio: CephFloat ragne=0.0|1.0 
         module=osd perm=rw flags=
         """
         prefix = 'osd set-nearfull-ratio'
@@ -4665,8 +4665,8 @@ class MonCommandApi(object):
     def osd_set_require_min_compat_client(self, version: str, yes_i_really_mean_it: bool=None):
         """
         set the minimum client version we will maintain compatibility with
-        :param version: CephString who=None req=True {}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param version: CephString 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd set-require-min-compat-client'
@@ -4676,7 +4676,7 @@ class MonCommandApi(object):
     def osd_setcrushmap(self, prior_version: int=None):
         """
         set crush map from input file
-        :param prior_version: CephInt who=None req=False {}
+        :param prior_version: CephInt 
         module=osd perm=rw flags=
         """
         prefix = 'osd setcrushmap'
@@ -4686,7 +4686,7 @@ class MonCommandApi(object):
     def osd_setmaxosd(self, newmax: int):
         """
         set new maximum osd value
-        :param newmax: CephInt who=None req=True {u'range': u'0'}
+        :param newmax: CephInt ragne=0 
         module=osd perm=rw flags=
         """
         prefix = 'osd setmaxosd'
@@ -4706,7 +4706,7 @@ class MonCommandApi(object):
     def osd_status(self, bucket: str=None):
         """
         Show the status of OSDs within a bucket, or all
-        :param bucket: CephString who=None req=False {}
+        :param bucket: CephString 
         module=mgr perm=r flags=mgr
         """
         prefix = 'osd status'
@@ -4716,7 +4716,7 @@ class MonCommandApi(object):
     def osd_stop(self, ids: List[str]):
         """
         stop the corresponding osd daemons and mark them as down
-        :param ids: CephString who=None req=True {}
+        :param ids: CephString 
         module=osd perm=rw flags=
         """
         prefix = 'osd stop'
@@ -4726,10 +4726,10 @@ class MonCommandApi(object):
     def osd_test_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds: int=None, pools: List[str]=None):
         """
         dry run of reweight OSDs by PG distribution [overload-percentage-for-consideration, default 120]
-        :param oload: CephInt who=None req=False {}
-        :param max_change: CephFloat who=None req=False {}
-        :param max_osds: CephInt who=None req=False {}
-        :param pools: CephPoolname who=None req=False {}
+        :param oload: CephInt 
+        :param max_change: CephFloat 
+        :param max_osds: CephInt 
+        :param pools: CephPoolname 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd test-reweight-by-pg'
@@ -4739,10 +4739,10 @@ class MonCommandApi(object):
     def osd_test_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds: int=None, no_increasing: bool=None):
         """
         dry run of reweight OSDs by utilization [overload-percentage-for-consideration, default 120]
-        :param oload: CephInt who=None req=False {}
-        :param max_change: CephFloat who=None req=False {}
-        :param max_osds: CephInt who=None req=False {}
-        :param no_increasing: CephBool who=None req=False {}
+        :param oload: CephInt 
+        :param max_change: CephFloat 
+        :param max_osds: CephInt 
+        :param no_increasing: CephBool 
         module=osd perm=r flags=mgr
         """
         prefix = 'osd test-reweight-by-utilization'
@@ -4752,9 +4752,9 @@ class MonCommandApi(object):
     def osd_tier_add(self, pool: str, tierpool: str, force_nonempty: str=None):
         """
         add the tier <tierpool> (the second one) to base pool <pool> (the first one)
-        :param pool: CephPoolname who=None req=True {}
-        :param tierpool: CephPoolname who=None req=True {}
-        :param force_nonempty: CephChoices who=None req=False {u'strings': u'--force-nonempty'}
+        :param pool: CephPoolname 
+        :param tierpool: CephPoolname 
+        :param force_nonempty: CephChoices strings=--force-nonempty 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier add'
@@ -4764,9 +4764,9 @@ class MonCommandApi(object):
     def osd_tier_add_cache(self, pool: str, tierpool: str, size: int):
         """
         add a cache <tierpool> (the second one) of size <size> to existing pool <pool> (the first one)
-        :param pool: CephPoolname who=None req=True {}
-        :param tierpool: CephPoolname who=None req=True {}
-        :param size: CephInt who=None req=True {u'range': u'0'}
+        :param pool: CephPoolname 
+        :param tierpool: CephPoolname 
+        :param size: CephInt ragne=0 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier add-cache'
@@ -4776,9 +4776,9 @@ class MonCommandApi(object):
     def osd_tier_cache_mode(self, pool: str, mode: str, yes_i_really_mean_it: bool=None):
         """
         specify the caching mode for cache tier <pool>
-        :param pool: CephPoolname who=None req=True {}
-        :param mode: CephChoices who=None req=True {u'strings': u'none|writeback|forward|readonly|readforward|proxy|readproxy'}
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
+        :param pool: CephPoolname 
+        :param mode: CephChoices strings=none|writeback|forward|readonly|readforward|proxy|readproxy 
+        :param yes_i_really_mean_it: CephBool 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier cache-mode'
@@ -4789,8 +4789,8 @@ class MonCommandApi(object):
     def osd_tier_remove(self, pool: str, tierpool: str):
         """
         remove the tier <tierpool> (the second one) from base pool <pool> (the first one)
-        :param pool: CephPoolname who=None req=True {}
-        :param tierpool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
+        :param tierpool: CephPoolname 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd tier remove'
@@ -4801,7 +4801,7 @@ class MonCommandApi(object):
     def osd_tier_remove_overlay(self, pool: str):
         """
         remove the overlay pool for base pool <pool>
-        :param pool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
         module=osd perm=rw flags=deprecated
         """
         prefix = 'osd tier remove-overlay'
@@ -4811,8 +4811,8 @@ class MonCommandApi(object):
     def osd_tier_rm(self, pool: str, tierpool: str):
         """
         remove the tier <tierpool> (the second one) from base pool <pool> (the first one)
-        :param pool: CephPoolname who=None req=True {}
-        :param tierpool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
+        :param tierpool: CephPoolname 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier rm'
@@ -4822,7 +4822,7 @@ class MonCommandApi(object):
     def osd_tier_rm_overlay(self, pool: str):
         """
         remove the overlay pool for base pool <pool>
-        :param pool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier rm-overlay'
@@ -4832,8 +4832,8 @@ class MonCommandApi(object):
     def osd_tier_set_overlay(self, pool: str, overlaypool: str):
         """
         set the overlay pool for base pool <pool> to be <overlaypool>
-        :param pool: CephPoolname who=None req=True {}
-        :param overlaypool: CephPoolname who=None req=True {}
+        :param pool: CephPoolname 
+        :param overlaypool: CephPoolname 
         module=osd perm=rw flags=
         """
         prefix = 'osd tier set-overlay'
@@ -4843,8 +4843,8 @@ class MonCommandApi(object):
     def osd_tree(self, epoch: int=None, states: List[str]=None):
         """
         print OSD tree
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
-        :param states: CephChoices who=None req=False {u'strings': u'up|down|in|out|destroyed'}
+        :param epoch: CephInt ragne=0 
+        :param states: CephChoices strings=up|down|in|out|destroyed 
         module=osd perm=r flags=
         """
         prefix = 'osd tree'
@@ -4854,9 +4854,9 @@ class MonCommandApi(object):
     def osd_tree_from(self, bucket: str, epoch: int=None, states: List[str]=None):
         """
         print OSD tree in bucket
-        :param bucket: CephString who=None req=True {}
-        :param epoch: CephInt who=None req=False {u'range': u'0'}
-        :param states: CephChoices who=None req=False {u'strings': u'up|down|in|out|destroyed'}
+        :param bucket: CephString 
+        :param epoch: CephInt ragne=0 
+        :param states: CephChoices strings=up|down|in|out|destroyed 
         module=osd perm=r flags=
         """
         prefix = 'osd tree-from'
@@ -4876,7 +4876,7 @@ class MonCommandApi(object):
     def osd_unset(self, key: str):
         """
         unset <key>
-        :param key: CephChoices who=None req=True {u'strings': u'full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim'}
+        :param key: CephChoices strings=full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim 
         module=osd perm=rw flags=
         """
         prefix = 'osd unset'
@@ -4906,7 +4906,7 @@ class MonCommandApi(object):
     def pg_cancel_force_backfill(self, pgid: List[str]):
         """
         restore normal backfill priority of <pgid>
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg cancel-force-backfill'
@@ -4916,7 +4916,7 @@ class MonCommandApi(object):
     def pg_cancel_force_recovery(self, pgid: List[str]):
         """
         restore normal recovery priority of <pgid>
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg cancel-force-recovery'
@@ -4926,7 +4926,7 @@ class MonCommandApi(object):
     def pg_debug(self, debugop: str):
         """
         show debug info about pgs
-        :param debugop: CephChoices who=None req=True {u'strings': u'unfound_objects_exist|degraded_pgs_exist'}
+        :param debugop: CephChoices strings=unfound_objects_exist|degraded_pgs_exist 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg debug'
@@ -4936,7 +4936,7 @@ class MonCommandApi(object):
     def pg_deep_scrub(self, pgid: str):
         """
         start deep-scrub on <pgid>
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg deep-scrub'
@@ -4946,7 +4946,7 @@ class MonCommandApi(object):
     def pg_dump(self, dumpcontents: List[str]=None):
         """
         show human-readable versions of pg map (only 'all' valid with plain)
-        :param dumpcontents: CephChoices who=None req=False {u'strings': u'all|summary|sum|delta|pools|osds|pgs|pgs_brief'}
+        :param dumpcontents: CephChoices strings=all|summary|sum|delta|pools|osds|pgs|pgs_brief 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg dump'
@@ -4956,7 +4956,7 @@ class MonCommandApi(object):
     def pg_dump_json(self, dumpcontents: List[str]=None):
         """
         show human-readable version of pg map in json only
-        :param dumpcontents: CephChoices who=None req=False {u'strings': u'all|summary|sum|pools|osds|pgs'}
+        :param dumpcontents: CephChoices strings=all|summary|sum|pools|osds|pgs 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg dump_json'
@@ -4976,8 +4976,8 @@ class MonCommandApi(object):
     def pg_dump_stuck(self, stuckops: List[str]=None, threshold: int=None):
         """
         show information about stuck pgs
-        :param stuckops: CephChoices who=None req=False {u'strings': u'inactive|unclean|stale|undersized|degraded'}
-        :param threshold: CephInt who=None req=False {}
+        :param stuckops: CephChoices strings=inactive|unclean|stale|undersized|degraded 
+        :param threshold: CephInt 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg dump_stuck'
@@ -4987,7 +4987,7 @@ class MonCommandApi(object):
     def pg_force_backfill(self, pgid: List[str]):
         """
         force backfill of <pgid> first
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg force-backfill'
@@ -4997,7 +4997,7 @@ class MonCommandApi(object):
     def pg_force_recovery(self, pgid: List[str]):
         """
         force recovery of <pgid> first
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg force-recovery'
@@ -5017,8 +5017,8 @@ class MonCommandApi(object):
     def pg_ls(self, pool: int=None, states: List[str]=None):
         """
         list pg with specific pool, osd, state
-        :param pool: CephInt who=None req=False {}
-        :param states: CephString who=None req=False {}
+        :param pool: CephInt 
+        :param states: CephString 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg ls'
@@ -5028,9 +5028,9 @@ class MonCommandApi(object):
     def pg_ls_by_osd(self, osd: str, pool: int=None, states: List[str]=None):
         """
         list pg on osd [osd]
-        :param osd: CephOsdName who=None req=True {}
-        :param pool: CephInt who=None req=False {}
-        :param states: CephString who=None req=False {}
+        :param osd: CephOsdName 
+        :param pool: CephInt 
+        :param states: CephString 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg ls-by-osd'
@@ -5040,8 +5040,8 @@ class MonCommandApi(object):
     def pg_ls_by_pool(self, poolstr: str, states: List[str]=None):
         """
         list pg with pool = [poolname]
-        :param poolstr: CephString who=None req=True {}
-        :param states: CephString who=None req=False {}
+        :param poolstr: CephString 
+        :param states: CephString 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg ls-by-pool'
@@ -5051,9 +5051,9 @@ class MonCommandApi(object):
     def pg_ls_by_primary(self, osd: str, pool: int=None, states: List[str]=None):
         """
         list pg with primary = [osd]
-        :param osd: CephOsdName who=None req=True {}
-        :param pool: CephInt who=None req=False {}
-        :param states: CephString who=None req=False {}
+        :param osd: CephOsdName 
+        :param pool: CephInt 
+        :param states: CephString 
         module=pg perm=r flags=mgr
         """
         prefix = 'pg ls-by-primary'
@@ -5063,7 +5063,7 @@ class MonCommandApi(object):
     def pg_map(self, pgid: str):
         """
         show mapping of pg to osds
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=r flags=
         """
         prefix = 'pg map'
@@ -5073,7 +5073,7 @@ class MonCommandApi(object):
     def pg_repair(self, pgid: str):
         """
         start repair on <pgid>
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg repair'
@@ -5083,7 +5083,7 @@ class MonCommandApi(object):
     def pg_repeer(self, pgid: str):
         """
         force a PG to repeer
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=osd perm=rw flags=
         """
         prefix = 'pg repeer'
@@ -5093,7 +5093,7 @@ class MonCommandApi(object):
     def pg_scrub(self, pgid: str):
         """
         start scrub on <pgid>
-        :param pgid: CephPgid who=None req=True {}
+        :param pgid: CephPgid 
         module=pg perm=rw flags=mgr
         """
         prefix = 'pg scrub'
@@ -5153,7 +5153,7 @@ class MonCommandApi(object):
     def quorum(self, quorumcmd: str):
         """
         enter or exit quorum
-        :param quorumcmd: CephChoices who=None req=True {u'strings': u'enter|exit'}
+        :param quorumcmd: CephChoices strings=enter|exit 
         module=mon perm=rw flags=
         """
         prefix = 'quorum'
@@ -5173,8 +5173,8 @@ class MonCommandApi(object):
     def rbd_perf_image_counters(self, pool_spec: str=None, sort_by: str=None):
         """
         Retrieve current RBD IO performance counters
-        :param pool_spec: CephString who=None req=False {}
-        :param sort_by: CephChoices who=None req=False {u'strings': u'write_ops|write_bytes|write_latency|read_ops|read_bytes|read_latency'}
+        :param pool_spec: CephString 
+        :param sort_by: CephChoices strings=write_ops|write_bytes|write_latency|read_ops|read_bytes|read_latency 
         module=mgr perm=r flags=mgr
         """
         prefix = 'rbd perf image counters'
@@ -5184,8 +5184,8 @@ class MonCommandApi(object):
     def rbd_perf_image_stats(self, pool_spec: str=None, sort_by: str=None):
         """
         Retrieve current RBD IO performance stats
-        :param pool_spec: CephString who=None req=False {}
-        :param sort_by: CephChoices who=None req=False {u'strings': u'write_ops|write_bytes|write_latency|read_ops|read_bytes|read_latency'}
+        :param pool_spec: CephString 
+        :param sort_by: CephChoices strings=write_ops|write_bytes|write_latency|read_ops|read_bytes|read_latency 
         module=mgr perm=r flags=mgr
         """
         prefix = 'rbd perf image stats'
@@ -5195,7 +5195,7 @@ class MonCommandApi(object):
     def report(self, tags: List[str]=None):
         """
         report full status of cluster, optional title tag strings
-        :param tags: CephString who=None req=False {}
+        :param tags: CephString 
         module=mon perm=r flags=
         """
         prefix = 'report'
@@ -5205,7 +5205,7 @@ class MonCommandApi(object):
     def restful_create_key(self, key_name: str):
         """
         Create an API key with this name
-        :param key_name: CephString who=None req=True {}
+        :param key_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'restful create-key'
@@ -5225,7 +5225,7 @@ class MonCommandApi(object):
     def restful_delete_key(self, key_name: str):
         """
         Delete an API key with this name
-        :param key_name: CephString who=None req=True {}
+        :param key_name: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'restful delete-key'
@@ -5286,7 +5286,7 @@ class MonCommandApi(object):
     def smart(self, devid: str=None):
         """
         Query health metrics for underlying device
-        :param devid: CephString who=None req=False {}
+        :param devid: CephString 
         module=mon perm=rw flags=hidden
         """
         prefix = 'smart'
@@ -5327,8 +5327,8 @@ class MonCommandApi(object):
     def sync_force(self, yes_i_really_mean_it: bool=None, i_know_what_i_am_doing: bool=None):
         """
         force sync of and clear monitor store
-        :param yes_i_really_mean_it: CephBool who=None req=False {}
-        :param i_know_what_i_am_doing: CephBool who=None req=False {}
+        :param yes_i_really_mean_it: CephBool 
+        :param i_know_what_i_am_doing: CephBool 
         module=mon perm=rw flags=deprecated, no_forward
         """
         prefix = 'sync force'
@@ -5338,8 +5338,8 @@ class MonCommandApi(object):
     def telegraf_config_set(self, key: str, value: str):
         """
         Set a configuration value
-        :param key: CephString who=None req=True {}
-        :param value: CephString who=None req=True {}
+        :param key: CephString 
+        :param value: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'telegraf config-set'
@@ -5419,8 +5419,8 @@ class MonCommandApi(object):
     def tell(self, target: str, args: List[str]):
         """
         send a command to a specific daemon
-        :param target: CephName who=None req=True {}
-        :param args: CephString who=None req=True {}
+        :param target: CephName 
+        :param args: CephString 
         module=mon perm=rw flags=
         """
         prefix = 'tell'
@@ -5460,8 +5460,8 @@ class MonCommandApi(object):
     def zabbix_config_set(self, key: str, value: str):
         """
         Set a configuration value
-        :param key: CephString who=None req=True {}
-        :param value: CephString who=None req=True {}
+        :param key: CephString 
+        :param value: CephString 
         module=mgr perm=rw flags=mgr
         """
         prefix = 'zabbix config-set'

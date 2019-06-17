@@ -117,20 +117,32 @@ class Param(object):
     }
 
 
-    def __init__(self, type, name, who=None, n=None, req=True, **kwargs):
+    def __init__(self, type, name, who=None, n=None, req=True, range=None, strings=None, goodchars=None):
         self.type = type
         self.name = name
         self.who = who
-        self.n = n
+        self.n = n == 'N'
         self.req = req != 'false'
-        self.kwargs = kwargs
+        self.range = range
+        self.strings = strings
+        self.goodchars = goodchars
+
+        assert who == None
 
     def safe_name(self):
         unsafe = ['from', 'class', 'id']
         return self.name + '_' if self.name in unsafe else self.name
 
     def help(self):
-        return '    :param {}: {} who={} req={} {}'.format(self.safe_name(), self.type, self.who, self.req, str(self.kwargs))
+        advanced = ''
+        if self.range:
+            advanced += 'ragne={} '.format(self.range)
+        if self.strings:
+            advanced += 'strings={} '.format(self.strings)
+        if self.goodchars:
+            advanced += 'goodchars={} '.format(self.goodchars)
+
+        return '    :param {}: {} {}'.format(self.safe_name(), self.type, advanced)
 
     def mk_default(self):
         if not self.req:
@@ -141,7 +153,7 @@ class Param(object):
         if PY2:
             return ''
         inner = Param.t[self.type]
-        return ': List[{}]'.format(inner) if self.n == 'N' else ': '  + inner
+        return ': List[{}]'.format(inner) if self.n else ': '  + inner
 
     def mk_dict(self):
         return "'{}': {}".format(self.name, self.safe_name())
