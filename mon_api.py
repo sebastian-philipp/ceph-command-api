@@ -31,7 +31,7 @@ class MonCommandApi(object):
     def _mon_command(self, cmd, inbuf=b'', target=None):
         return self._cluster.mon_command(json.dumps(cmd), inbuf=inbuf, target=target)
     
-    def auth_add(self, entity: str, caps: List[str]=None):
+    def auth_add(self, entity, caps=None):
         """
         add auth info for <entity> from input file, or random key if no input is given, and/or any caps specified in the command
         :param entity: CephString 
@@ -42,7 +42,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity, 'caps': caps}
         return self._mon_command(_args)
     
-    def auth_caps(self, entity: str, caps: List[str]):
+    def auth_caps(self, entity, caps):
         """
         update caps for <name> from caps specified in the command
         :param entity: CephString 
@@ -54,7 +54,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def auth_del(self, entity: str):
+    def auth_del(self, entity):
         """
         delete all caps for <name>
         :param entity: CephString 
@@ -64,7 +64,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_export(self, entity: str=None):
+    def auth_export(self, entity=None):
         """
         write keyring for requested entity, or master keyring if none given
         :param entity: CephString 
@@ -74,7 +74,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_get(self, entity: str):
+    def auth_get(self, entity):
         """
         write keyring file with requested key
         :param entity: CephString 
@@ -84,7 +84,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_get_key(self, entity: str):
+    def auth_get_key(self, entity):
         """
         display requested key
         :param entity: CephString 
@@ -94,7 +94,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_get_or_create(self, entity: str, caps: List[str]=None):
+    def auth_get_or_create(self, entity, caps=None):
         """
         add auth info for <entity> from input file, or random key if no input given, and/or any caps specified in the command
         :param entity: CephString 
@@ -105,7 +105,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity, 'caps': caps}
         return self._mon_command(_args)
     
-    def auth_get_or_create_key(self, entity: str, caps: List[str]=None):
+    def auth_get_or_create_key(self, entity, caps=None):
         """
         get, or add, key for <name> from system/caps pairs specified in the command.  If key already exists, any given caps must match the existing caps for that key.
         :param entity: CephString 
@@ -146,30 +146,30 @@ class MonCommandApi(object):
         prefix = 'auth ls'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
+    # 
+    # @overload  # Python 3 only
+    # def auth_print_key(self, entity):
+    #     """
+    #     display requested key
+    #     :param entity: CephString 
+    #     module=auth perm=rx flags=
+    #     """
+    #     prefix = 'auth print-key'
+    #     _args = {'prefix': prefix, 'entity': entity}
+    #     return self._mon_command(_args)
+    # 
+    # @overload  # Python 3 only
+    # def auth_print_key(self, entity):
+    #     """
+    #     display requested key
+    #     :param entity: CephString 
+    #     module=auth perm=rx flags=
+    #     """
+    #     prefix = 'auth print_key'
+    #     _args = {'prefix': prefix, 'entity': entity}
+    #     return self._mon_command(_args)
     
-    @overload  # Python 3 only
-    def auth_print_key(self, entity: str):
-        """
-        display requested key
-        :param entity: CephString 
-        module=auth perm=rx flags=
-        """
-        prefix = 'auth print-key'
-        _args = {'prefix': prefix, 'entity': entity}
-        return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def auth_print_key(self, entity: str):
-        """
-        display requested key
-        :param entity: CephString 
-        module=auth perm=rx flags=
-        """
-        prefix = 'auth print_key'
-        _args = {'prefix': prefix, 'entity': entity}
-        return self._mon_command(_args)
-    
-    def auth_rm(self, entity: str):
+    def auth_rm(self, entity):
         """
         remove all caps for <name>
         :param entity: CephString 
@@ -179,7 +179,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def balancer_dump(self, plan: str):
+    def balancer_dump(self, plan):
         """
         Show an optimization plan
         :param plan: CephString 
@@ -189,7 +189,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'plan': plan}
         return self._mon_command(_args)
     
-    def balancer_eval(self, option: str=None):
+    def balancer_eval(self, option=None):
         """
         Evaluate data distribution for the current cluster or specific pool or specific plan
         :param option: CephString 
@@ -199,7 +199,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'option': option}
         return self._mon_command(_args)
     
-    def balancer_eval_verbose(self, option: str=None):
+    def balancer_eval_verbose(self, option=None):
         """
         Evaluate data distribution for the current cluster or specific pool or specific plan (verbosely)
         :param option: CephString 
@@ -209,7 +209,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'option': option}
         return self._mon_command(_args)
     
-    def balancer_execute(self, plan: str):
+    def balancer_execute(self, plan):
         """
         Execute an optimization plan
         :param plan: CephString 
@@ -229,7 +229,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def balancer_mode(self, mode: str):
+    def balancer_mode(self, mode):
         """
         Set balancer mode
         :param mode: CephChoices strings=none|crush-compat|upmap 
@@ -259,7 +259,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def balancer_optimize(self, plan: str, pools: List[str]=None):
+    def balancer_optimize(self, plan, pools=None):
         """
         Run optimizer to create a new plan
         :param plan: CephString 
@@ -270,7 +270,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'plan': plan, 'pools': pools}
         return self._mon_command(_args)
     
-    def balancer_pool_add(self, pools: List[str]):
+    def balancer_pool_add(self, pools):
         """
         Enable automatic balancing for specific pools
         :param pools: CephString 
@@ -290,7 +290,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def balancer_pool_rm(self, pools: List[str]):
+    def balancer_pool_rm(self, pools):
         """
         Disable automatic balancing for specific pools
         :param pools: CephString 
@@ -310,7 +310,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def balancer_rm(self, plan: str):
+    def balancer_rm(self, plan):
         """
         Discard an optimization plan
         :param plan: CephString 
@@ -320,7 +320,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'plan': plan}
         return self._mon_command(_args)
     
-    def balancer_show(self, plan: str):
+    def balancer_show(self, plan):
         """
         Show details of an optimization plan
         :param plan: CephString 
@@ -381,7 +381,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def config_get(self, who: str, key: str):
+    def config_get(self, who, key):
         """
         Show configuration option(s) for an entity
         :param who: CephString 
@@ -392,7 +392,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who, 'key': key}
         return self._mon_command(_args)
     
-    def config_help(self, key: str):
+    def config_help(self, key):
         """
         Describe a configuration option
         :param key: CephString 
@@ -402,7 +402,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_log(self, num: int):
+    def config_log(self, num):
         """
         Show recent history of config changes
         :param num: CephInt 
@@ -422,7 +422,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def config_reset(self, num: int):
+    def config_reset(self, num):
         """
         Revert configuration to a historical version specified by <num>
         :param num: CephInt ragne=0 
@@ -432,7 +432,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'num': num}
         return self._mon_command(_args)
     
-    def config_rm(self, who: str, name: str):
+    def config_rm(self, who, name):
         """
         Clear a configuration option for one or more entities
         :param who: CephString 
@@ -443,7 +443,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who, 'name': name}
         return self._mon_command(_args)
     
-    def config_set(self, who: str, name: str, value: str, force: bool=None):
+    def config_set(self, who, name, value, force=None):
         """
         Set a configuration option for one or more entities
         :param who: CephString 
@@ -456,7 +456,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who, 'name': name, 'value': value, 'force': force}
         return self._mon_command(_args)
     
-    def config_show(self, who: str, key: str):
+    def config_show(self, who, key):
         """
         Show running configuration
         :param who: CephString 
@@ -467,7 +467,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who, 'key': key}
         return self._mon_command(_args)
     
-    def config_show_with_defaults(self, who: str):
+    def config_show_with_defaults(self, who):
         """
         Show running configuration (including compiled-in defaults)
         :param who: CephString 
@@ -478,7 +478,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def config_key_del(self, key: str):
+    def config_key_del(self, key):
         """
         delete <key>
         :param key: CephString 
@@ -488,7 +488,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_dump(self, key: str=None):
+    def config_key_dump(self, key=None):
         """
         dump keys and values (with optional prefix)
         :param key: CephString 
@@ -498,7 +498,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_exists(self, key: str):
+    def config_key_exists(self, key):
         """
         check for <key>'s existence
         :param key: CephString 
@@ -508,7 +508,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_get(self, key: str):
+    def config_key_get(self, key):
         """
         get <key>
         :param key: CephString 
@@ -540,7 +540,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def config_key_put(self, key: str, val: str=None):
+    def config_key_put(self, key, val=None):
         """
         put <key>, value <val>
         :param key: CephString 
@@ -551,7 +551,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key, 'val': val}
         return self._mon_command(_args)
     
-    def config_key_rm(self, key: str):
+    def config_key_rm(self, key):
         """
         rm <key>
         :param key: CephString 
@@ -561,7 +561,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_set(self, key: str, val: str=None):
+    def config_key_set(self, key, val=None):
         """
         set <key> to value <val>
         :param key: CephString 
@@ -572,7 +572,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key, 'val': val}
         return self._mon_command(_args)
     
-    def crash_info(self, id_: str):
+    def crash_info(self, id_):
         """
         show crash dump metadata
         :param id_: CephString 
@@ -582,7 +582,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_}
         return self._mon_command(_args)
     
-    def crash_json_report(self, hours: str):
+    def crash_json_report(self, hours):
         """
         Crashes in the last <hours> hours
         :param hours: CephString 
@@ -612,7 +612,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def crash_prune(self, keep: str):
+    def crash_prune(self, keep):
         """
         Remove crashes older than <keep> days
         :param keep: CephString 
@@ -622,7 +622,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'keep': keep}
         return self._mon_command(_args)
     
-    def crash_rm(self, id_: str):
+    def crash_rm(self, id_):
         """
         Remove a saved crash <id>
         :param id_: CephString 
@@ -642,7 +642,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_ac_role_add_scope_perms(self, rolename: str, scopename: str, permissions: List[str]):
+    def dashboard_ac_role_add_scope_perms(self, rolename, scopename, permissions):
         """
         Add the scope permissions for a role
         :param rolename: CephString 
@@ -654,7 +654,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename, 'scopename': scopename, 'permissions': permissions}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_create(self, rolename: str, description: str=None):
+    def dashboard_ac_role_create(self, rolename, description=None):
         """
         Create a new access control role
         :param rolename: CephString 
@@ -665,7 +665,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename, 'description': description}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_del_scope_perms(self, rolename: str, scopename: str):
+    def dashboard_ac_role_del_scope_perms(self, rolename, scopename):
         """
         Delete the scope permissions for a role
         :param rolename: CephString 
@@ -676,7 +676,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename, 'scopename': scopename}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_delete(self, rolename: str):
+    def dashboard_ac_role_delete(self, rolename):
         """
         Delete an access control role
         :param rolename: CephString 
@@ -686,7 +686,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_show(self, rolename: str=None):
+    def dashboard_ac_role_show(self, rolename=None):
         """
         Show role info
         :param rolename: CephString 
@@ -696,7 +696,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_add_roles(self, username: str, roles: List[str]):
+    def dashboard_ac_user_add_roles(self, username, roles):
         """
         Add roles to user
         :param username: CephString 
@@ -707,7 +707,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'roles': roles}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_create(self, username: str, password: str=None, rolename: str=None, name: str=None, email: str=None):
+    def dashboard_ac_user_create(self, username, password=None, rolename=None, name=None, email=None):
         """
         Create a user
         :param username: CephString 
@@ -721,7 +721,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'password': password, 'rolename': rolename, 'name': name, 'email': email}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_del_roles(self, username: str, roles: List[str]):
+    def dashboard_ac_user_del_roles(self, username, roles):
         """
         Delete roles from user
         :param username: CephString 
@@ -732,7 +732,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'roles': roles}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_delete(self, username: str):
+    def dashboard_ac_user_delete(self, username):
         """
         Delete user
         :param username: CephString 
@@ -742,7 +742,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_set_info(self, username: str, name: str, email: str):
+    def dashboard_ac_user_set_info(self, username, name, email):
         """
         Set user info
         :param username: CephString 
@@ -754,7 +754,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'name': name, 'email': email}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_set_password(self, username: str, password: str):
+    def dashboard_ac_user_set_password(self, username, password):
         """
         Set user password
         :param username: CephString 
@@ -765,7 +765,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'password': password}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_set_roles(self, username: str, roles: List[str]):
+    def dashboard_ac_user_set_roles(self, username, roles):
         """
         Set user roles
         :param username: CephString 
@@ -776,7 +776,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'roles': roles}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_show(self, username: str=None):
+    def dashboard_ac_user_show(self, username=None):
         """
         Show user info
         :param username: CephString 
@@ -796,7 +796,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_feature(self, action: str, features: List[str]=None):
+    def dashboard_feature(self, action, features=None):
         """
         Enable or disable features in Ceph-Mgr Dashboard
         :param action: CephChoices strings=disable|enable|status 
@@ -1007,7 +1007,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_iscsi_gateway_add(self, service_url: str):
+    def dashboard_iscsi_gateway_add(self, service_url):
         """
         Add iSCSI gateway configuration
         :param service_url: CephString 
@@ -1027,7 +1027,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_iscsi_gateway_rm(self, name: str):
+    def dashboard_iscsi_gateway_rm(self, name):
         """
         Remove iSCSI gateway configuration
         :param name: CephString 
@@ -1227,7 +1227,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_set_alertmanager_api_host(self, value: str):
+    def dashboard_set_alertmanager_api_host(self, value):
         """
         Set the ALERTMANAGER_API_HOST option value
         :param value: CephString 
@@ -1237,7 +1237,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_audit_api_enabled(self, value: str):
+    def dashboard_set_audit_api_enabled(self, value):
         """
         Set the AUDIT_API_ENABLED option value
         :param value: CephString 
@@ -1247,7 +1247,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_audit_api_log_payload(self, value: str):
+    def dashboard_set_audit_api_log_payload(self, value):
         """
         Set the AUDIT_API_LOG_PAYLOAD option value
         :param value: CephString 
@@ -1257,7 +1257,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_enable_browsable_api(self, value: str):
+    def dashboard_set_enable_browsable_api(self, value):
         """
         Set the ENABLE_BROWSABLE_API option value
         :param value: CephString 
@@ -1267,7 +1267,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_ganesha_clusters_rados_pool_namespace(self, value: str):
+    def dashboard_set_ganesha_clusters_rados_pool_namespace(self, value):
         """
         Set the GANESHA_CLUSTERS_RADOS_POOL_NAMESPACE option value
         :param value: CephString 
@@ -1277,7 +1277,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_grafana_api_password(self, value: str):
+    def dashboard_set_grafana_api_password(self, value):
         """
         Set the GRAFANA_API_PASSWORD option value
         :param value: CephString 
@@ -1287,7 +1287,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_grafana_api_url(self, value: str):
+    def dashboard_set_grafana_api_url(self, value):
         """
         Set the GRAFANA_API_URL option value
         :param value: CephString 
@@ -1297,7 +1297,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_grafana_api_username(self, value: str):
+    def dashboard_set_grafana_api_username(self, value):
         """
         Set the GRAFANA_API_USERNAME option value
         :param value: CephString 
@@ -1307,7 +1307,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_iscsi_api_ssl_verification(self, value: str):
+    def dashboard_set_iscsi_api_ssl_verification(self, value):
         """
         Set the ISCSI_API_SSL_VERIFICATION option value
         :param value: CephString 
@@ -1317,7 +1317,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_jwt_token_ttl(self, seconds: int):
+    def dashboard_set_jwt_token_ttl(self, seconds):
         """
         Set the JWT token TTL in seconds
         :param seconds: CephInt 
@@ -1327,7 +1327,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'seconds': seconds}
         return self._mon_command(_args)
     
-    def dashboard_set_login_credentials(self, username: str, password: str):
+    def dashboard_set_login_credentials(self, username, password):
         """
         Set the login credentials
         :param username: CephString 
@@ -1338,7 +1338,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'password': password}
         return self._mon_command(_args)
     
-    def dashboard_set_prometheus_api_host(self, value: str):
+    def dashboard_set_prometheus_api_host(self, value):
         """
         Set the PROMETHEUS_API_HOST option value
         :param value: CephString 
@@ -1348,7 +1348,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rest_requests_timeout(self, value: int):
+    def dashboard_set_rest_requests_timeout(self, value):
         """
         Set the REST_REQUESTS_TIMEOUT option value
         :param value: CephInt 
@@ -1358,7 +1358,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_access_key(self, value: str):
+    def dashboard_set_rgw_api_access_key(self, value):
         """
         Set the RGW_API_ACCESS_KEY option value
         :param value: CephString 
@@ -1368,7 +1368,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_admin_resource(self, value: str):
+    def dashboard_set_rgw_api_admin_resource(self, value):
         """
         Set the RGW_API_ADMIN_RESOURCE option value
         :param value: CephString 
@@ -1378,7 +1378,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_host(self, value: str):
+    def dashboard_set_rgw_api_host(self, value):
         """
         Set the RGW_API_HOST option value
         :param value: CephString 
@@ -1388,7 +1388,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_port(self, value: int):
+    def dashboard_set_rgw_api_port(self, value):
         """
         Set the RGW_API_PORT option value
         :param value: CephInt 
@@ -1398,7 +1398,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_scheme(self, value: str):
+    def dashboard_set_rgw_api_scheme(self, value):
         """
         Set the RGW_API_SCHEME option value
         :param value: CephString 
@@ -1408,7 +1408,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_secret_key(self, value: str):
+    def dashboard_set_rgw_api_secret_key(self, value):
         """
         Set the RGW_API_SECRET_KEY option value
         :param value: CephString 
@@ -1418,7 +1418,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_ssl_verify(self, value: str):
+    def dashboard_set_rgw_api_ssl_verify(self, value):
         """
         Set the RGW_API_SSL_VERIFY option value
         :param value: CephString 
@@ -1428,7 +1428,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_rgw_api_user_id(self, value: str):
+    def dashboard_set_rgw_api_user_id(self, value):
         """
         Set the RGW_API_USER_ID option value
         :param value: CephString 
@@ -1458,7 +1458,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_sso_setup_saml2(self, ceph_dashboard_base_url: str, idp_metadata: str, idp_username_attribute: str=None, idp_entity_id: str=None, sp_x_509_cert: str=None, sp_private_key: str=None):
+    def dashboard_sso_setup_saml2(self, ceph_dashboard_base_url, idp_metadata, idp_username_attribute=None, idp_entity_id=None, sp_x_509_cert=None, sp_private_key=None):
         """
         Setup SAML2 Single Sign-On
         :param ceph_dashboard_base_url: CephString 
@@ -1493,7 +1493,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def deepsea_config_set(self, key: str, value: str):
+    def deepsea_config_set(self, key, value):
         """
         Set a configuration value
         :param key: CephString 
@@ -1544,7 +1544,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def device_get_health_metrics(self, devid: str, sample: str):
+    def device_get_health_metrics(self, devid, sample):
         """
         Show stored device metrics for the device
         :param devid: CephString 
@@ -1555,7 +1555,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'devid': devid, 'sample': sample}
         return self._mon_command(_args)
     
-    def device_info(self, devid: str):
+    def device_info(self, devid):
         """
         Show information about a device
         :param devid: CephString 
@@ -1575,7 +1575,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def device_ls_by_daemon(self, who: str):
+    def device_ls_by_daemon(self, who):
         """
         Show devices associated with a daemon
         :param who: CephString 
@@ -1585,7 +1585,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def device_ls_by_host(self, host: str):
+    def device_ls_by_host(self, host):
         """
         Show devices on a host
         :param host: CephString 
@@ -1615,7 +1615,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def device_predict_life_expectancy(self, devid: str):
+    def device_predict_life_expectancy(self, devid):
         """
         Predict life expectancy with local predictor
         :param devid: CephString 
@@ -1625,7 +1625,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'devid': devid}
         return self._mon_command(_args)
     
-    def device_query_daemon_health_metrics(self, who: str):
+    def device_query_daemon_health_metrics(self, who):
         """
         Get device health metrics for a given daemon
         :param who: CephString 
@@ -1635,7 +1635,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def device_rm_life_expectancy(self, devid: str):
+    def device_rm_life_expectancy(self, devid):
         """
         Clear predicted device life expectancy
         :param devid: CephString 
@@ -1645,7 +1645,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'devid': devid}
         return self._mon_command(_args)
     
-    def device_scrape_daemon_health_metrics(self, who: str):
+    def device_scrape_daemon_health_metrics(self, who):
         """
         Scrape and store device health metrics for a given daemon
         :param who: CephString 
@@ -1655,7 +1655,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def device_scrape_health_metrics(self, devid: str):
+    def device_scrape_health_metrics(self, devid):
         """
         Scrape and store health metrics
         :param devid: CephString 
@@ -1665,7 +1665,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'devid': devid}
         return self._mon_command(_args)
     
-    def device_set_cloud_prediction_config(self, server: str, user: str, password: str, certfile: str, port: str=None):
+    def device_set_cloud_prediction_config(self, server, user, password, certfile, port=None):
         """
         Configure Disk Prediction service
         :param server: CephString 
@@ -1679,7 +1679,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'server': server, 'user': user, 'password': password, 'certfile': certfile, 'port': port}
         return self._mon_command(_args)
     
-    def device_set_life_expectancy(self, devid: str, from_: str, to: str):
+    def device_set_life_expectancy(self, devid, from_, to):
         """
         Set predicted device life expectancy
         :param devid: CephString 
@@ -1701,7 +1701,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def df(self, detail: str=None):
+    def df(self, detail=None):
         """
         show cluster free space stats
         :param detail: CephChoices strings=detail 
@@ -1731,7 +1731,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def fs_add_data_pool(self, fs_name: str, pool: str):
+    def fs_add_data_pool(self, fs_name, pool):
         """
         add data pool <pool>
         :param fs_name: CephString 
@@ -1742,7 +1742,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'pool': pool}
         return self._mon_command(_args)
     
-    def fs_authorize(self, filesystem: str, entity: str, caps: List[str]):
+    def fs_authorize(self, filesystem, entity, caps):
         """
         add auth for <entity> to access file system <filesystem> based on following directory and permissions pairs
         :param filesystem: CephString 
@@ -1754,7 +1754,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'filesystem': filesystem, 'entity': entity, 'caps': caps}
         return self._mon_command(_args)
     
-    def fs_dump(self, epoch: int=None):
+    def fs_dump(self, epoch=None):
         """
         dump all CephFS status, optionally from epoch
         :param epoch: CephInt ragne=0 
@@ -1764,7 +1764,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def fs_fail(self, fs_name: str):
+    def fs_fail(self, fs_name):
         """
         bring the file system down and all of its ranks
         :param fs_name: CephString 
@@ -1774,7 +1774,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name}
         return self._mon_command(_args)
     
-    def fs_flag_set(self, flag_name: str, val: str, yes_i_really_mean_it: bool=None):
+    def fs_flag_set(self, flag_name, val, yes_i_really_mean_it=None):
         """
         Set a global CephFS flag
         :param flag_name: CephChoices strings=enable_multiple 
@@ -1786,7 +1786,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'flag_name': flag_name, 'val': val, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def fs_get(self, fs_name: str):
+    def fs_get(self, fs_name):
         """
         get info about one filesystem
         :param fs_name: CephString 
@@ -1806,7 +1806,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def fs_new(self, fs_name: str, metadata: str, data: str, force: bool=None, allow_dangerous_metadata_overlay: bool=None):
+    def fs_new(self, fs_name, metadata, data, force=None, allow_dangerous_metadata_overlay=None):
         """
         make new filesystem using named pools <metadata> and <data>
         :param fs_name: CephString 
@@ -1820,7 +1820,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'metadata': metadata, 'data': data, 'force': force, 'allow_dangerous_metadata_overlay': allow_dangerous_metadata_overlay}
         return self._mon_command(_args)
     
-    def fs_reset(self, fs_name: str, yes_i_really_mean_it: bool=None):
+    def fs_reset(self, fs_name, yes_i_really_mean_it=None):
         """
         disaster recovery only: reset to a single-MDS map
         :param fs_name: CephString 
@@ -1831,7 +1831,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def fs_rm(self, fs_name: str, yes_i_really_mean_it: bool=None):
+    def fs_rm(self, fs_name, yes_i_really_mean_it=None):
         """
         disable the named filesystem
         :param fs_name: CephString 
@@ -1842,7 +1842,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def fs_rm_data_pool(self, fs_name: str, pool: str):
+    def fs_rm_data_pool(self, fs_name, pool):
         """
         remove data pool <pool>
         :param fs_name: CephString 
@@ -1853,7 +1853,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'pool': pool}
         return self._mon_command(_args)
     
-    def fs_set(self, fs_name: str, var: str, val: str, yes_i_really_mean_it: bool=None):
+    def fs_set(self, fs_name, var, val, yes_i_really_mean_it=None):
         """
         set fs parameter <var> to <val>
         :param fs_name: CephString 
@@ -1865,31 +1865,31 @@ class MonCommandApi(object):
         prefix = 'fs set'
         _args = {'prefix': prefix, 'fs_name': fs_name, 'var': var, 'val': val, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
+    # 
+    # @overload  # Python 3 only
+    # def fs_set_default(self, fs_name):
+    #     """
+    #     set the default to the named filesystem
+    #     :param fs_name: CephString 
+    #     module=fs perm=rw flags=
+    #     """
+    #     prefix = 'fs set-default'
+    #     _args = {'prefix': prefix, 'fs_name': fs_name}
+    #     return self._mon_command(_args)
+    # 
+    # @deprecated
+    # @overload  # Python 3 only
+    # def fs_set_default(self, fs_name):
+    #     """
+    #     set the default to the named filesystem
+    #     :param fs_name: CephString 
+    #     module=fs perm=rw flags=deprecated
+    #     """
+    #     prefix = 'fs set_default'
+    #     _args = {'prefix': prefix, 'fs_name': fs_name}
+    #     return self._mon_command(_args)
     
-    @overload  # Python 3 only
-    def fs_set_default(self, fs_name: str):
-        """
-        set the default to the named filesystem
-        :param fs_name: CephString 
-        module=fs perm=rw flags=
-        """
-        prefix = 'fs set-default'
-        _args = {'prefix': prefix, 'fs_name': fs_name}
-        return self._mon_command(_args)
-    
-    @deprecated
-    @overload  # Python 3 only
-    def fs_set_default(self, fs_name: str):
-        """
-        set the default to the named filesystem
-        :param fs_name: CephString 
-        module=fs perm=rw flags=deprecated
-        """
-        prefix = 'fs set_default'
-        _args = {'prefix': prefix, 'fs_name': fs_name}
-        return self._mon_command(_args)
-    
-    def fs_status(self, fs: str=None):
+    def fs_status(self, fs=None):
         """
         Show the status of a CephFS filesystem
         :param fs: CephString 
@@ -1899,7 +1899,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs': fs}
         return self._mon_command(_args)
     
-    def fs_subvolume_create(self, vol_name: str, sub_name: str, size: int=None, group_name: str=None):
+    def fs_subvolume_create(self, vol_name, sub_name, size=None, group_name=None):
         """
         Create a CephFS subvolume in a volume, and optionally, with a specific size (in bytes) and in a specific subvolume group
         :param vol_name: CephString 
@@ -1912,7 +1912,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'size': size, 'group_name': group_name}
         return self._mon_command(_args)
     
-    def fs_subvolume_getpath(self, vol_name: str, sub_name: str, group_name: str=None):
+    def fs_subvolume_getpath(self, vol_name, sub_name, group_name=None):
         """
         Get the mountpath of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
         :param vol_name: CephString 
@@ -1924,7 +1924,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'group_name': group_name}
         return self._mon_command(_args)
     
-    def fs_subvolume_rm(self, vol_name: str, sub_name: str, group_name: str=None, force: bool=None):
+    def fs_subvolume_rm(self, vol_name, sub_name, group_name=None, force=None):
         """
         Delete a CephFS subvolume in a volume, and optionally, in a specific subvolume group
         :param vol_name: CephString 
@@ -1937,7 +1937,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'group_name': group_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_subvolume_snapshot_create(self, vol_name: str, sub_name: str, snap_name: str, group_name: str=None):
+    def fs_subvolume_snapshot_create(self, vol_name, sub_name, snap_name, group_name=None):
         """
         Create a snapshot of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
         :param vol_name: CephString 
@@ -1950,7 +1950,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'snap_name': snap_name, 'group_name': group_name}
         return self._mon_command(_args)
     
-    def fs_subvolume_snapshot_rm(self, vol_name: str, sub_name: str, snap_name: str, group_name: str=None, force: bool=None):
+    def fs_subvolume_snapshot_rm(self, vol_name, sub_name, snap_name, group_name=None, force=None):
         """
         Delete a snapshot of a CephFS subvolume in a volume, and optionally, in a specific subvolume group
         :param vol_name: CephString 
@@ -1964,7 +1964,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'snap_name': snap_name, 'group_name': group_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_create(self, vol_name: str, group_name: str):
+    def fs_subvolumegroup_create(self, vol_name, group_name):
         """
         Create a CephFS subvolume group in a volume
         :param vol_name: CephString 
@@ -1975,7 +1975,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_rm(self, vol_name: str, group_name: str, force: bool=None):
+    def fs_subvolumegroup_rm(self, vol_name, group_name, force=None):
         """
         Delete a CephFS subvolume group in a volume
         :param vol_name: CephString 
@@ -1987,7 +1987,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_snapshot_create(self, vol_name: str, group_name: str, snap_name: str):
+    def fs_subvolumegroup_snapshot_create(self, vol_name, group_name, snap_name):
         """
         Create a snapshot of a CephFS subvolume group in a volume
         :param vol_name: CephString 
@@ -1999,7 +1999,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name, 'snap_name': snap_name}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_snapshot_rm(self, vol_name: str, group_name: str, snap_name: str, force: bool=None):
+    def fs_subvolumegroup_snapshot_rm(self, vol_name, group_name, snap_name, force=None):
         """
         Delete a snapshot of a CephFS subvolume group in a volume
         :param vol_name: CephString 
@@ -2012,7 +2012,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name, 'snap_name': snap_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_volume_create(self, name: str, size: str=None):
+    def fs_volume_create(self, name, size=None):
         """
         Create a CephFS volume
         :param name: CephString 
@@ -2033,7 +2033,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def fs_volume_rm(self, vol_name: str):
+    def fs_volume_rm(self, vol_name):
         """
         Delete a CephFS volume
         :param vol_name: CephString 
@@ -2053,7 +2053,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def health(self, detail: str=None):
+    def health(self, detail=None):
         """
         show cluster health
         :param detail: CephChoices strings=detail 
@@ -2063,7 +2063,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'detail': detail}
         return self._mon_command(_args)
     
-    def heap(self, heapcmd: str):
+    def heap(self, heapcmd):
         """
         show heap usage info (available only if compiled with tcmalloc)
         :param heapcmd: CephChoices strings=dump|start_profiler|stop_profiler|release|stats 
@@ -2073,7 +2073,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'heapcmd': heapcmd}
         return self._mon_command(_args)
     
-    def hello(self, person_name: str=None):
+    def hello(self, person_name=None):
         """
         Prints hello world to mgr.x.log
         :param person_name: CephString 
@@ -2083,7 +2083,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'person_name': person_name}
         return self._mon_command(_args)
     
-    def influx_config_set(self, key: str, value: str):
+    def influx_config_set(self, key, value):
         """
         Set a configuration value
         :param key: CephString 
@@ -2114,7 +2114,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def injectargs(self, injected_args: List[str]):
+    def injectargs(self, injected_args):
         """
         inject config arguments into monitor
         :param injected_args: CephString 
@@ -2134,7 +2134,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def insights_prune_health(self, hours: str):
+    def insights_prune_health(self, hours):
         """
         Remove health history older than <hours> hours
         :param hours: CephString 
@@ -2154,7 +2154,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def log(self, logtext: List[str]):
+    def log(self, logtext):
         """
         log supplied text to the monitor log
         :param logtext: CephString 
@@ -2164,7 +2164,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'logtext': logtext}
         return self._mon_command(_args)
     
-    def log_last(self, num: int=None, level: str=None, channel: str=None):
+    def log_last(self, num=None, level=None, channel=None):
         """
         print last few lines of the cluster log
         :param num: CephInt ragne=1 
@@ -2177,7 +2177,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_add_data_pool(self, pool: str):
+    def mds_add_data_pool(self, pool):
         """
         add data pool <pool>
         :param pool: CephString 
@@ -2209,7 +2209,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mds_compat_rm_compat(self, feature: int):
+    def mds_compat_rm_compat(self, feature):
         """
         remove compatible feature
         :param feature: CephInt ragne=0 
@@ -2219,7 +2219,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'feature': feature}
         return self._mon_command(_args)
     
-    def mds_compat_rm_incompat(self, feature: int):
+    def mds_compat_rm_incompat(self, feature):
         """
         remove incompatible feature
         :param feature: CephInt ragne=0 
@@ -2239,7 +2239,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mds_count_metadata(self, property: str):
+    def mds_count_metadata(self, property):
         """
         count MDSs by metadata field property
         :param property: CephString 
@@ -2250,7 +2250,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_deactivate(self, role: str):
+    def mds_deactivate(self, role):
         """
         clean up specified MDS rank (use with `set max_mds` to shrink cluster)
         :param role: CephString 
@@ -2261,7 +2261,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_dump(self, epoch: int=None):
+    def mds_dump(self, epoch=None):
         """
         dump legacy MDS cluster info, optionally from epoch
         :param epoch: CephInt ragne=0 
@@ -2271,7 +2271,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mds_fail(self, role_or_gid: str):
+    def mds_fail(self, role_or_gid):
         """
         Mark MDS failed: trigger a failover if a standby is available
         :param role_or_gid: CephString 
@@ -2281,7 +2281,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'role_or_gid': role_or_gid}
         return self._mon_command(_args)
     
-    def mds_freeze(self, role_or_gid: str, val: str):
+    def mds_freeze(self, role_or_gid, val):
         """
         freeze MDS yes/no
         :param role_or_gid: CephString 
@@ -2293,7 +2293,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_getmap(self, epoch: int=None):
+    def mds_getmap(self, epoch=None):
         """
         get MDS map, optionally from epoch
         :param epoch: CephInt ragne=0 
@@ -2303,7 +2303,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mds_metadata(self, who: str=None):
+    def mds_metadata(self, who=None):
         """
         fetch metadata for mds <role>
         :param who: CephString 
@@ -2314,7 +2314,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_newfs(self, metadata: int, data: int, yes_i_really_mean_it: bool=None):
+    def mds_newfs(self, metadata, data, yes_i_really_mean_it=None):
         """
         make new filesystem using pools <metadata> and <data>
         :param metadata: CephInt ragne=0 
@@ -2326,7 +2326,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'metadata': metadata, 'data': data, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def mds_ok_to_stop(self, ids: List[str]):
+    def mds_ok_to_stop(self, ids):
         """
         check whether stopping the specified MDS would reduce immediate availability
         :param ids: CephString 
@@ -2337,7 +2337,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_remove_data_pool(self, pool: str):
+    def mds_remove_data_pool(self, pool):
         """
         remove data pool <pool>
         :param pool: CephString 
@@ -2347,7 +2347,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def mds_repaired(self, role: str):
+    def mds_repaired(self, role):
         """
         mark a damaged MDS rank as no longer damaged
         :param role: CephString 
@@ -2357,7 +2357,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'role': role}
         return self._mon_command(_args)
     
-    def mds_rm(self, gid: int):
+    def mds_rm(self, gid):
         """
         remove nonactive mds
         :param gid: CephInt ragne=0 
@@ -2368,7 +2368,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_rm_data_pool(self, pool: str):
+    def mds_rm_data_pool(self, pool):
         """
         remove data pool <pool>
         :param pool: CephString 
@@ -2378,7 +2378,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def mds_rmfailed(self, role: str, yes_i_really_mean_it: bool=None):
+    def mds_rmfailed(self, role, yes_i_really_mean_it=None):
         """
         remove failed rank
         :param role: CephString 
@@ -2390,7 +2390,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_set(self, var: str, val: str, yes_i_really_mean_it: bool=None):
+    def mds_set(self, var, val, yes_i_really_mean_it=None):
         """
         set mds parameter <var> to <val>
         :param var: CephChoices strings=max_mds|max_file_size|inline_data|allow_new_snaps|allow_multimds|allow_multimds_snaps|allow_dirfrags 
@@ -2403,7 +2403,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_set_max_mds(self, maxmds: int):
+    def mds_set_max_mds(self, maxmds):
         """
         set max MDS index
         :param maxmds: CephInt ragne=0 
@@ -2413,7 +2413,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'maxmds': maxmds}
         return self._mon_command(_args)
     
-    def mds_set_state(self, gid: int, state: int):
+    def mds_set_state(self, gid, state):
         """
         set mds state of <gid> to <numeric-state>
         :param gid: CephInt ragne=0 
@@ -2435,7 +2435,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_stop(self, role: str):
+    def mds_stop(self, role):
         """
         stop mds
         :param role: CephString 
@@ -2446,7 +2446,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_tell(self, who: str, args: List[str]):
+    def mds_tell(self, who, args):
         """
         send command to particular mds
         :param who: CephString 
@@ -2467,7 +2467,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mgr_count_metadata(self, property: str):
+    def mgr_count_metadata(self, property):
         """
         count ceph-mgr daemons by metadata field property
         :param property: CephString 
@@ -2477,7 +2477,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'property': property}
         return self._mon_command(_args)
     
-    def mgr_dump(self, epoch: int=None):
+    def mgr_dump(self, epoch=None):
         """
         dump the latest MgrMap
         :param epoch: CephInt ragne=0 
@@ -2487,7 +2487,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mgr_fail(self, who: str):
+    def mgr_fail(self, who):
         """
         treat the named manager daemon as failed
         :param who: CephString 
@@ -2497,7 +2497,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def mgr_metadata(self, who: str=None):
+    def mgr_metadata(self, who=None):
         """
         dump metadata for all daemons or a specific daemon
         :param who: CephString 
@@ -2507,7 +2507,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def mgr_module_disable(self, module: str):
+    def mgr_module_disable(self, module):
         """
         disable mgr module
         :param module: CephString 
@@ -2517,7 +2517,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'module': module}
         return self._mon_command(_args)
     
-    def mgr_module_enable(self, module: str, force: str=None):
+    def mgr_module_enable(self, module, force=None):
         """
         enable mgr module
         :param module: CephString 
@@ -2538,7 +2538,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mgr_self_test_background_start(self, workload: str):
+    def mgr_self_test_background_start(self, workload):
         """
         Activate a background workload (one of command_spam, throw_exception)
         :param workload: CephString 
@@ -2558,7 +2558,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mgr_self_test_cluster_log(self, channel: str, priority: str, message: str):
+    def mgr_self_test_cluster_log(self, channel, priority, message):
         """
         Create an audit log record.
         :param channel: CephString 
@@ -2570,7 +2570,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'channel': channel, 'priority': priority, 'message': message}
         return self._mon_command(_args)
     
-    def mgr_self_test_config_get(self, key: str):
+    def mgr_self_test_config_get(self, key):
         """
         Peek at a configuration value
         :param key: CephString 
@@ -2580,7 +2580,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def mgr_self_test_config_get_localized(self, key: str):
+    def mgr_self_test_config_get_localized(self, key):
         """
         Peek at a configuration value (localized variant)
         :param key: CephString 
@@ -2590,7 +2590,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def mgr_self_test_health_clear(self, checks: List[str]):
+    def mgr_self_test_health_clear(self, checks):
         """
         Clear health checks by name. If no names provided, clear all.
         :param checks: CephString 
@@ -2600,7 +2600,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'checks': checks}
         return self._mon_command(_args)
     
-    def mgr_self_test_health_set(self, checks: str):
+    def mgr_self_test_health_set(self, checks):
         """
         Set a health check from a JSON-formatted description.
         :param checks: CephString 
@@ -2610,7 +2610,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'checks': checks}
         return self._mon_command(_args)
     
-    def mgr_self_test_insights_set_now_offset(self, hours: str):
+    def mgr_self_test_insights_set_now_offset(self, hours):
         """
         Set the now time for the insights module.
         :param hours: CephString 
@@ -2620,7 +2620,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'hours': hours}
         return self._mon_command(_args)
     
-    def mgr_self_test_module(self, module: str):
+    def mgr_self_test_module(self, module):
         """
         Run another module's self_test() method
         :param module: CephString 
@@ -2670,7 +2670,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_add(self, name: str, addr: str):
+    def mon_add(self, name, addr):
         """
         add new monitor named <name> at <addr>
         :param name: CephString 
@@ -2691,7 +2691,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_count_metadata(self, property: str):
+    def mon_count_metadata(self, property):
         """
         count mons by metadata field property
         :param property: CephString 
@@ -2701,7 +2701,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'property': property}
         return self._mon_command(_args)
     
-    def mon_dump(self, epoch: int=None):
+    def mon_dump(self, epoch=None):
         """
         dump formatted monmap (optionally from epoch)
         :param epoch: CephInt ragne=0 
@@ -2721,7 +2721,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_feature_ls(self, with_value: str=None):
+    def mon_feature_ls(self, with_value=None):
         """
         list available mon map features to be set/unset
         :param with_value: CephChoices strings=--with-value 
@@ -2731,7 +2731,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'with_value': with_value}
         return self._mon_command(_args)
     
-    def mon_feature_set(self, feature_name: str, yes_i_really_mean_it: bool=None):
+    def mon_feature_set(self, feature_name, yes_i_really_mean_it=None):
         """
         set provided feature on mon map
         :param feature_name: CephString 
@@ -2742,7 +2742,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'feature_name': feature_name, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def mon_getmap(self, epoch: int=None):
+    def mon_getmap(self, epoch=None):
         """
         get monmap
         :param epoch: CephInt ragne=0 
@@ -2752,7 +2752,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mon_metadata(self, id_: str=None):
+    def mon_metadata(self, id_=None):
         """
         fetch metadata for mon <id>
         :param id_: CephString 
@@ -2772,7 +2772,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_ok_to_rm(self, id_: str):
+    def mon_ok_to_rm(self, id_):
         """
         check whether removing the specified mon would break quorum
         :param id_: CephString 
@@ -2782,7 +2782,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_}
         return self._mon_command(_args)
     
-    def mon_ok_to_stop(self, ids: List[str]):
+    def mon_ok_to_stop(self, ids):
         """
         check whether mon(s) can be safely stopped without reducing immediate availability
         :param ids: CephString 
@@ -2793,7 +2793,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mon_remove(self, name: str):
+    def mon_remove(self, name):
         """
         remove monitor named <name>
         :param name: CephString 
@@ -2803,7 +2803,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
-    def mon_rm(self, name: str):
+    def mon_rm(self, name):
         """
         remove monitor named <name>
         :param name: CephString 
@@ -2823,7 +2823,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_set_addrs(self, name: str, addrs: str):
+    def mon_set_addrs(self, name, addrs):
         """
         set the addrs (IPs and ports) a specific monitor binds to
         :param name: CephString 
@@ -2834,7 +2834,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'addrs': addrs}
         return self._mon_command(_args)
     
-    def mon_set_rank(self, name: str, rank: int):
+    def mon_set_rank(self, name, rank):
         """
         set the rank for the specified mon
         :param name: CephString 
@@ -2845,7 +2845,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'rank': rank}
         return self._mon_command(_args)
     
-    def mon_set_weight(self, name: str, weight: int):
+    def mon_set_weight(self, name, weight):
         """
         set the weight for the specified mon
         :param name: CephString 
@@ -2866,7 +2866,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_sync_force(self, yes_i_really_mean_it: bool=None, i_know_what_i_am_doing: bool=None):
+    def mon_sync_force(self, yes_i_really_mean_it=None, i_know_what_i_am_doing=None):
         """
         force sync of and clear monitor store
         :param yes_i_really_mean_it: CephBool 
@@ -2897,7 +2897,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def node_ls(self, type: str=None):
+    def node_ls(self, type=None):
         """
         list all nodes in cluster [type]
         :param type: CephChoices strings=all|osd|mon|mds|mgr 
@@ -2907,7 +2907,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'type': type}
         return self._mon_command(_args)
     
-    def orchestrator_device_ls(self, host: List[str]=None, format: str=None, refresh: bool=None):
+    def orchestrator_device_ls(self, host=None, format=None, refresh=None):
         """
         List devices on a node
         :param host: CephString 
@@ -2919,7 +2919,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'host': host, 'format': format, 'refresh': refresh}
         return self._mon_command(_args)
     
-    def orchestrator_host_add(self, host: str):
+    def orchestrator_host_add(self, host):
         """
         Add a host
         :param host: CephString 
@@ -2939,7 +2939,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def orchestrator_host_rm(self, host: str):
+    def orchestrator_host_rm(self, host):
         """
         Remove a host
         :param host: CephString 
@@ -2949,7 +2949,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'host': host}
         return self._mon_command(_args)
     
-    def orchestrator_mds_add(self, svc_arg: str):
+    def orchestrator_mds_add(self, svc_arg):
         """
         Create an MDS service
         :param svc_arg: CephString 
@@ -2959,7 +2959,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_arg': svc_arg}
         return self._mon_command(_args)
     
-    def orchestrator_mds_rm(self, svc_id: str):
+    def orchestrator_mds_rm(self, svc_id):
         """
         Remove an MDS service
         :param svc_id: CephString 
@@ -2969,7 +2969,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_mgr_update(self, num: int, hosts: List[str]=None):
+    def orchestrator_mgr_update(self, num, hosts=None):
         """
         Update the number of manager instances
         :param num: CephInt 
@@ -2980,7 +2980,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_mon_update(self, num: int, hosts: List[str]=None):
+    def orchestrator_mon_update(self, num, hosts=None):
         """
         Update the number of monitor instances
         :param num: CephInt 
@@ -2991,7 +2991,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace: str=None):
+    def orchestrator_nfs_add(self, svc_arg, pool, namespace=None):
         """
         Create an NFS service
         :param svc_arg: CephString 
@@ -3003,7 +3003,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_arg': svc_arg, 'pool': pool, 'namespace': namespace}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_rm(self, svc_id: str):
+    def orchestrator_nfs_rm(self, svc_id):
         """
         Remove an NFS service
         :param svc_id: CephString 
@@ -3013,7 +3013,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_update(self, svc_id: str, num: int):
+    def orchestrator_nfs_update(self, svc_id, num):
         """
         Scale an NFS service
         :param svc_id: CephString 
@@ -3024,7 +3024,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id, 'num': num}
         return self._mon_command(_args)
     
-    def orchestrator_osd_create(self, svc_arg: str=None):
+    def orchestrator_osd_create(self, svc_arg=None):
         """
         Create an OSD service. Either --svc_arg=host:drives or -i <drive_group>
         :param svc_arg: CephString 
@@ -3034,7 +3034,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_arg': svc_arg}
         return self._mon_command(_args)
     
-    def orchestrator_osd_rm(self, svc_id: List[str]):
+    def orchestrator_osd_rm(self, svc_id):
         """
         Remove OSD services
         :param svc_id: CephString 
@@ -3044,7 +3044,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_rgw_add(self, svc_arg: str):
+    def orchestrator_rgw_add(self, svc_arg):
         """
         Create an RGW service
         :param svc_arg: CephString 
@@ -3054,7 +3054,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_arg': svc_arg}
         return self._mon_command(_args)
     
-    def orchestrator_rgw_rm(self, svc_id: str):
+    def orchestrator_rgw_rm(self, svc_id):
         """
         Remove an RGW service
         :param svc_id: CephString 
@@ -3064,7 +3064,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_service(self, action: str, svc_type: str, svc_name: str):
+    def orchestrator_service(self, action, svc_type, svc_name):
         """
         Start, stop or reload an entire service (i.e. all daemons)
         :param action: CephChoices strings=start|stop|reload 
@@ -3076,7 +3076,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'action': action, 'svc_type': svc_type, 'svc_name': svc_name}
         return self._mon_command(_args)
     
-    def orchestrator_service_ls(self, host: str=None, svc_type: str=None, svc_id: str=None, format: str=None):
+    def orchestrator_service_ls(self, host=None, svc_type=None, svc_id=None, format=None):
         """
         List services known to orchestrator
         :param host: CephString 
@@ -3089,7 +3089,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'host': host, 'svc_type': svc_type, 'svc_id': svc_id, 'format': format}
         return self._mon_command(_args)
     
-    def orchestrator_service_instance(self, action: str, svc_type: str, svc_id: str):
+    def orchestrator_service_instance(self, action, svc_type, svc_id):
         """
         Start, stop or reload a specific service instance
         :param action: CephChoices strings=start|stop|reload 
@@ -3101,7 +3101,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'action': action, 'svc_type': svc_type, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_set_backend(self, module_name: str):
+    def orchestrator_set_backend(self, module_name):
         """
         Select orchestrator module backend
         :param module_name: CephString 
@@ -3121,7 +3121,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_add_nodown(self, ids: List[str]):
+    def osd_add_nodown(self, ids):
         """
         mark osd(s) <id> [<id>...] as nodown, or use <all|any> to mark all osds as nodown
         :param ids: CephString 
@@ -3131,7 +3131,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_add_noin(self, ids: List[str]):
+    def osd_add_noin(self, ids):
         """
         mark osd(s) <id> [<id>...] as noin, or use <all|any> to mark all osds as noin
         :param ids: CephString 
@@ -3141,7 +3141,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_add_noout(self, ids: List[str]):
+    def osd_add_noout(self, ids):
         """
         mark osd(s) <id> [<id>...] as noout, or use <all|any> to mark all osds as noout
         :param ids: CephString 
@@ -3151,7 +3151,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_add_noup(self, ids: List[str]):
+    def osd_add_noup(self, ids):
         """
         mark osd(s) <id> [<id>...] as noup, or use <all|any> to mark all osds as noup
         :param ids: CephString 
@@ -3161,7 +3161,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_blacklist(self, blacklistop: str, addr: str, expire: float=None):
+    def osd_blacklist(self, blacklistop, addr, expire=None):
         """
         add (optionally until <expire> seconds from now) or remove <addr> from blacklist
         :param blacklistop: CephChoices strings=add|rm 
@@ -3203,7 +3203,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_count_metadata(self, property: str):
+    def osd_count_metadata(self, property):
         """
         count OSDs by metadata field property
         :param property: CephString 
@@ -3214,7 +3214,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_create(self, uuid: str=None, id_: str=None):
+    def osd_create(self, uuid=None, id_=None):
         """
         create new osd (with optional UUID and ID)
         :param uuid: CephUUID 
@@ -3225,7 +3225,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'uuid': uuid, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_crush_add(self, id_: str, weight: float, args: List[str]):
+    def osd_crush_add(self, id_, weight, args):
         """
         add or update crushmap position and weight for <name> with <weight> and location <args>
         :param id_: CephOsdName 
@@ -3237,7 +3237,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'weight': weight, 'args': args}
         return self._mon_command(_args)
     
-    def osd_crush_add_bucket(self, name: str, type: str, args: List[str]=None):
+    def osd_crush_add_bucket(self, name, type, args=None):
         """
         add no-parent (probably root) crush bucket <name> of type <type> to location <args>
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3249,7 +3249,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'type': type, 'args': args}
         return self._mon_command(_args)
     
-    def osd_crush_class_create(self, class_: str):
+    def osd_crush_class_create(self, class_):
         """
         create crush device class <class>
         :param class_: CephString goodchars=[A-Za-z0-9-_] 
@@ -3269,7 +3269,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_class_ls_osd(self, class_: str):
+    def osd_crush_class_ls_osd(self, class_):
         """
         list all osds belonging to the specific <class>
         :param class_: CephString goodchars=[A-Za-z0-9-_] 
@@ -3279,7 +3279,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'class': class_}
         return self._mon_command(_args)
     
-    def osd_crush_class_rename(self, srcname: str, dstname: str):
+    def osd_crush_class_rename(self, srcname, dstname):
         """
         rename crush device class <srcname> to <dstname>
         :param srcname: CephString goodchars=[A-Za-z0-9-_] 
@@ -3290,7 +3290,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'srcname': srcname, 'dstname': dstname}
         return self._mon_command(_args)
     
-    def osd_crush_class_rm(self, class_: str):
+    def osd_crush_class_rm(self, class_):
         """
         remove crush device class <class>
         :param class_: CephString goodchars=[A-Za-z0-9-_] 
@@ -3300,7 +3300,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'class': class_}
         return self._mon_command(_args)
     
-    def osd_crush_create_or_move(self, id_: str, weight: float, args: List[str]):
+    def osd_crush_create_or_move(self, id_, weight, args):
         """
         create entry or move existing entry for <name> <weight> at/to location <args>
         :param id_: CephOsdName 
@@ -3322,7 +3322,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_get_device_class(self, ids: List[str]):
+    def osd_crush_get_device_class(self, ids):
         """
         get classes of specified osd(s) <id> [<id>...]
         :param ids: CephString 
@@ -3332,7 +3332,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_crush_get_tunable(self, tunable: str):
+    def osd_crush_get_tunable(self, tunable):
         """
         get crush tunable <tunable>
         :param tunable: CephChoices strings=straw_calc_version 
@@ -3342,7 +3342,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'tunable': tunable}
         return self._mon_command(_args)
     
-    def osd_crush_link(self, name: str, args: List[str]):
+    def osd_crush_link(self, name, args):
         """
         link existing entry for <name> under location <args>
         :param name: CephString 
@@ -3353,7 +3353,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'args': args}
         return self._mon_command(_args)
     
-    def osd_crush_ls(self, node: str):
+    def osd_crush_ls(self, node):
         """
         list items beneath a node in the CRUSH tree
         :param node: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3363,7 +3363,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'node': node}
         return self._mon_command(_args)
     
-    def osd_crush_move(self, name: str, args: List[str]):
+    def osd_crush_move(self, name, args):
         """
         move existing entry for <name> to location <args>
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3375,7 +3375,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_crush_remove(self, name: str, ancestor: str=None):
+    def osd_crush_remove(self, name, ancestor=None):
         """
         remove <name> from crush map (everywhere, or just at <ancestor>)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3386,7 +3386,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'ancestor': ancestor}
         return self._mon_command(_args)
     
-    def osd_crush_rename_bucket(self, srcname: str, dstname: str):
+    def osd_crush_rename_bucket(self, srcname, dstname):
         """
         rename bucket <srcname> to <dstname>
         :param srcname: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3397,7 +3397,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'srcname': srcname, 'dstname': dstname}
         return self._mon_command(_args)
     
-    def osd_crush_reweight(self, name: str, weight: float):
+    def osd_crush_reweight(self, name, weight):
         """
         change <name>'s weight to <weight> in crush map
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3418,7 +3418,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_reweight_subtree(self, name: str, weight: float):
+    def osd_crush_reweight_subtree(self, name, weight):
         """
         change all leaf items beneath <name> to <weight> in crush map
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3429,7 +3429,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_crush_rm(self, name: str, ancestor: str=None):
+    def osd_crush_rm(self, name, ancestor=None):
         """
         remove <name> from crush map (everywhere, or just at <ancestor>)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3440,7 +3440,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'ancestor': ancestor}
         return self._mon_command(_args)
     
-    def osd_crush_rm_device_class(self, ids: List[str]):
+    def osd_crush_rm_device_class(self, ids):
         """
         remove class of the osd(s) <id> [<id>...],or use <all|any> to remove all.
         :param ids: CephString 
@@ -3450,7 +3450,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_erasure(self, name: str, profile: str=None):
+    def osd_crush_rule_create_erasure(self, name, profile=None):
         """
         create crush rule <name> for erasure coded pool created with <profile> (default default)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3461,7 +3461,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'profile': profile}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_replicated(self, name: str, root: str, type: str, class_: str=None):
+    def osd_crush_rule_create_replicated(self, name, root, type, class_=None):
         """
         create crush rule <name> for replicated pool to start from <root>, replicate across buckets of type <type>, use devices of type <class> (ssd or hdd)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3474,7 +3474,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'root': root, 'type': type, 'class': class_}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_simple(self, name: str, root: str, type: str, mode: str=None):
+    def osd_crush_rule_create_simple(self, name, root, type, mode=None):
         """
         create crush rule <name> to start from <root>, replicate across buckets of type <type>, using a choose mode of <firstn|indep> (default firstn; indep best for erasure pools)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3487,7 +3487,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'root': root, 'type': type, 'mode': mode}
         return self._mon_command(_args)
     
-    def osd_crush_rule_dump(self, name: str=None):
+    def osd_crush_rule_dump(self, name=None):
         """
         dump crush rule <name> (default all)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3518,7 +3518,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_rule_ls_by_class(self, class_: str):
+    def osd_crush_rule_ls_by_class(self, class_):
         """
         list all crush rules that reference the same <class>
         :param class_: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3528,7 +3528,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'class': class_}
         return self._mon_command(_args)
     
-    def osd_crush_rule_rename(self, srcname: str, dstname: str):
+    def osd_crush_rule_rename(self, srcname, dstname):
         """
         rename crush rule <srcname> to <dstname>
         :param srcname: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3539,7 +3539,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'srcname': srcname, 'dstname': dstname}
         return self._mon_command(_args)
     
-    def osd_crush_rule_rm(self, name: str):
+    def osd_crush_rule_rm(self, name):
         """
         remove crush rule <name>
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3548,30 +3548,30 @@ class MonCommandApi(object):
         prefix = 'osd crush rule rm'
         _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def osd_crush_set(self, prior_version: int=None):
-        """
-        set crush map from input file
-        :param prior_version: CephInt 
-        module=osd perm=rw flags=
-        """
-        prefix = 'osd crush set'
-        _args = {'prefix': prefix, 'prior_version': prior_version}
-        return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def osd_crush_set(self, id_: str, weight: float, args: List[str]):
-        """
-        update crushmap position and weight for <name> to <weight> with location <args>
-        :param id_: CephOsdName 
-        :param weight: CephFloat ragne=0.0 
-        :param args: CephString goodchars=[A-Za-z0-9-_.=] 
-        module=osd perm=rw flags=
-        """
-        prefix = 'osd crush set'
-        _args = {'prefix': prefix, 'id': id_, 'weight': weight, 'args': args}
-        return self._mon_command(_args)
+    # 
+    # @overload  # Python 3 only
+    # def osd_crush_set(self, prior_version=None):
+    #     """
+    #     set crush map from input file
+    #     :param prior_version: CephInt 
+    #     module=osd perm=rw flags=
+    #     """
+    #     prefix = 'osd crush set'
+    #     _args = {'prefix': prefix, 'prior_version': prior_version}
+    #     return self._mon_command(_args)
+    # 
+    # @overload  # Python 3 only
+    # def osd_crush_set(self, id_, weight, args):
+    #     """
+    #     update crushmap position and weight for <name> to <weight> with location <args>
+    #     :param id_: CephOsdName 
+    #     :param weight: CephFloat ragne=0.0 
+    #     :param args: CephString goodchars=[A-Za-z0-9-_.=] 
+    #     module=osd perm=rw flags=
+    #     """
+    #     prefix = 'osd crush set'
+    #     _args = {'prefix': prefix, 'id': id_, 'weight': weight, 'args': args}
+    #     return self._mon_command(_args)
     
     def osd_crush_set_all_straw_buckets_to_straw2(self):
         """
@@ -3583,7 +3583,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_set_device_class(self, class_: str, ids: List[str]):
+    def osd_crush_set_device_class(self, class_, ids):
         """
         set the <class> of the osd(s) <id> [<id>...],or use <all|any> to set all.
         :param class_: CephString 
@@ -3594,7 +3594,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'class': class_, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_crush_set_tunable(self, tunable: str, value: int):
+    def osd_crush_set_tunable(self, tunable, value):
         """
         set crush tunable <tunable> to <value>
         :param tunable: CephChoices strings=straw_calc_version 
@@ -3615,7 +3615,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_swap_bucket(self, source: str, dest: str, yes_i_really_mean_it: bool=None):
+    def osd_crush_swap_bucket(self, source, dest, yes_i_really_mean_it=None):
         """
         swap existing bucket contents from (orphan) bucket <source> and <target>
         :param source: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3627,7 +3627,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'source': source, 'dest': dest, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_crush_tree(self, shadow: str=None):
+    def osd_crush_tree(self, shadow=None):
         """
         dump crush buckets and items in a tree view
         :param shadow: CephChoices strings=--show-shadow 
@@ -3637,7 +3637,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'shadow': shadow}
         return self._mon_command(_args)
     
-    def osd_crush_tunables(self, profile: str):
+    def osd_crush_tunables(self, profile):
         """
         set crush tunables values to <profile>
         :param profile: CephChoices strings=legacy|argonaut|bobtail|firefly|hammer|jewel|optimal|default 
@@ -3647,7 +3647,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'profile': profile}
         return self._mon_command(_args)
     
-    def osd_crush_unlink(self, name: str, ancestor: str=None):
+    def osd_crush_unlink(self, name, ancestor=None):
         """
         unlink <name> from crush map (everywhere, or just at <ancestor>)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3658,7 +3658,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'ancestor': ancestor}
         return self._mon_command(_args)
     
-    def osd_crush_weight_set_create(self, pool: str, mode: str):
+    def osd_crush_weight_set_create(self, pool, mode):
         """
         create a weight-set for a given pool
         :param pool: CephPoolname 
@@ -3699,7 +3699,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_crush_weight_set_reweight(self, pool: str, item: str, weight: List[float]):
+    def osd_crush_weight_set_reweight(self, pool, item, weight):
         """
         set weight for an item (bucket or osd) in a pool's weight-set
         :param pool: CephPoolname 
@@ -3711,7 +3711,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'item': item, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_crush_weight_set_reweight_compat(self, item: str, weight: List[float]):
+    def osd_crush_weight_set_reweight_compat(self, item, weight):
         """
         set weight for an item (bucket or osd) in the backward-compatible weight-set
         :param item: CephString 
@@ -3722,7 +3722,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'item': item, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_crush_weight_set_rm(self, pool: str):
+    def osd_crush_weight_set_rm(self, pool):
         """
         remove the weight-set for a given pool
         :param pool: CephPoolname 
@@ -3742,7 +3742,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_deep_scrub(self, who: str):
+    def osd_deep_scrub(self, who):
         """
         initiate deep scrub on osd <who>, or use <all|any> to deep scrub all
         :param who: CephString 
@@ -3752,7 +3752,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_destroy(self, id_: str, force: bool=None, yes_i_really_mean_it: bool=None):
+    def osd_destroy(self, id_, force=None, yes_i_really_mean_it=None):
         """
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but removes cephx keys, config-key data and lockbox keys, rendering data permanently unreadable.
         :param id_: CephOsdName 
@@ -3764,7 +3764,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'force': force, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_destroy_actual(self, id_: str, yes_i_really_mean_it: bool=None):
+    def osd_destroy_actual(self, id_, yes_i_really_mean_it=None):
         """
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but removes cephx keys, config-key data and lockbox keys, rendering data permanently unreadable.
         :param id_: CephOsdName 
@@ -3775,7 +3775,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_df(self, output_method: str=None, filter_by: str=None, filter: str=None):
+    def osd_df(self, output_method=None, filter_by=None, filter=None):
         """
         show OSD utilization
         :param output_method: CephChoices strings=plain|tree 
@@ -3787,7 +3787,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'output_method': output_method, 'filter_by': filter_by, 'filter': filter}
         return self._mon_command(_args)
     
-    def osd_down(self, ids: List[str]):
+    def osd_down(self, ids):
         """
         set osd(s) <id> [<id>...] down, or use <any|all> to set all osds down
         :param ids: CephString 
@@ -3797,7 +3797,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_dump(self, epoch: int=None):
+    def osd_dump(self, epoch=None):
         """
         print summary of OSD map
         :param epoch: CephInt ragne=0 
@@ -3807,7 +3807,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def osd_erasure_code_profile_get(self, name: str):
+    def osd_erasure_code_profile_get(self, name):
         """
         get erasure code profile <name>
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3827,7 +3827,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_erasure_code_profile_rm(self, name: str):
+    def osd_erasure_code_profile_rm(self, name):
         """
         remove erasure code profile <name>
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3837,7 +3837,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
-    def osd_erasure_code_profile_set(self, name: str, profile: List[str]=None, force: bool=None):
+    def osd_erasure_code_profile_set(self, name, profile=None, force=None):
         """
         create erasure code profile <name> with [<key[=value]> ...] pairs. Add a --force at the end to override an existing profile (VERY DANGEROUS)
         :param name: CephString goodchars=[A-Za-z0-9-_.] 
@@ -3849,7 +3849,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'profile': profile, 'force': force}
         return self._mon_command(_args)
     
-    def osd_find(self, id_: str):
+    def osd_find(self, id_):
         """
         find osd <id> in the CRUSH map and show its location
         :param id_: CephOsdName 
@@ -3859,7 +3859,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_force_create_pg(self, pgid: str, yes_i_really_mean_it: bool=None):
+    def osd_force_create_pg(self, pgid, yes_i_really_mean_it=None):
         """
         force creation of pg <pgid>
         :param pgid: CephPgid 
@@ -3880,7 +3880,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_getcrushmap(self, epoch: int=None):
+    def osd_getcrushmap(self, epoch=None):
         """
         get CRUSH map
         :param epoch: CephInt ragne=0 
@@ -3890,7 +3890,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def osd_getmap(self, epoch: int=None):
+    def osd_getmap(self, epoch=None):
         """
         get OSD map
         :param epoch: CephInt ragne=0 
@@ -3910,7 +3910,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_in(self, ids: List[str]):
+    def osd_in(self, ids):
         """
         set osd(s) <id> [<id>...] in, can use <any|all> to automatically set all previously out osds in
         :param ids: CephString 
@@ -3920,7 +3920,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_last_stat_seq(self, id_: str):
+    def osd_last_stat_seq(self, id_):
         """
         get the last pg stats sequence number reported for this osd
         :param id_: CephOsdName 
@@ -3930,7 +3930,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_lost(self, id_: str, yes_i_really_mean_it: bool=None):
+    def osd_lost(self, id_, yes_i_really_mean_it=None):
         """
         mark osd as permanently lost. THIS DESTROYS DATA IF NO MORE REPLICAS EXIST, BE CAREFUL
         :param id_: CephOsdName 
@@ -3941,7 +3941,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_ls(self, epoch: int=None):
+    def osd_ls(self, epoch=None):
         """
         show all OSD ids
         :param epoch: CephInt ragne=0 
@@ -3951,7 +3951,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def osd_ls_tree(self, name: str, epoch: int=None):
+    def osd_ls_tree(self, name, epoch=None):
         """
         show OSD ids under bucket <name> in the CRUSH map
         :param name: CephString 
@@ -3973,7 +3973,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_map(self, pool: str, object: str, nspace: str=None):
+    def osd_map(self, pool, object, nspace=None):
         """
         find pg for <object> in <pool> with [namespace]
         :param pool: CephPoolname 
@@ -3985,7 +3985,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'object': object, 'nspace': nspace}
         return self._mon_command(_args)
     
-    def osd_metadata(self, id_: str=None):
+    def osd_metadata(self, id_=None):
         """
         fetch metadata for osd {id} (default all)
         :param id_: CephOsdName 
@@ -3995,7 +3995,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_new(self, uuid: str, id_: str=None):
+    def osd_new(self, uuid, id_=None):
         """
         Create a new OSD. If supplied, the `id` to be replaced needs to exist and have been previously destroyed. Reads secrets from JSON file via `-i <file>` (see man page).
         :param uuid: CephUUID 
@@ -4016,7 +4016,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_ok_to_stop(self, ids: List[str]):
+    def osd_ok_to_stop(self, ids):
         """
         check whether osd(s) can be safely stopped without reducing immediate data availability
         :param ids: CephString 
@@ -4026,7 +4026,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_out(self, ids: List[str]):
+    def osd_out(self, ids):
         """
         set osd(s) <id> [<id>...] out, or use <any|all> to set all osds out
         :param ids: CephString 
@@ -4056,7 +4056,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_perf_counters_get(self, query_id: int):
+    def osd_perf_counters_get(self, query_id):
         """
         fetch osd perf counters
         :param query_id: CephInt 
@@ -4066,7 +4066,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'query_id': query_id}
         return self._mon_command(_args)
     
-    def osd_perf_query_add(self, query: str):
+    def osd_perf_query_add(self, query):
         """
         add osd perf query
         :param query: CephChoices strings=client_id|rbd_image_id|all_subkeys 
@@ -4076,7 +4076,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'query': query}
         return self._mon_command(_args)
     
-    def osd_perf_query_remove(self, query_id: int):
+    def osd_perf_query_remove(self, query_id):
         """
         remove osd perf query
         :param query_id: CephInt 
@@ -4086,7 +4086,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'query_id': query_id}
         return self._mon_command(_args)
     
-    def osd_pg_temp(self, pgid: str, id_: List[str]=None):
+    def osd_pg_temp(self, pgid, id_=None):
         """
         set pg_temp mapping pgid:[<id> [<id>...]] (developers only)
         :param pgid: CephPgid 
@@ -4097,7 +4097,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_pg_upmap(self, pgid: str, id_: List[str]):
+    def osd_pg_upmap(self, pgid, id_):
         """
         set pg_upmap mapping <pgid>:[<id> [<id>...]] (developers only)
         :param pgid: CephPgid 
@@ -4108,7 +4108,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_pg_upmap_items(self, pgid: str, id_: List[str]):
+    def osd_pg_upmap_items(self, pgid, id_):
         """
         set pg_upmap_items mapping <pgid>:{<id> to <id>, [...]} (developers only)
         :param pgid: CephPgid 
@@ -4119,7 +4119,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_pool_application_disable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
+    def osd_pool_application_disable(self, pool, app, yes_i_really_mean_it=None):
         """
         disables use of an application <app> on pool <poolname>
         :param pool: CephPoolname 
@@ -4131,7 +4131,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'app': app, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_pool_application_enable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
+    def osd_pool_application_enable(self, pool, app, yes_i_really_mean_it=None):
         """
         enable use of an application <app> [cephfs,rbd,rgw] on pool <poolname>
         :param pool: CephPoolname 
@@ -4143,7 +4143,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'app': app, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_pool_application_get(self, pool: str, app: str=None, key: str=None):
+    def osd_pool_application_get(self, pool, app=None, key=None):
         """
         get value of key <key> of application <app> on pool <poolname>
         :param pool: CephPoolname 
@@ -4155,7 +4155,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'app': app, 'key': key}
         return self._mon_command(_args)
     
-    def osd_pool_application_rm(self, pool: str, app: str, key: str):
+    def osd_pool_application_rm(self, pool, app, key):
         """
         removes application <app> metadata key <key> on pool <poolname>
         :param pool: CephPoolname 
@@ -4167,7 +4167,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'app': app, 'key': key}
         return self._mon_command(_args)
     
-    def osd_pool_application_set(self, pool: str, app: str, key: str, value: str):
+    def osd_pool_application_set(self, pool, app, key, value):
         """
         sets application <app> metadata key <key> to <value> on pool <poolname>
         :param pool: CephPoolname 
@@ -4190,7 +4190,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_pool_cancel_force_backfill(self, who: List[str]):
+    def osd_pool_cancel_force_backfill(self, who):
         """
         restore normal recovery priority of specified pool <who>
         :param who: CephPoolname 
@@ -4200,7 +4200,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_cancel_force_recovery(self, who: List[str]):
+    def osd_pool_cancel_force_recovery(self, who):
         """
         restore normal recovery priority of specified pool <who>
         :param who: CephPoolname 
@@ -4210,7 +4210,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_create(self, pool: str, pg_num: int, pgp_num: int=None, pool_type: str=None, erasure_code_profile: str=None, rule: str=None, expected_num_objects: int=None, size: int=None, pg_num_min: int=None, target_size_bytes: int=None, target_size_ratio: float=None):
+    def osd_pool_create(self, pool, pg_num, pgp_num=None, pool_type=None, erasure_code_profile=None, rule=None, expected_num_objects=None, size=None, pg_num_min=None, target_size_bytes=None, target_size_ratio=None):
         """
         create pool
         :param pool: CephPoolname 
@@ -4230,7 +4230,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'pg_num': pg_num, 'pgp_num': pgp_num, 'pool_type': pool_type, 'erasure_code_profile': erasure_code_profile, 'rule': rule, 'expected_num_objects': expected_num_objects, 'size': size, 'pg_num_min': pg_num_min, 'target_size_bytes': target_size_bytes, 'target_size_ratio': target_size_ratio}
         return self._mon_command(_args)
     
-    def osd_pool_deep_scrub(self, who: List[str]):
+    def osd_pool_deep_scrub(self, who):
         """
         initiate deep-scrub on pool <who>
         :param who: CephPoolname 
@@ -4241,7 +4241,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_pool_delete(self, pool: str, pool2: str=None, yes_i_really_really_mean_it: bool=None, yes_i_really_really_mean_it_not_faking: bool=None):
+    def osd_pool_delete(self, pool, pool2=None, yes_i_really_really_mean_it=None, yes_i_really_really_mean_it_not_faking=None):
         """
         delete pool
         :param pool: CephPoolname 
@@ -4254,7 +4254,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'pool2': pool2, 'yes_i_really_really_mean_it': yes_i_really_really_mean_it, 'yes_i_really_really_mean_it_not_faking': yes_i_really_really_mean_it_not_faking}
         return self._mon_command(_args)
     
-    def osd_pool_force_backfill(self, who: List[str]):
+    def osd_pool_force_backfill(self, who):
         """
         force backfill of specified pool <who> first
         :param who: CephPoolname 
@@ -4264,7 +4264,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_force_recovery(self, who: List[str]):
+    def osd_pool_force_recovery(self, who):
         """
         force recovery of specified pool <who> first
         :param who: CephPoolname 
@@ -4274,7 +4274,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_get(self, pool: str, var: str):
+    def osd_pool_get(self, pool, var):
         """
         get pool parameter <var>
         :param pool: CephPoolname 
@@ -4285,7 +4285,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'var': var}
         return self._mon_command(_args)
     
-    def osd_pool_get_quota(self, pool: str):
+    def osd_pool_get_quota(self, pool):
         """
         obtain object or byte limits for pool
         :param pool: CephPoolname 
@@ -4295,7 +4295,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def osd_pool_ls(self, detail: str=None):
+    def osd_pool_ls(self, detail=None):
         """
         list pools
         :param detail: CephChoices strings=detail 
@@ -4305,7 +4305,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'detail': detail}
         return self._mon_command(_args)
     
-    def osd_pool_mksnap(self, pool: str, snap: str):
+    def osd_pool_mksnap(self, pool, snap):
         """
         make snapshot <snap> in <pool>
         :param pool: CephPoolname 
@@ -4316,7 +4316,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'snap': snap}
         return self._mon_command(_args)
     
-    def osd_pool_rename(self, srcpool: str, destpool: str):
+    def osd_pool_rename(self, srcpool, destpool):
         """
         rename <srcpool> to <destpool>
         :param srcpool: CephPoolname 
@@ -4327,7 +4327,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'srcpool': srcpool, 'destpool': destpool}
         return self._mon_command(_args)
     
-    def osd_pool_repair(self, who: List[str]):
+    def osd_pool_repair(self, who):
         """
         initiate repair on pool <who>
         :param who: CephPoolname 
@@ -4337,7 +4337,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_rm(self, pool: str, pool2: str=None, yes_i_really_really_mean_it: bool=None, yes_i_really_really_mean_it_not_faking: bool=None):
+    def osd_pool_rm(self, pool, pool2=None, yes_i_really_really_mean_it=None, yes_i_really_really_mean_it_not_faking=None):
         """
         remove pool
         :param pool: CephPoolname 
@@ -4350,7 +4350,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'pool2': pool2, 'yes_i_really_really_mean_it': yes_i_really_really_mean_it, 'yes_i_really_really_mean_it_not_faking': yes_i_really_really_mean_it_not_faking}
         return self._mon_command(_args)
     
-    def osd_pool_rmsnap(self, pool: str, snap: str):
+    def osd_pool_rmsnap(self, pool, snap):
         """
         remove snapshot <snap> from <pool>
         :param pool: CephPoolname 
@@ -4361,7 +4361,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'snap': snap}
         return self._mon_command(_args)
     
-    def osd_pool_scrub(self, who: List[str]):
+    def osd_pool_scrub(self, who):
         """
         initiate scrub on pool <who>
         :param who: CephPoolname 
@@ -4371,7 +4371,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_set(self, pool: str, var: str, val: str, yes_i_really_mean_it: bool=None):
+    def osd_pool_set(self, pool, var, val, yes_i_really_mean_it=None):
         """
         set pool parameter <var> to <val>
         :param pool: CephPoolname 
@@ -4384,7 +4384,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'var': var, 'val': val, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_pool_set_quota(self, pool: str, field: str, val: str):
+    def osd_pool_set_quota(self, pool, field, val):
         """
         set object or byte limit on pool
         :param pool: CephPoolname 
@@ -4396,7 +4396,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'field': field, 'val': val}
         return self._mon_command(_args)
     
-    def osd_pool_stats(self, pool_name: str=None):
+    def osd_pool_stats(self, pool_name=None):
         """
         obtain stats from all pools, or from specified pool
         :param pool_name: CephPoolname 
@@ -4406,7 +4406,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool_name': pool_name}
         return self._mon_command(_args)
     
-    def osd_primary_affinity(self, id_: str, weight: float):
+    def osd_primary_affinity(self, id_, weight):
         """
         adjust osd primary-affinity from 0.0 <= <weight> <= 1.0
         :param id_: CephOsdName 
@@ -4417,7 +4417,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_primary_temp(self, pgid: str, id_: str):
+    def osd_primary_temp(self, pgid, id_):
         """
         set primary_temp mapping pgid:<id>|-1 (developers only)
         :param pgid: CephPgid 
@@ -4428,7 +4428,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_}
         return self._mon_command(_args)
     
-    def osd_purge(self, id_: str, force: bool=None, yes_i_really_mean_it: bool=None):
+    def osd_purge(self, id_, force=None, yes_i_really_mean_it=None):
         """
         purge all osd data from the monitors including the OSD id and CRUSH position
         :param id_: CephOsdName 
@@ -4440,7 +4440,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'force': force, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_purge_actual(self, id_: str, yes_i_really_mean_it: bool=None):
+    def osd_purge_actual(self, id_, yes_i_really_mean_it=None):
         """
         purge all osd data from the monitors. Combines `osd destroy`, `osd rm`, and `osd crush rm`.
         :param id_: CephOsdName 
@@ -4451,7 +4451,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_purge_new(self, id_: str, yes_i_really_mean_it: bool=None):
+    def osd_purge_new(self, id_, yes_i_really_mean_it=None):
         """
         purge all traces of an OSD that was partially created but never started
         :param id_: CephOsdName 
@@ -4462,7 +4462,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_repair(self, who: str):
+    def osd_repair(self, who):
         """
         initiate repair on osd <who>, or use <all|any> to repair all
         :param who: CephString 
@@ -4472,7 +4472,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_require_osd_release(self, release: str, yes_i_really_mean_it: bool=None):
+    def osd_require_osd_release(self, release, yes_i_really_mean_it=None):
         """
         set the minimum allowed OSD release to participate in the cluster
         :param release: CephChoices strings=luminous|mimic|nautilus|octopus 
@@ -4483,7 +4483,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'release': release, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_reweight(self, id_: str, weight: float):
+    def osd_reweight(self, id_, weight):
         """
         reweight osd to 0.0 < <weight> < 1.0
         :param id_: CephOsdName 
@@ -4494,7 +4494,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds: int=None, pools: List[str]=None):
+    def osd_reweight_by_pg(self, oload=None, max_change=None, max_osds=None, pools=None):
         """
         reweight OSDs by PG distribution [overload-percentage-for-consideration, default 120]
         :param oload: CephInt 
@@ -4507,7 +4507,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'oload': oload, 'max_change': max_change, 'max_osds': max_osds, 'pools': pools}
         return self._mon_command(_args)
     
-    def osd_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds: int=None, no_increasing: str=None):
+    def osd_reweight_by_utilization(self, oload=None, max_change=None, max_osds=None, no_increasing=None):
         """
         reweight OSDs by utilization [overload-percentage-for-consideration, default 120]
         :param oload: CephInt 
@@ -4520,7 +4520,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'oload': oload, 'max_change': max_change, 'max_osds': max_osds, 'no_increasing': no_increasing}
         return self._mon_command(_args)
     
-    def osd_reweightn(self, weights: str):
+    def osd_reweightn(self, weights):
         """
         reweight osds with {<id>: <weight>,...})
         :param weights: CephString 
@@ -4531,7 +4531,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_rm(self, ids: List[str]):
+    def osd_rm(self, ids):
         """
         remove osd(s) <id> [<id>...], or use <any|all> to remove all osds
         :param ids: CephString 
@@ -4541,7 +4541,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_rm_nodown(self, ids: List[str]):
+    def osd_rm_nodown(self, ids):
         """
         allow osd(s) <id> [<id>...] to be marked down (if they are currently marked as nodown), can use <all|any> to automatically filter out all nodown osds
         :param ids: CephString 
@@ -4551,7 +4551,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_rm_noin(self, ids: List[str]):
+    def osd_rm_noin(self, ids):
         """
         allow osd(s) <id> [<id>...] to be marked in (if they are currently marked as noin), can use <all|any> to automatically filter out all noin osds
         :param ids: CephString 
@@ -4561,7 +4561,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_rm_noout(self, ids: List[str]):
+    def osd_rm_noout(self, ids):
         """
         allow osd(s) <id> [<id>...] to be marked out (if they are currently marked as noout), can use <all|any> to automatically filter out all noout osds
         :param ids: CephString 
@@ -4571,7 +4571,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_rm_noup(self, ids: List[str]):
+    def osd_rm_noup(self, ids):
         """
         allow osd(s) <id> [<id>...] to be marked up (if they are currently marked as noup), can use <all|any> to automatically filter out all noup osds
         :param ids: CephString 
@@ -4581,7 +4581,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_rm_pg_upmap(self, pgid: str):
+    def osd_rm_pg_upmap(self, pgid):
         """
         clear pg_upmap mapping for <pgid> (developers only)
         :param pgid: CephPgid 
@@ -4591,7 +4591,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def osd_rm_pg_upmap_items(self, pgid: str):
+    def osd_rm_pg_upmap_items(self, pgid):
         """
         clear pg_upmap_items mapping for <pgid> (developers only)
         :param pgid: CephPgid 
@@ -4601,7 +4601,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def osd_safe_to_destroy(self, ids: List[str]):
+    def osd_safe_to_destroy(self, ids):
         """
         check whether osd(s) can be safely destroyed without reducing data durability
         :param ids: CephString 
@@ -4611,7 +4611,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_scrub(self, who: str):
+    def osd_scrub(self, who):
         """
         initiate scrub on osd <who>, or use <all|any> to scrub all
         :param who: CephString 
@@ -4621,7 +4621,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_set(self, key: str, yes_i_really_mean_it: bool=None):
+    def osd_set(self, key, yes_i_really_mean_it=None):
         """
         set <key>
         :param key: CephChoices strings=full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim|pglog_hardlimit 
@@ -4632,7 +4632,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_set_backfillfull_ratio(self, ratio: float):
+    def osd_set_backfillfull_ratio(self, ratio):
         """
         set usage ratio at which OSDs are marked too full to backfill
         :param ratio: CephFloat ragne=0.0|1.0 
@@ -4642,7 +4642,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ratio': ratio}
         return self._mon_command(_args)
     
-    def osd_set_full_ratio(self, ratio: float):
+    def osd_set_full_ratio(self, ratio):
         """
         set usage ratio at which OSDs are marked full
         :param ratio: CephFloat ragne=0.0|1.0 
@@ -4652,7 +4652,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ratio': ratio}
         return self._mon_command(_args)
     
-    def osd_set_nearfull_ratio(self, ratio: float):
+    def osd_set_nearfull_ratio(self, ratio):
         """
         set usage ratio at which OSDs are marked near-full
         :param ratio: CephFloat ragne=0.0|1.0 
@@ -4662,7 +4662,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ratio': ratio}
         return self._mon_command(_args)
     
-    def osd_set_require_min_compat_client(self, version: str, yes_i_really_mean_it: bool=None):
+    def osd_set_require_min_compat_client(self, version, yes_i_really_mean_it=None):
         """
         set the minimum client version we will maintain compatibility with
         :param version: CephString 
@@ -4673,7 +4673,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'version': version, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_setcrushmap(self, prior_version: int=None):
+    def osd_setcrushmap(self, prior_version=None):
         """
         set crush map from input file
         :param prior_version: CephInt 
@@ -4683,7 +4683,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'prior_version': prior_version}
         return self._mon_command(_args)
     
-    def osd_setmaxosd(self, newmax: int):
+    def osd_setmaxosd(self, newmax):
         """
         set new maximum osd value
         :param newmax: CephInt ragne=0 
@@ -4703,7 +4703,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_status(self, bucket: str=None):
+    def osd_status(self, bucket=None):
         """
         Show the status of OSDs within a bucket, or all
         :param bucket: CephString 
@@ -4713,7 +4713,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'bucket': bucket}
         return self._mon_command(_args)
     
-    def osd_stop(self, ids: List[str]):
+    def osd_stop(self, ids):
         """
         stop the corresponding osd daemons and mark them as down
         :param ids: CephString 
@@ -4723,7 +4723,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_test_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds: int=None, pools: List[str]=None):
+    def osd_test_reweight_by_pg(self, oload=None, max_change=None, max_osds=None, pools=None):
         """
         dry run of reweight OSDs by PG distribution [overload-percentage-for-consideration, default 120]
         :param oload: CephInt 
@@ -4736,7 +4736,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'oload': oload, 'max_change': max_change, 'max_osds': max_osds, 'pools': pools}
         return self._mon_command(_args)
     
-    def osd_test_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds: int=None, no_increasing: bool=None):
+    def osd_test_reweight_by_utilization(self, oload=None, max_change=None, max_osds=None, no_increasing=None):
         """
         dry run of reweight OSDs by utilization [overload-percentage-for-consideration, default 120]
         :param oload: CephInt 
@@ -4749,7 +4749,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'oload': oload, 'max_change': max_change, 'max_osds': max_osds, 'no_increasing': no_increasing}
         return self._mon_command(_args)
     
-    def osd_tier_add(self, pool: str, tierpool: str, force_nonempty: str=None):
+    def osd_tier_add(self, pool, tierpool, force_nonempty=None):
         """
         add the tier <tierpool> (the second one) to base pool <pool> (the first one)
         :param pool: CephPoolname 
@@ -4761,7 +4761,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'tierpool': tierpool, 'force_nonempty': force_nonempty}
         return self._mon_command(_args)
     
-    def osd_tier_add_cache(self, pool: str, tierpool: str, size: int):
+    def osd_tier_add_cache(self, pool, tierpool, size):
         """
         add a cache <tierpool> (the second one) of size <size> to existing pool <pool> (the first one)
         :param pool: CephPoolname 
@@ -4773,7 +4773,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'tierpool': tierpool, 'size': size}
         return self._mon_command(_args)
     
-    def osd_tier_cache_mode(self, pool: str, mode: str, yes_i_really_mean_it: bool=None):
+    def osd_tier_cache_mode(self, pool, mode, yes_i_really_mean_it=None):
         """
         specify the caching mode for cache tier <pool>
         :param pool: CephPoolname 
@@ -4786,7 +4786,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_tier_remove(self, pool: str, tierpool: str):
+    def osd_tier_remove(self, pool, tierpool):
         """
         remove the tier <tierpool> (the second one) from base pool <pool> (the first one)
         :param pool: CephPoolname 
@@ -4798,7 +4798,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_tier_remove_overlay(self, pool: str):
+    def osd_tier_remove_overlay(self, pool):
         """
         remove the overlay pool for base pool <pool>
         :param pool: CephPoolname 
@@ -4808,7 +4808,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def osd_tier_rm(self, pool: str, tierpool: str):
+    def osd_tier_rm(self, pool, tierpool):
         """
         remove the tier <tierpool> (the second one) from base pool <pool> (the first one)
         :param pool: CephPoolname 
@@ -4819,7 +4819,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'tierpool': tierpool}
         return self._mon_command(_args)
     
-    def osd_tier_rm_overlay(self, pool: str):
+    def osd_tier_rm_overlay(self, pool):
         """
         remove the overlay pool for base pool <pool>
         :param pool: CephPoolname 
@@ -4829,7 +4829,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def osd_tier_set_overlay(self, pool: str, overlaypool: str):
+    def osd_tier_set_overlay(self, pool, overlaypool):
         """
         set the overlay pool for base pool <pool> to be <overlaypool>
         :param pool: CephPoolname 
@@ -4840,7 +4840,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'overlaypool': overlaypool}
         return self._mon_command(_args)
     
-    def osd_tree(self, epoch: int=None, states: List[str]=None):
+    def osd_tree(self, epoch=None, states=None):
         """
         print OSD tree
         :param epoch: CephInt ragne=0 
@@ -4851,7 +4851,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch, 'states': states}
         return self._mon_command(_args)
     
-    def osd_tree_from(self, bucket: str, epoch: int=None, states: List[str]=None):
+    def osd_tree_from(self, bucket, epoch=None, states=None):
         """
         print OSD tree in bucket
         :param bucket: CephString 
@@ -4873,7 +4873,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_unset(self, key: str):
+    def osd_unset(self, key):
         """
         unset <key>
         :param key: CephChoices strings=full|pause|noup|nodown|noout|noin|nobackfill|norebalance|norecover|noscrub|nodeep-scrub|notieragent|nosnaptrim 
@@ -4903,7 +4903,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def pg_cancel_force_backfill(self, pgid: List[str]):
+    def pg_cancel_force_backfill(self, pgid):
         """
         restore normal backfill priority of <pgid>
         :param pgid: CephPgid 
@@ -4913,7 +4913,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_cancel_force_recovery(self, pgid: List[str]):
+    def pg_cancel_force_recovery(self, pgid):
         """
         restore normal recovery priority of <pgid>
         :param pgid: CephPgid 
@@ -4923,7 +4923,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_debug(self, debugop: str):
+    def pg_debug(self, debugop):
         """
         show debug info about pgs
         :param debugop: CephChoices strings=unfound_objects_exist|degraded_pgs_exist 
@@ -4933,7 +4933,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'debugop': debugop}
         return self._mon_command(_args)
     
-    def pg_deep_scrub(self, pgid: str):
+    def pg_deep_scrub(self, pgid):
         """
         start deep-scrub on <pgid>
         :param pgid: CephPgid 
@@ -4943,7 +4943,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_dump(self, dumpcontents: List[str]=None):
+    def pg_dump(self, dumpcontents=None):
         """
         show human-readable versions of pg map (only 'all' valid with plain)
         :param dumpcontents: CephChoices strings=all|summary|sum|delta|pools|osds|pgs|pgs_brief 
@@ -4953,7 +4953,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'dumpcontents': dumpcontents}
         return self._mon_command(_args)
     
-    def pg_dump_json(self, dumpcontents: List[str]=None):
+    def pg_dump_json(self, dumpcontents=None):
         """
         show human-readable version of pg map in json only
         :param dumpcontents: CephChoices strings=all|summary|sum|pools|osds|pgs 
@@ -4973,7 +4973,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def pg_dump_stuck(self, stuckops: List[str]=None, threshold: int=None):
+    def pg_dump_stuck(self, stuckops=None, threshold=None):
         """
         show information about stuck pgs
         :param stuckops: CephChoices strings=inactive|unclean|stale|undersized|degraded 
@@ -4984,7 +4984,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'stuckops': stuckops, 'threshold': threshold}
         return self._mon_command(_args)
     
-    def pg_force_backfill(self, pgid: List[str]):
+    def pg_force_backfill(self, pgid):
         """
         force backfill of <pgid> first
         :param pgid: CephPgid 
@@ -4994,7 +4994,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_force_recovery(self, pgid: List[str]):
+    def pg_force_recovery(self, pgid):
         """
         force recovery of <pgid> first
         :param pgid: CephPgid 
@@ -5014,7 +5014,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def pg_ls(self, pool: int=None, states: List[str]=None):
+    def pg_ls(self, pool=None, states=None):
         """
         list pg with specific pool, osd, state
         :param pool: CephInt 
@@ -5025,7 +5025,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_osd(self, osd: str, pool: int=None, states: List[str]=None):
+    def pg_ls_by_osd(self, osd, pool=None, states=None):
         """
         list pg on osd [osd]
         :param osd: CephOsdName 
@@ -5037,7 +5037,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'osd': osd, 'pool': pool, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_pool(self, poolstr: str, states: List[str]=None):
+    def pg_ls_by_pool(self, poolstr, states=None):
         """
         list pg with pool = [poolname]
         :param poolstr: CephString 
@@ -5048,7 +5048,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'poolstr': poolstr, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_primary(self, osd: str, pool: int=None, states: List[str]=None):
+    def pg_ls_by_primary(self, osd, pool=None, states=None):
         """
         list pg with primary = [osd]
         :param osd: CephOsdName 
@@ -5060,7 +5060,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'osd': osd, 'pool': pool, 'states': states}
         return self._mon_command(_args)
     
-    def pg_map(self, pgid: str):
+    def pg_map(self, pgid):
         """
         show mapping of pg to osds
         :param pgid: CephPgid 
@@ -5070,7 +5070,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_repair(self, pgid: str):
+    def pg_repair(self, pgid):
         """
         start repair on <pgid>
         :param pgid: CephPgid 
@@ -5080,7 +5080,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_repeer(self, pgid: str):
+    def pg_repeer(self, pgid):
         """
         force a PG to repeer
         :param pgid: CephPgid 
@@ -5090,7 +5090,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_scrub(self, pgid: str):
+    def pg_scrub(self, pgid):
         """
         start scrub on <pgid>
         :param pgid: CephPgid 
@@ -5150,7 +5150,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def quorum(self, quorumcmd: str):
+    def quorum(self, quorumcmd):
         """
         enter or exit quorum
         :param quorumcmd: CephChoices strings=enter|exit 
@@ -5170,7 +5170,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def rbd_perf_image_counters(self, pool_spec: str=None, sort_by: str=None):
+    def rbd_perf_image_counters(self, pool_spec=None, sort_by=None):
         """
         Retrieve current RBD IO performance counters
         :param pool_spec: CephString 
@@ -5181,7 +5181,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool_spec': pool_spec, 'sort_by': sort_by}
         return self._mon_command(_args)
     
-    def rbd_perf_image_stats(self, pool_spec: str=None, sort_by: str=None):
+    def rbd_perf_image_stats(self, pool_spec=None, sort_by=None):
         """
         Retrieve current RBD IO performance stats
         :param pool_spec: CephString 
@@ -5192,7 +5192,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool_spec': pool_spec, 'sort_by': sort_by}
         return self._mon_command(_args)
     
-    def report(self, tags: List[str]=None):
+    def report(self, tags=None):
         """
         report full status of cluster, optional title tag strings
         :param tags: CephString 
@@ -5202,7 +5202,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'tags': tags}
         return self._mon_command(_args)
     
-    def restful_create_key(self, key_name: str):
+    def restful_create_key(self, key_name):
         """
         Create an API key with this name
         :param key_name: CephString 
@@ -5222,7 +5222,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def restful_delete_key(self, key_name: str):
+    def restful_delete_key(self, key_name):
         """
         Delete an API key with this name
         :param key_name: CephString 
@@ -5283,7 +5283,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def smart(self, devid: str=None):
+    def smart(self, devid=None):
         """
         Query health metrics for underlying device
         :param devid: CephString 
@@ -5324,7 +5324,7 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def sync_force(self, yes_i_really_mean_it: bool=None, i_know_what_i_am_doing: bool=None):
+    def sync_force(self, yes_i_really_mean_it=None, i_know_what_i_am_doing=None):
         """
         force sync of and clear monitor store
         :param yes_i_really_mean_it: CephBool 
@@ -5335,7 +5335,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'yes_i_really_mean_it': yes_i_really_mean_it, 'i_know_what_i_am_doing': i_know_what_i_am_doing}
         return self._mon_command(_args)
     
-    def telegraf_config_set(self, key: str, value: str):
+    def telegraf_config_set(self, key, value):
         """
         Set a configuration value
         :param key: CephString 
@@ -5416,7 +5416,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def tell(self, target: str, args: List[str]):
+    def tell(self, target, args):
         """
         send a command to a specific daemon
         :param target: CephName 
@@ -5457,7 +5457,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def zabbix_config_set(self, key: str, value: str):
+    def zabbix_config_set(self, key, value):
         """
         Set a configuration value
         :param key: CephString 
@@ -5501,7 +5501,10 @@ class MonCommandApi(object):
 
 if __name__ == '__main__':
     import rados
-    cluster = rados.Rados(conffile=sys.argv[1])
-    cluster.connect()
-    print(getattr(MonCommandApi(cluster), sys.argv[2])(*sys.argv[3:]))
+    with rados.Rados(conffile=sys.argv[1]) as cluster:
+        meth = getattr(MonCommandApi(cluster), sys.argv[2])
+        try:
+            print(meth(*sys.argv[3:]))
+        except TypeError:
+            help(meth)
 

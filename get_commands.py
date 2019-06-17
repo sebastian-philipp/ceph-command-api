@@ -58,9 +58,12 @@ footer = """
 
 if __name__ == '__main__':
     import rados
-    cluster = rados.Rados(conffile=sys.argv[1])
-    cluster.connect()
-    print(getattr(MonCommandApi(cluster), sys.argv[2])(*sys.argv[3:]))
+    with rados.Rados(conffile=sys.argv[1]) as cluster:
+        meth = getattr(MonCommandApi(cluster), sys.argv[2])
+        try:
+            print(meth(*sys.argv[3:]))
+        except TypeError:
+            help(meth)
 """
 def indent(s):
     return '\n'.join(' '*4 + l for l in s.splitlines())
