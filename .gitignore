@@ -2,3 +2,4 @@ __pycache__
 docs/build/
 venv
 .idea
+ceph_command_api.egg-info
