@@ -12,6 +12,4 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 python rebuild.py $CEPH_BUILD_DIR/ceph.conf
 
-cd docs
-echo "sphinx-build: $(which sphinx-build)"
-make singlehtml
+python setup.py build_sphinx
