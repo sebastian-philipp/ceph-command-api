@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 version = '1.0'
-release = '1.0.0'
+release = '1.0.1'
 
 setup(
     name='ceph-command-api',
