@@ -20,7 +20,7 @@ import warnings
 import json
 
 try:
-    from typing import List
+    from typing import List, Optional
     from ceph.mon_command_api import CommandResult
 except ImportError:
     pass
@@ -126,6 +126,23 @@ class Param(object):
         'CephFloat': 'float',
     }
 
+    bash_example = {
+        'CephInt': '1',
+        'CephString': 'string',
+        'CephChoices': 'choice',
+        'CephPgid': '0',
+        'CephOsdName': 'osd.0',
+        'CephPoolname': 'poolname',
+        'CephObjectname': 'objectname',
+        'CephUUID': 'uuid',
+        'CephEntityAddr': 'entityaddr',
+        'CephIPAddr': '0.0.0.0',
+        'CephName': 'name',
+        'CephBool': 'true',
+        'CephFloat': '0.0',
+    }
+
+
     def __init__(self, type, name, who=None, n=None, req=True, range=None, strings=None, goodchars=None):
         self.type = type
         self.name = name
@@ -165,7 +182,8 @@ class Param(object):
 
     def py_type(self):
         inner = Param.t[self.type]
-        return 'List[{}]'.format(inner) if self.n else inner
+        ret = 'List[{}]'.format(inner) if self.n else inner
+        return ret if self.req else 'Optional[{}]'.format(ret)
 
     def mk_type(self):
         if PY2:
@@ -174,6 +192,9 @@ class Param(object):
 
     def mk_dict(self):
         return "'{}': {}".format(self.name, self.safe_name())
+
+    def mk_bash_example(self):
+        return '--{}={}'.format(self.name, Param.bash_example[self.type])
 
     def __str__(self):
         return '{}{}{}'.format(self.safe_name(), self.mk_type(), self.mk_default())
@@ -214,29 +235,35 @@ class FuncSig(object):
         return ''
 
     def mk_doc_string(self):
-        elems = ['Prefix: ``{}``'.format(self.prefix())]
+        elems = []
         if self.help:
             elems.append(textwrap.fill(self.help))
+
+        elems.append(self.mk_bash_example())
         elems.append('module={} perm={} flags={}'.format(self.module, self.perm, str(self.flags)))
         if self.params:
             elems.append(self.mk_param_help())
         return indent('"""\n{}\n"""'.format('\n\n'.join(elems)))
 
+    def mk_bash_example(self):
+        line = ' '.join(['ceph', self.prefix()] + [p.mk_bash_example() for p in self.params])
+        return "Example command:\n\n.. code-block:: bash\n\n    " + line
+
 
     def __str__(self):
         out = func_template.format(self.name(), self.mk_params(), indent(self.mk_type_hint()), self.mk_doc_string(), self.prefix(), self.mk_mk_dict())
         if self.needs_overload:
-            out = '\n@overload  # Python 3 only' + out
+            out = '\n@overload  # todo' + out
         if 'deprecated' in self.flags or 'obsolete' in self.flags:
             out = '\n@deprecated' + out
-        if self.needs_overload and PY2:
+        if self.needs_overload:
             out = comment(out)
         return out
 
 
 def set_overload(funcs):
-    for k, g in groupby(funcs, key=lambda f: f.name()):
-        g = list(g)
+    for k, g_ in groupby(funcs, key=lambda f: f.name()):
+        g = list(g_)
         if len(g) > 1:
             for f in g:
                 f.needs_overload = True

@@ -14,6 +14,8 @@
 #
 import os
 import sys
+from typing import Any, List, Dict
+
 sys.path.insert(0, os.path.abspath('../..'))
 import ceph_command_api
 
@@ -66,7 +68,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns: List[Any] = []
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -109,7 +111,7 @@ htmlhelp_basename = 'ceph-command-apidoc'
 
 # -- Options for LaTeX output ------------------------------------------------
 
-latex_elements = {
+latex_elements: Dict[str, Any] = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',

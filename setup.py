@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 version = '1.0'
-release = '1.0.1'
+release = '1.0.2'
 
 setup(
     name='ceph-command-api',
@@ -33,5 +33,6 @@ setup(
             'version': ('setup.py', version),
             'release': ('setup.py', release),
             'source_dir': ('setup.py', 'docs/source')}},
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest', 'mypy', 'pytest-mypy']
 )
-

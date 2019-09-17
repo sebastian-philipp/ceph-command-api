@@ -9,7 +9,7 @@ import warnings
 import json
 
 try:
-    from typing import List
+    from typing import List, Optional
     from ceph.mon_command_api import CommandResult
 except ImportError:
     pass
@@ -50,9 +50,13 @@ class MonCommandApi(object):
         res = self._rados.mon_command(json.dumps(cmd), inbuf=inbuf, target=target)
         return CommandResult(*res)
     
-    def ansible_set_ssl_certificate(self, mgr_id: str=None):
+    def ansible_set_ssl_certificate(self, mgr_id: Optional[str]=None):
         """
-        Prefix: ``ansible set-ssl-certificate``
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph ansible set-ssl-certificate --mgr_id=string
         
         module=mgr perm=w flags=mgr
         
@@ -62,9 +66,13 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'mgr_id': mgr_id}
         return self._mon_command(_args)
     
-    def ansible_set_ssl_certificate_key(self, mgr_id: str=None):
+    def ansible_set_ssl_certificate_key(self, mgr_id: Optional[str]=None):
         """
-        Prefix: ``ansible set-ssl-certificate-key``
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph ansible set-ssl-certificate-key --mgr_id=string
         
         module=mgr perm=w flags=mgr
         
@@ -74,12 +82,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'mgr_id': mgr_id}
         return self._mon_command(_args)
     
-    def auth_add(self, entity: str, caps: List[str]=None):
+    def auth_add(self, entity: str, caps: Optional[List[str]]=None):
         """
-        Prefix: ``auth add``
-        
         add auth info for <entity> from input file, or random key if no input
         is given, and/or any caps specified in the command
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth add --entity=string --caps=string
         
         module=auth perm=rwx flags=
         
@@ -92,9 +104,13 @@ class MonCommandApi(object):
     
     def auth_caps(self, entity: str, caps: List[str]):
         """
-        Prefix: ``auth caps``
-        
         update caps for <name> from caps specified in the command
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth caps --entity=string --caps=string
         
         module=auth perm=rwx flags=
         
@@ -108,9 +124,13 @@ class MonCommandApi(object):
     @deprecated
     def auth_del(self, entity: str):
         """
-        Prefix: ``auth del``
-        
         delete all caps for <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth del --entity=string
         
         module=auth perm=rwx flags=deprecated
         
@@ -120,11 +140,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_export(self, entity: str=None):
+    def auth_export(self, entity: Optional[str]=None):
         """
-        Prefix: ``auth export``
-        
         write keyring for requested entity, or master keyring if none given
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth export --entity=string
         
         module=auth perm=rx flags=
         
@@ -136,9 +160,13 @@ class MonCommandApi(object):
     
     def auth_get(self, entity: str):
         """
-        Prefix: ``auth get``
-        
         write keyring file with requested key
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth get --entity=string
         
         module=auth perm=rx flags=
         
@@ -150,9 +178,13 @@ class MonCommandApi(object):
     
     def auth_get_key(self, entity: str):
         """
-        Prefix: ``auth get-key``
-        
         display requested key
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth get-key --entity=string
         
         module=auth perm=rx flags=
         
@@ -162,12 +194,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity}
         return self._mon_command(_args)
     
-    def auth_get_or_create(self, entity: str, caps: List[str]=None):
+    def auth_get_or_create(self, entity: str, caps: Optional[List[str]]=None):
         """
-        Prefix: ``auth get-or-create``
-        
         add auth info for <entity> from input file, or random key if no input
         given, and/or any caps specified in the command
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth get-or-create --entity=string --caps=string
         
         module=auth perm=rwx flags=
         
@@ -178,13 +214,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'entity': entity, 'caps': caps}
         return self._mon_command(_args)
     
-    def auth_get_or_create_key(self, entity: str, caps: List[str]=None):
+    def auth_get_or_create_key(self, entity: str, caps: Optional[List[str]]=None):
         """
-        Prefix: ``auth get-or-create-key``
-        
         get, or add, key for <name> from system/caps pairs specified in the
         command.  If key already exists, any given caps must match the
         existing caps for that key.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth get-or-create-key --entity=string --caps=string
         
         module=auth perm=rwx flags=
         
@@ -197,9 +237,13 @@ class MonCommandApi(object):
     
     def auth_import(self):
         """
-        Prefix: ``auth import``
-        
         auth import: read keyring file from -i <file>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth import
         
         module=auth perm=rwx flags=
         """
@@ -210,9 +254,13 @@ class MonCommandApi(object):
     @deprecated
     def auth_list(self):
         """
-        Prefix: ``auth list``
-        
         list authentication state
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth list
         
         module=auth perm=rx flags=deprecated
         """
@@ -222,51 +270,67 @@ class MonCommandApi(object):
     
     def auth_ls(self):
         """
-        Prefix: ``auth ls``
-        
         list authentication state
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth ls
         
         module=auth perm=rx flags=
         """
         prefix = 'auth ls'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def auth_print_key(self, entity: str):
-        """
-        Prefix: ``auth print-key``
-        
-        display requested key
-        
-        module=auth perm=rx flags=
-        
-        :param entity:
-        """
-        prefix = 'auth print-key'
-        _args = {'prefix': prefix, 'entity': entity}
-        return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def auth_print_key(self, entity: str):
-        """
-        Prefix: ``auth print_key``
-        
-        display requested key
-        
-        module=auth perm=rx flags=
-        
-        :param entity:
-        """
-        prefix = 'auth print_key'
-        _args = {'prefix': prefix, 'entity': entity}
-        return self._mon_command(_args)
+    # 
+    # @overload  # todo
+    # def auth_print_key(self, entity: str):
+    #     """
+    #     display requested key
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph auth print-key --entity=string
+    #     
+    #     module=auth perm=rx flags=
+    #     
+    #     :param entity:
+    #     """
+    #     prefix = 'auth print-key'
+    #     _args = {'prefix': prefix, 'entity': entity}
+    #     return self._mon_command(_args)
+    # 
+    # @overload  # todo
+    # def auth_print_key(self, entity: str):
+    #     """
+    #     display requested key
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph auth print_key --entity=string
+    #     
+    #     module=auth perm=rx flags=
+    #     
+    #     :param entity:
+    #     """
+    #     prefix = 'auth print_key'
+    #     _args = {'prefix': prefix, 'entity': entity}
+    #     return self._mon_command(_args)
     
     def auth_rm(self, entity: str):
         """
-        Prefix: ``auth rm``
-        
         remove all caps for <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph auth rm --entity=string
         
         module=auth perm=rwx flags=
         
@@ -278,9 +342,13 @@ class MonCommandApi(object):
     
     def balancer_dump(self, plan: str):
         """
-        Prefix: ``balancer dump``
-        
         Show an optimization plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer dump --plan=string
         
         module=mgr perm=r flags=mgr
         
@@ -290,12 +358,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'plan': plan}
         return self._mon_command(_args)
     
-    def balancer_eval(self, option: str=None):
+    def balancer_eval(self, option: Optional[str]=None):
         """
-        Prefix: ``balancer eval``
-        
         Evaluate data distribution for the current cluster or specific pool or
         specific plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer eval --option=string
         
         module=mgr perm=r flags=mgr
         
@@ -305,12 +377,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'option': option}
         return self._mon_command(_args)
     
-    def balancer_eval_verbose(self, option: str=None):
+    def balancer_eval_verbose(self, option: Optional[str]=None):
         """
-        Prefix: ``balancer eval-verbose``
-        
         Evaluate data distribution for the current cluster or specific pool or
         specific plan (verbosely)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer eval-verbose --option=string
         
         module=mgr perm=r flags=mgr
         
@@ -322,9 +398,13 @@ class MonCommandApi(object):
     
     def balancer_execute(self, plan: str):
         """
-        Prefix: ``balancer execute``
-        
         Execute an optimization plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer execute --plan=string
         
         module=mgr perm=rw flags=mgr
         
@@ -336,9 +416,13 @@ class MonCommandApi(object):
     
     def balancer_ls(self):
         """
-        Prefix: ``balancer ls``
-        
         List all plans
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer ls
         
         module=mgr perm=r flags=mgr
         """
@@ -348,9 +432,13 @@ class MonCommandApi(object):
     
     def balancer_mode(self, mode: str):
         """
-        Prefix: ``balancer mode``
-        
         Set balancer mode
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer mode --mode=choice
         
         module=mgr perm=rw flags=mgr
         
@@ -362,9 +450,13 @@ class MonCommandApi(object):
     
     def balancer_off(self):
         """
-        Prefix: ``balancer off``
-        
         Disable automatic balancing
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer off
         
         module=mgr perm=rw flags=mgr
         """
@@ -374,9 +466,13 @@ class MonCommandApi(object):
     
     def balancer_on(self):
         """
-        Prefix: ``balancer on``
-        
         Enable automatic balancing
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer on
         
         module=mgr perm=rw flags=mgr
         """
@@ -384,11 +480,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def balancer_optimize(self, plan: str, pools: List[str]=None):
+    def balancer_optimize(self, plan: str, pools: Optional[List[str]]=None):
         """
-        Prefix: ``balancer optimize``
-        
         Run optimizer to create a new plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer optimize --plan=string --pools=string
         
         module=mgr perm=rw flags=mgr
         
@@ -401,9 +501,13 @@ class MonCommandApi(object):
     
     def balancer_pool_add(self, pools: List[str]):
         """
-        Prefix: ``balancer pool add``
-        
         Enable automatic balancing for specific pools
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer pool add --pools=string
         
         module=mgr perm=rw flags=mgr
         
@@ -415,11 +519,15 @@ class MonCommandApi(object):
     
     def balancer_pool_ls(self):
         """
-        Prefix: ``balancer pool ls``
-        
         List automatic balancing pools. Note that empty list means all
         existing pools will be automatic balancing targets, which is the
         default behaviour of balancer.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer pool ls
         
         module=mgr perm=r flags=mgr
         """
@@ -429,9 +537,13 @@ class MonCommandApi(object):
     
     def balancer_pool_rm(self, pools: List[str]):
         """
-        Prefix: ``balancer pool rm``
-        
         Disable automatic balancing for specific pools
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer pool rm --pools=string
         
         module=mgr perm=rw flags=mgr
         
@@ -443,9 +555,13 @@ class MonCommandApi(object):
     
     def balancer_reset(self):
         """
-        Prefix: ``balancer reset``
-        
         Discard all optimization plans
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer reset
         
         module=mgr perm=rw flags=mgr
         """
@@ -455,9 +571,13 @@ class MonCommandApi(object):
     
     def balancer_rm(self, plan: str):
         """
-        Prefix: ``balancer rm``
-        
         Discard an optimization plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer rm --plan=string
         
         module=mgr perm=rw flags=mgr
         
@@ -469,9 +589,13 @@ class MonCommandApi(object):
     
     def balancer_show(self, plan: str):
         """
-        Prefix: ``balancer show``
-        
         Show details of an optimization plan
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer show --plan=string
         
         module=mgr perm=r flags=mgr
         
@@ -483,9 +607,13 @@ class MonCommandApi(object):
     
     def balancer_status(self):
         """
-        Prefix: ``balancer status``
-        
         Show balancer status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph balancer status
         
         module=mgr perm=r flags=mgr
         """
@@ -496,11 +624,15 @@ class MonCommandApi(object):
     @deprecated
     def compact(self):
         """
-        Prefix: ``compact``
-        
         cause compaction of monitor's leveldb/rocksdb storage
         
-        module=mon perm=rw flags=no_forward, deprecated
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph compact
+        
+        module=mon perm=rw flags=deprecated, no_forward
         """
         prefix = 'compact'
         _args = {'prefix': prefix, }
@@ -508,9 +640,13 @@ class MonCommandApi(object):
     
     def config_assimilate_conf(self):
         """
-        Prefix: ``config assimilate-conf``
-        
         Assimilate options from a conf, and return a new, minimal conf file
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config assimilate-conf
         
         module=config perm=rw flags=
         """
@@ -520,9 +656,13 @@ class MonCommandApi(object):
     
     def config_dump(self):
         """
-        Prefix: ``config dump``
-        
         Show all configuration option(s)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config dump
         
         module=mon perm=r flags=
         """
@@ -532,9 +672,13 @@ class MonCommandApi(object):
     
     def config_generate_minimal_conf(self):
         """
-        Prefix: ``config generate-minimal-conf``
-        
         Generate a minimal ceph.conf file
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config generate-minimal-conf
         
         module=config perm=r flags=
         """
@@ -544,9 +688,13 @@ class MonCommandApi(object):
     
     def config_get(self, who: str, key: str):
         """
-        Prefix: ``config get``
-        
         Show configuration option(s) for an entity
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config get --who=string --key=string
         
         module=config perm=r flags=
         
@@ -559,9 +707,13 @@ class MonCommandApi(object):
     
     def config_help(self, key: str):
         """
-        Prefix: ``config help``
-        
         Describe a configuration option
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config help --key=string
         
         module=config perm=r flags=
         
@@ -573,9 +725,13 @@ class MonCommandApi(object):
     
     def config_log(self, num: int):
         """
-        Prefix: ``config log``
-        
         Show recent history of config changes
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config log --num=1
         
         module=config perm=r flags=
         
@@ -587,9 +743,13 @@ class MonCommandApi(object):
     
     def config_ls(self):
         """
-        Prefix: ``config ls``
-        
         List available configuration options
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config ls
         
         module=config perm=r flags=
         """
@@ -599,9 +759,13 @@ class MonCommandApi(object):
     
     def config_reset(self, num: int):
         """
-        Prefix: ``config reset``
-        
         Revert configuration to a historical version specified by <num>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config reset --num=1
         
         module=config perm=rw flags=
         
@@ -613,9 +777,13 @@ class MonCommandApi(object):
     
     def config_rm(self, who: str, name: str):
         """
-        Prefix: ``config rm``
-        
         Clear a configuration option for one or more entities
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config rm --who=string --name=string
         
         module=config perm=rw flags=
         
@@ -626,11 +794,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who, 'name': name}
         return self._mon_command(_args)
     
-    def config_set(self, who: str, name: str, value: str, force: bool=None):
+    def config_set(self, who: str, name: str, value: str, force:
+                   Optional[bool]=None):
         """
-        Prefix: ``config set``
-        
         Set a configuration option for one or more entities
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config set --who=string --name=string --value=string --force=true
         
         module=config perm=rw flags=
         
@@ -645,9 +818,13 @@ class MonCommandApi(object):
     
     def config_show(self, who: str, key: str):
         """
-        Prefix: ``config show``
-        
         Show running configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config show --who=string --key=string
         
         module=mgr perm=r flags=mgr
         
@@ -660,9 +837,13 @@ class MonCommandApi(object):
     
     def config_show_with_defaults(self, who: str):
         """
-        Prefix: ``config show-with-defaults``
-        
         Show running configuration (including compiled-in defaults)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config show-with-defaults --who=string
         
         module=mgr perm=r flags=mgr
         
@@ -675,9 +856,13 @@ class MonCommandApi(object):
     @deprecated
     def config_key_del(self, key: str):
         """
-        Prefix: ``config-key del``
-        
         delete <key>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key del --key=string
         
         module=config-key perm=rw flags=deprecated
         
@@ -687,11 +872,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_dump(self, key: str=None):
+    def config_key_dump(self, key: Optional[str]=None):
         """
-        Prefix: ``config-key dump``
-        
         dump keys and values (with optional prefix)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key dump --key=string
         
         module=config-key perm=r flags=
         
@@ -703,9 +892,13 @@ class MonCommandApi(object):
     
     def config_key_exists(self, key: str):
         """
-        Prefix: ``config-key exists``
-        
         check for <key>'s existence
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key exists --key=string
         
         module=config-key perm=r flags=
         
@@ -717,9 +910,13 @@ class MonCommandApi(object):
     
     def config_key_get(self, key: str):
         """
-        Prefix: ``config-key get``
-        
         get <key>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key get --key=string
         
         module=config-key perm=r flags=
         
@@ -732,9 +929,13 @@ class MonCommandApi(object):
     @deprecated
     def config_key_list(self):
         """
-        Prefix: ``config-key list``
-        
         list keys
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key list
         
         module=config-key perm=r flags=deprecated
         """
@@ -744,9 +945,13 @@ class MonCommandApi(object):
     
     def config_key_ls(self):
         """
-        Prefix: ``config-key ls``
-        
         list keys
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key ls
         
         module=config-key perm=r flags=
         """
@@ -755,11 +960,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def config_key_put(self, key: str, val: str=None):
+    def config_key_put(self, key: str, val: Optional[str]=None):
         """
-        Prefix: ``config-key put``
-        
         put <key>, value <val>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key put --key=string --val=string
         
         module=config-key perm=rw flags=deprecated
         
@@ -772,9 +981,13 @@ class MonCommandApi(object):
     
     def config_key_rm(self, key: str):
         """
-        Prefix: ``config-key rm``
-        
         rm <key>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key rm --key=string
         
         module=config-key perm=rw flags=
         
@@ -784,11 +997,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key}
         return self._mon_command(_args)
     
-    def config_key_set(self, key: str, val: str=None):
+    def config_key_set(self, key: str, val: Optional[str]=None):
         """
-        Prefix: ``config-key set``
-        
         set <key> to value <val>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph config-key set --key=string --val=string
         
         module=config-key perm=rw flags=
         
@@ -799,11 +1016,67 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'key': key, 'val': val}
         return self._mon_command(_args)
     
+    def count(self, num: int):
+        """
+        Do some counting
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph count --num=1
+        
+        module=mgr perm=r flags=mgr
+        
+        :param num: CephInt
+        """
+        prefix = 'count'
+        _args = {'prefix': prefix, 'num': num}
+        return self._mon_command(_args)
+    
+    def crash_archive(self, id_1: str):
+        """
+        Acknowledge a crash and silence health warning(s)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash archive --id=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param id_1: Real name is ``id``
+        """
+        prefix = 'crash archive'
+        _args = {'prefix': prefix, 'id': id_1}
+        return self._mon_command(_args)
+    
+    def crash_archive_all(self):
+        """
+        Acknowledge all new crashes and silence health warning(s)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash archive-all
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'crash archive-all'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def crash_info(self, id_1: str):
         """
-        Prefix: ``crash info``
-        
         show crash dump metadata
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash info --id=string
         
         module=mgr perm=r flags=mgr
         
@@ -815,9 +1088,13 @@ class MonCommandApi(object):
     
     def crash_json_report(self, hours: str):
         """
-        Prefix: ``crash json_report``
-        
         Crashes in the last <hours> hours
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash json_report --hours=string
         
         module=mgr perm=r flags=mgr
         
@@ -829,9 +1106,13 @@ class MonCommandApi(object):
     
     def crash_ls(self):
         """
-        Prefix: ``crash ls``
+        Show new and archived crash dumps
         
-        Show saved crash dumps
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash ls
         
         module=mgr perm=r flags=mgr
         """
@@ -839,11 +1120,31 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
+    def crash_ls_new(self):
+        """
+        Show new crash dumps
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash ls-new
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'crash ls-new'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def crash_post(self):
         """
-        Prefix: ``crash post``
-        
         Add a crash dump (use -i <jsonfile>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash post
         
         module=mgr perm=rw flags=mgr
         """
@@ -853,9 +1154,13 @@ class MonCommandApi(object):
     
     def crash_prune(self, keep: str):
         """
-        Prefix: ``crash prune``
-        
         Remove crashes older than <keep> days
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash prune --keep=string
         
         module=mgr perm=rw flags=mgr
         
@@ -867,9 +1172,13 @@ class MonCommandApi(object):
     
     def crash_rm(self, id_1: str):
         """
-        Prefix: ``crash rm``
-        
         Remove a saved crash <id>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash rm --id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -881,9 +1190,13 @@ class MonCommandApi(object):
     
     def crash_stat(self):
         """
-        Prefix: ``crash stat``
-        
         Summarize recorded crashes
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph crash stat
         
         module=mgr perm=r flags=mgr
         """
@@ -893,9 +1206,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_role_add_scope_perms(self, rolename: str, scopename: str, permissions: List[str]):
         """
-        Prefix: ``dashboard ac-role-add-scope-perms``
-        
         Add the scope permissions for a role
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-role-add-scope-perms --rolename=string --scopename=string --permissions=string
         
         module=mgr perm=w flags=mgr
         
@@ -908,11 +1225,15 @@ class MonCommandApi(object):
                  permissions}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_create(self, rolename: str, description: str=None):
+    def dashboard_ac_role_create(self, rolename: str, description: Optional[str]=None):
         """
-        Prefix: ``dashboard ac-role-create``
-        
         Create a new access control role
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-role-create --rolename=string --description=string
         
         module=mgr perm=w flags=mgr
         
@@ -925,9 +1246,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_role_del_scope_perms(self, rolename: str, scopename: str):
         """
-        Prefix: ``dashboard ac-role-del-scope-perms``
-        
         Delete the scope permissions for a role
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-role-del-scope-perms --rolename=string --scopename=string
         
         module=mgr perm=w flags=mgr
         
@@ -940,9 +1265,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_role_delete(self, rolename: str):
         """
-        Prefix: ``dashboard ac-role-delete``
-        
         Delete an access control role
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-role-delete --rolename=string
         
         module=mgr perm=w flags=mgr
         
@@ -952,11 +1281,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'rolename': rolename}
         return self._mon_command(_args)
     
-    def dashboard_ac_role_show(self, rolename: str=None):
+    def dashboard_ac_role_show(self, rolename: Optional[str]=None):
         """
-        Prefix: ``dashboard ac-role-show``
-        
         Show role info
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-role-show --rolename=string
         
         module=mgr perm=r flags=mgr
         
@@ -968,9 +1301,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_user_add_roles(self, username: str, roles: List[str]):
         """
-        Prefix: ``dashboard ac-user-add-roles``
-        
         Add roles to user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-add-roles --username=string --roles=string
         
         module=mgr perm=w flags=mgr
         
@@ -981,12 +1318,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'roles': roles}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_create(self, username: str, password: str=None, rolename: str=None,
-                                 name: str=None, email: str=None):
+    def dashboard_ac_user_create(self, username: str, password: Optional[str]=None, rolename:
+                                 Optional[str]=None, name: Optional[str]=None, email:
+                                 Optional[str]=None, enabled: Optional[bool]=None):
         """
-        Prefix: ``dashboard ac-user-create``
-        
         Create a user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-create --username=string --password=string --rolename=string --name=string --email=string --enabled=true
         
         module=mgr perm=w flags=mgr
         
@@ -995,17 +1337,22 @@ class MonCommandApi(object):
         :param rolename:
         :param name:
         :param email:
+        :param enabled: CephBool
         """
         prefix = 'dashboard ac-user-create'
         _args = {'prefix': prefix, 'username': username, 'password': password, 'rolename':
-                 rolename, 'name': name, 'email': email}
+                 rolename, 'name': name, 'email': email, 'enabled': enabled}
         return self._mon_command(_args)
     
     def dashboard_ac_user_del_roles(self, username: str, roles: List[str]):
         """
-        Prefix: ``dashboard ac-user-del-roles``
-        
         Delete roles from user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-del-roles --username=string --roles=string
         
         module=mgr perm=w flags=mgr
         
@@ -1018,9 +1365,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_user_delete(self, username: str):
         """
-        Prefix: ``dashboard ac-user-delete``
-        
         Delete user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-delete --username=string
         
         module=mgr perm=w flags=mgr
         
@@ -1030,11 +1381,51 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username}
         return self._mon_command(_args)
     
+    def dashboard_ac_user_disable(self, username: str):
+        """
+        Disable a user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-disable --username=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param username:
+        """
+        prefix = 'dashboard ac-user-disable'
+        _args = {'prefix': prefix, 'username': username}
+        return self._mon_command(_args)
+    
+    def dashboard_ac_user_enable(self, username: str):
+        """
+        Enable a user
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-enable --username=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param username:
+        """
+        prefix = 'dashboard ac-user-enable'
+        _args = {'prefix': prefix, 'username': username}
+        return self._mon_command(_args)
+    
     def dashboard_ac_user_set_info(self, username: str, name: str, email: str):
         """
-        Prefix: ``dashboard ac-user-set-info``
-        
         Set user info
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-set-info --username=string --name=string --email=string
         
         module=mgr perm=w flags=mgr
         
@@ -1048,9 +1439,13 @@ class MonCommandApi(object):
     
     def dashboard_ac_user_set_password(self, username: str, password: str):
         """
-        Prefix: ``dashboard ac-user-set-password``
-        
         Set user password
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-set-password --username=string --password=string
         
         module=mgr perm=w flags=mgr
         
@@ -1061,11 +1456,34 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'password': password}
         return self._mon_command(_args)
     
+    def dashboard_ac_user_set_password_hash(self, username: str, hashed_password: str):
+        """
+        Set user password bcrypt hash
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-set-password-hash --username=string --hashed_password=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param username:
+        :param hashed_password:
+        """
+        prefix = 'dashboard ac-user-set-password-hash'
+        _args = {'prefix': prefix, 'username': username, 'hashed_password': hashed_password}
+        return self._mon_command(_args)
+    
     def dashboard_ac_user_set_roles(self, username: str, roles: List[str]):
         """
-        Prefix: ``dashboard ac-user-set-roles``
-        
         Set user roles
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-set-roles --username=string --roles=string
         
         module=mgr perm=w flags=mgr
         
@@ -1076,11 +1494,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'roles': roles}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_show(self, username: str=None):
+    def dashboard_ac_user_show(self, username: Optional[str]=None):
         """
-        Prefix: ``dashboard ac-user-show``
-        
         Show user info
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard ac-user-show --username=string
         
         module=mgr perm=r flags=mgr
         
@@ -1092,9 +1514,13 @@ class MonCommandApi(object):
     
     def dashboard_create_self_signed_cert(self):
         """
-        Prefix: ``dashboard create-self-signed-cert``
-        
         Create self signed certificate
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard create-self-signed-cert
         
         module=mgr perm=w flags=mgr
         """
@@ -1102,11 +1528,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def dashboard_feature(self, action: str, features: List[str]=None):
+    def dashboard_feature(self, action: str, features: Optional[List[str]]=None):
         """
-        Prefix: ``dashboard feature``
-        
         Enable or disable features in Ceph-Mgr Dashboard
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard feature --action=choice --features=choice
         
         module=mgr perm=rw flags=mgr
         
@@ -1119,9 +1549,13 @@ class MonCommandApi(object):
     
     def dashboard_get_alertmanager_api_host(self):
         """
-        Prefix: ``dashboard get-alertmanager-api-host``
-        
         Get the ALERTMANAGER_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-alertmanager-api-host
         
         module=mgr perm=r flags=mgr
         """
@@ -1131,9 +1565,13 @@ class MonCommandApi(object):
     
     def dashboard_get_audit_api_enabled(self):
         """
-        Prefix: ``dashboard get-audit-api-enabled``
-        
         Get the AUDIT_API_ENABLED option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-audit-api-enabled
         
         module=mgr perm=r flags=mgr
         """
@@ -1143,9 +1581,13 @@ class MonCommandApi(object):
     
     def dashboard_get_audit_api_log_payload(self):
         """
-        Prefix: ``dashboard get-audit-api-log-payload``
-        
         Get the AUDIT_API_LOG_PAYLOAD option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-audit-api-log-payload
         
         module=mgr perm=r flags=mgr
         """
@@ -1155,9 +1597,13 @@ class MonCommandApi(object):
     
     def dashboard_get_enable_browsable_api(self):
         """
-        Prefix: ``dashboard get-enable-browsable-api``
-        
         Get the ENABLE_BROWSABLE_API option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-enable-browsable-api
         
         module=mgr perm=r flags=mgr
         """
@@ -1167,9 +1613,13 @@ class MonCommandApi(object):
     
     def dashboard_get_ganesha_clusters_rados_pool_namespace(self):
         """
-        Prefix: ``dashboard get-ganesha-clusters-rados-pool-namespace``
-        
         Get the GANESHA_CLUSTERS_RADOS_POOL_NAMESPACE option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-ganesha-clusters-rados-pool-namespace
         
         module=mgr perm=r flags=mgr
         """
@@ -1179,9 +1629,13 @@ class MonCommandApi(object):
     
     def dashboard_get_grafana_api_password(self):
         """
-        Prefix: ``dashboard get-grafana-api-password``
-        
         Get the GRAFANA_API_PASSWORD option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-grafana-api-password
         
         module=mgr perm=r flags=mgr
         """
@@ -1191,9 +1645,13 @@ class MonCommandApi(object):
     
     def dashboard_get_grafana_api_url(self):
         """
-        Prefix: ``dashboard get-grafana-api-url``
-        
         Get the GRAFANA_API_URL option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-grafana-api-url
         
         module=mgr perm=r flags=mgr
         """
@@ -1203,9 +1661,13 @@ class MonCommandApi(object):
     
     def dashboard_get_grafana_api_username(self):
         """
-        Prefix: ``dashboard get-grafana-api-username``
-        
         Get the GRAFANA_API_USERNAME option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-grafana-api-username
         
         module=mgr perm=r flags=mgr
         """
@@ -1215,9 +1677,13 @@ class MonCommandApi(object):
     
     def dashboard_get_grafana_update_dashboards(self):
         """
-        Prefix: ``dashboard get-grafana-update-dashboards``
-        
         Get the GRAFANA_UPDATE_DASHBOARDS option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-grafana-update-dashboards
         
         module=mgr perm=r flags=mgr
         """
@@ -1227,9 +1693,13 @@ class MonCommandApi(object):
     
     def dashboard_get_iscsi_api_ssl_verification(self):
         """
-        Prefix: ``dashboard get-iscsi-api-ssl-verification``
-        
         Get the ISCSI_API_SSL_VERIFICATION option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-iscsi-api-ssl-verification
         
         module=mgr perm=r flags=mgr
         """
@@ -1239,9 +1709,13 @@ class MonCommandApi(object):
     
     def dashboard_get_jwt_token_ttl(self):
         """
-        Prefix: ``dashboard get-jwt-token-ttl``
-        
         Get the JWT token TTL in seconds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-jwt-token-ttl
         
         module=mgr perm=r flags=mgr
         """
@@ -1251,9 +1725,13 @@ class MonCommandApi(object):
     
     def dashboard_get_prometheus_api_host(self):
         """
-        Prefix: ``dashboard get-prometheus-api-host``
-        
         Get the PROMETHEUS_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-prometheus-api-host
         
         module=mgr perm=r flags=mgr
         """
@@ -1263,9 +1741,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rest_requests_timeout(self):
         """
-        Prefix: ``dashboard get-rest-requests-timeout``
-        
         Get the REST_REQUESTS_TIMEOUT option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rest-requests-timeout
         
         module=mgr perm=r flags=mgr
         """
@@ -1275,9 +1757,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_access_key(self):
         """
-        Prefix: ``dashboard get-rgw-api-access-key``
-        
         Get the RGW_API_ACCESS_KEY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-access-key
         
         module=mgr perm=r flags=mgr
         """
@@ -1287,9 +1773,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_admin_resource(self):
         """
-        Prefix: ``dashboard get-rgw-api-admin-resource``
-        
         Get the RGW_API_ADMIN_RESOURCE option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-admin-resource
         
         module=mgr perm=r flags=mgr
         """
@@ -1299,9 +1789,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_host(self):
         """
-        Prefix: ``dashboard get-rgw-api-host``
-        
         Get the RGW_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-host
         
         module=mgr perm=r flags=mgr
         """
@@ -1311,9 +1805,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_port(self):
         """
-        Prefix: ``dashboard get-rgw-api-port``
-        
         Get the RGW_API_PORT option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-port
         
         module=mgr perm=r flags=mgr
         """
@@ -1323,9 +1821,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_scheme(self):
         """
-        Prefix: ``dashboard get-rgw-api-scheme``
-        
         Get the RGW_API_SCHEME option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-scheme
         
         module=mgr perm=r flags=mgr
         """
@@ -1335,9 +1837,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_secret_key(self):
         """
-        Prefix: ``dashboard get-rgw-api-secret-key``
-        
         Get the RGW_API_SECRET_KEY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-secret-key
         
         module=mgr perm=r flags=mgr
         """
@@ -1347,9 +1853,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_ssl_verify(self):
         """
-        Prefix: ``dashboard get-rgw-api-ssl-verify``
-        
         Get the RGW_API_SSL_VERIFY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-ssl-verify
         
         module=mgr perm=r flags=mgr
         """
@@ -1359,9 +1869,13 @@ class MonCommandApi(object):
     
     def dashboard_get_rgw_api_user_id(self):
         """
-        Prefix: ``dashboard get-rgw-api-user-id``
-        
         Get the RGW_API_USER_ID option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-rgw-api-user-id
         
         module=mgr perm=r flags=mgr
         """
@@ -1371,9 +1885,13 @@ class MonCommandApi(object):
     
     def dashboard_grafana_dashboards_update(self):
         """
-        Prefix: ``dashboard grafana dashboards update``
-        
         Push dashboards to Grafana
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard grafana dashboards update
         
         module=mgr perm=w flags=mgr
         """
@@ -1383,9 +1901,13 @@ class MonCommandApi(object):
     
     def dashboard_iscsi_gateway_add(self, service_url: str):
         """
-        Prefix: ``dashboard iscsi-gateway-add``
-        
         Add iSCSI gateway configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard iscsi-gateway-add --service_url=string
         
         module=mgr perm=w flags=mgr
         
@@ -1397,9 +1919,13 @@ class MonCommandApi(object):
     
     def dashboard_iscsi_gateway_list(self):
         """
-        Prefix: ``dashboard iscsi-gateway-list``
-        
         List iSCSI gateways
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard iscsi-gateway-list
         
         module=mgr perm=r flags=mgr
         """
@@ -1409,9 +1935,13 @@ class MonCommandApi(object):
     
     def dashboard_iscsi_gateway_rm(self, name: str):
         """
-        Prefix: ``dashboard iscsi-gateway-rm``
-        
         Remove iSCSI gateway configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard iscsi-gateway-rm --name=string
         
         module=mgr perm=w flags=mgr
         
@@ -1423,9 +1953,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_alertmanager_api_host(self):
         """
-        Prefix: ``dashboard reset-alertmanager-api-host``
-        
         Reset the ALERTMANAGER_API_HOST option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-alertmanager-api-host
         
         module=mgr perm=w flags=mgr
         """
@@ -1435,9 +1969,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_audit_api_enabled(self):
         """
-        Prefix: ``dashboard reset-audit-api-enabled``
-        
         Reset the AUDIT_API_ENABLED option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-audit-api-enabled
         
         module=mgr perm=w flags=mgr
         """
@@ -1447,9 +1985,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_audit_api_log_payload(self):
         """
-        Prefix: ``dashboard reset-audit-api-log-payload``
-        
         Reset the AUDIT_API_LOG_PAYLOAD option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-audit-api-log-payload
         
         module=mgr perm=w flags=mgr
         """
@@ -1459,9 +2001,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_enable_browsable_api(self):
         """
-        Prefix: ``dashboard reset-enable-browsable-api``
-        
         Reset the ENABLE_BROWSABLE_API option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-enable-browsable-api
         
         module=mgr perm=w flags=mgr
         """
@@ -1471,10 +2017,14 @@ class MonCommandApi(object):
     
     def dashboard_reset_ganesha_clusters_rados_pool_namespace(self):
         """
-        Prefix: ``dashboard reset-ganesha-clusters-rados-pool-namespace``
-        
         Reset the GANESHA_CLUSTERS_RADOS_POOL_NAMESPACE option to its default
         value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-ganesha-clusters-rados-pool-namespace
         
         module=mgr perm=w flags=mgr
         """
@@ -1484,9 +2034,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_grafana_api_password(self):
         """
-        Prefix: ``dashboard reset-grafana-api-password``
-        
         Reset the GRAFANA_API_PASSWORD option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-grafana-api-password
         
         module=mgr perm=w flags=mgr
         """
@@ -1496,9 +2050,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_grafana_api_url(self):
         """
-        Prefix: ``dashboard reset-grafana-api-url``
-        
         Reset the GRAFANA_API_URL option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-grafana-api-url
         
         module=mgr perm=w flags=mgr
         """
@@ -1508,9 +2066,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_grafana_api_username(self):
         """
-        Prefix: ``dashboard reset-grafana-api-username``
-        
         Reset the GRAFANA_API_USERNAME option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-grafana-api-username
         
         module=mgr perm=w flags=mgr
         """
@@ -1520,9 +2082,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_grafana_update_dashboards(self):
         """
-        Prefix: ``dashboard reset-grafana-update-dashboards``
-        
         Reset the GRAFANA_UPDATE_DASHBOARDS option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-grafana-update-dashboards
         
         module=mgr perm=w flags=mgr
         """
@@ -1532,9 +2098,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_iscsi_api_ssl_verification(self):
         """
-        Prefix: ``dashboard reset-iscsi-api-ssl-verification``
-        
         Reset the ISCSI_API_SSL_VERIFICATION option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-iscsi-api-ssl-verification
         
         module=mgr perm=w flags=mgr
         """
@@ -1544,9 +2114,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_prometheus_api_host(self):
         """
-        Prefix: ``dashboard reset-prometheus-api-host``
-        
         Reset the PROMETHEUS_API_HOST option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-prometheus-api-host
         
         module=mgr perm=w flags=mgr
         """
@@ -1556,9 +2130,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rest_requests_timeout(self):
         """
-        Prefix: ``dashboard reset-rest-requests-timeout``
-        
         Reset the REST_REQUESTS_TIMEOUT option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rest-requests-timeout
         
         module=mgr perm=w flags=mgr
         """
@@ -1568,9 +2146,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_access_key(self):
         """
-        Prefix: ``dashboard reset-rgw-api-access-key``
-        
         Reset the RGW_API_ACCESS_KEY option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-access-key
         
         module=mgr perm=w flags=mgr
         """
@@ -1580,9 +2162,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_admin_resource(self):
         """
-        Prefix: ``dashboard reset-rgw-api-admin-resource``
-        
         Reset the RGW_API_ADMIN_RESOURCE option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-admin-resource
         
         module=mgr perm=w flags=mgr
         """
@@ -1592,9 +2178,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_host(self):
         """
-        Prefix: ``dashboard reset-rgw-api-host``
-        
         Reset the RGW_API_HOST option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-host
         
         module=mgr perm=w flags=mgr
         """
@@ -1604,9 +2194,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_port(self):
         """
-        Prefix: ``dashboard reset-rgw-api-port``
-        
         Reset the RGW_API_PORT option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-port
         
         module=mgr perm=w flags=mgr
         """
@@ -1616,9 +2210,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_scheme(self):
         """
-        Prefix: ``dashboard reset-rgw-api-scheme``
-        
         Reset the RGW_API_SCHEME option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-scheme
         
         module=mgr perm=w flags=mgr
         """
@@ -1628,9 +2226,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_secret_key(self):
         """
-        Prefix: ``dashboard reset-rgw-api-secret-key``
-        
         Reset the RGW_API_SECRET_KEY option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-secret-key
         
         module=mgr perm=w flags=mgr
         """
@@ -1640,9 +2242,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_ssl_verify(self):
         """
-        Prefix: ``dashboard reset-rgw-api-ssl-verify``
-        
         Reset the RGW_API_SSL_VERIFY option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-ssl-verify
         
         module=mgr perm=w flags=mgr
         """
@@ -1652,9 +2258,13 @@ class MonCommandApi(object):
     
     def dashboard_reset_rgw_api_user_id(self):
         """
-        Prefix: ``dashboard reset-rgw-api-user-id``
-        
         Reset the RGW_API_USER_ID option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-rgw-api-user-id
         
         module=mgr perm=w flags=mgr
         """
@@ -1664,9 +2274,13 @@ class MonCommandApi(object):
     
     def dashboard_set_alertmanager_api_host(self, value: str):
         """
-        Prefix: ``dashboard set-alertmanager-api-host``
-        
         Set the ALERTMANAGER_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-alertmanager-api-host --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1678,9 +2292,13 @@ class MonCommandApi(object):
     
     def dashboard_set_audit_api_enabled(self, value: str):
         """
-        Prefix: ``dashboard set-audit-api-enabled``
-        
         Set the AUDIT_API_ENABLED option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-audit-api-enabled --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1692,9 +2310,13 @@ class MonCommandApi(object):
     
     def dashboard_set_audit_api_log_payload(self, value: str):
         """
-        Prefix: ``dashboard set-audit-api-log-payload``
-        
         Set the AUDIT_API_LOG_PAYLOAD option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-audit-api-log-payload --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1706,9 +2328,13 @@ class MonCommandApi(object):
     
     def dashboard_set_enable_browsable_api(self, value: str):
         """
-        Prefix: ``dashboard set-enable-browsable-api``
-        
         Set the ENABLE_BROWSABLE_API option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-enable-browsable-api --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1720,9 +2346,13 @@ class MonCommandApi(object):
     
     def dashboard_set_ganesha_clusters_rados_pool_namespace(self, value: str):
         """
-        Prefix: ``dashboard set-ganesha-clusters-rados-pool-namespace``
-        
         Set the GANESHA_CLUSTERS_RADOS_POOL_NAMESPACE option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-ganesha-clusters-rados-pool-namespace --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1734,9 +2364,13 @@ class MonCommandApi(object):
     
     def dashboard_set_grafana_api_password(self, value: str):
         """
-        Prefix: ``dashboard set-grafana-api-password``
-        
         Set the GRAFANA_API_PASSWORD option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-grafana-api-password --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1748,9 +2382,13 @@ class MonCommandApi(object):
     
     def dashboard_set_grafana_api_url(self, value: str):
         """
-        Prefix: ``dashboard set-grafana-api-url``
-        
         Set the GRAFANA_API_URL option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-grafana-api-url --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1762,9 +2400,13 @@ class MonCommandApi(object):
     
     def dashboard_set_grafana_api_username(self, value: str):
         """
-        Prefix: ``dashboard set-grafana-api-username``
-        
         Set the GRAFANA_API_USERNAME option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-grafana-api-username --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1776,9 +2418,13 @@ class MonCommandApi(object):
     
     def dashboard_set_grafana_update_dashboards(self, value: str):
         """
-        Prefix: ``dashboard set-grafana-update-dashboards``
-        
         Set the GRAFANA_UPDATE_DASHBOARDS option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-grafana-update-dashboards --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1790,9 +2436,13 @@ class MonCommandApi(object):
     
     def dashboard_set_iscsi_api_ssl_verification(self, value: str):
         """
-        Prefix: ``dashboard set-iscsi-api-ssl-verification``
-        
         Set the ISCSI_API_SSL_VERIFICATION option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-iscsi-api-ssl-verification --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1804,9 +2454,13 @@ class MonCommandApi(object):
     
     def dashboard_set_jwt_token_ttl(self, seconds: int):
         """
-        Prefix: ``dashboard set-jwt-token-ttl``
-        
         Set the JWT token TTL in seconds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-jwt-token-ttl --seconds=1
         
         module=mgr perm=w flags=mgr
         
@@ -1818,9 +2472,13 @@ class MonCommandApi(object):
     
     def dashboard_set_login_credentials(self, username: str, password: str):
         """
-        Prefix: ``dashboard set-login-credentials``
-        
         Set the login credentials
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-login-credentials --username=string --password=string
         
         module=mgr perm=w flags=mgr
         
@@ -1833,9 +2491,13 @@ class MonCommandApi(object):
     
     def dashboard_set_prometheus_api_host(self, value: str):
         """
-        Prefix: ``dashboard set-prometheus-api-host``
-        
         Set the PROMETHEUS_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-prometheus-api-host --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1847,9 +2509,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rest_requests_timeout(self, value: int):
         """
-        Prefix: ``dashboard set-rest-requests-timeout``
-        
         Set the REST_REQUESTS_TIMEOUT option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rest-requests-timeout --value=1
         
         module=mgr perm=w flags=mgr
         
@@ -1861,9 +2527,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_access_key(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-access-key``
-        
         Set the RGW_API_ACCESS_KEY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-access-key --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1875,9 +2545,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_admin_resource(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-admin-resource``
-        
         Set the RGW_API_ADMIN_RESOURCE option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-admin-resource --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1889,9 +2563,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_host(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-host``
-        
         Set the RGW_API_HOST option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-host --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1903,9 +2581,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_port(self, value: int):
         """
-        Prefix: ``dashboard set-rgw-api-port``
-        
         Set the RGW_API_PORT option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-port --value=1
         
         module=mgr perm=w flags=mgr
         
@@ -1917,9 +2599,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_scheme(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-scheme``
-        
         Set the RGW_API_SCHEME option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-scheme --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1931,9 +2617,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_secret_key(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-secret-key``
-        
         Set the RGW_API_SECRET_KEY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-secret-key --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1945,9 +2635,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_ssl_verify(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-ssl-verify``
-        
         Set the RGW_API_SSL_VERIFY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-ssl-verify --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1959,9 +2653,13 @@ class MonCommandApi(object):
     
     def dashboard_set_rgw_api_user_id(self, value: str):
         """
-        Prefix: ``dashboard set-rgw-api-user-id``
-        
         Set the RGW_API_USER_ID option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-rgw-api-user-id --value=string
         
         module=mgr perm=w flags=mgr
         
@@ -1971,9 +2669,13 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
-    def dashboard_set_ssl_certificate(self, mgr_id: str=None):
+    def dashboard_set_ssl_certificate(self, mgr_id: Optional[str]=None):
         """
-        Prefix: ``dashboard set-ssl-certificate``
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-ssl-certificate --mgr_id=string
         
         module=mgr perm=w flags=mgr
         
@@ -1983,9 +2685,13 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'mgr_id': mgr_id}
         return self._mon_command(_args)
     
-    def dashboard_set_ssl_certificate_key(self, mgr_id: str=None):
+    def dashboard_set_ssl_certificate_key(self, mgr_id: Optional[str]=None):
         """
-        Prefix: ``dashboard set-ssl-certificate-key``
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-ssl-certificate-key --mgr_id=string
         
         module=mgr perm=w flags=mgr
         
@@ -1997,9 +2703,13 @@ class MonCommandApi(object):
     
     def dashboard_sso_disable(self):
         """
-        Prefix: ``dashboard sso disable``
-        
         Disable Single Sign-On
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard sso disable
         
         module=mgr perm=w flags=mgr
         """
@@ -2009,9 +2719,13 @@ class MonCommandApi(object):
     
     def dashboard_sso_enable_saml2(self):
         """
-        Prefix: ``dashboard sso enable saml2``
-        
         Enable SAML2 Single Sign-On
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard sso enable saml2
         
         module=mgr perm=w flags=mgr
         """
@@ -2020,12 +2734,17 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def dashboard_sso_setup_saml2(self, ceph_dashboard_base_url: str, idp_metadata: str,
-                                  idp_username_attribute: str=None, idp_entity_id: str=None,
-                                  sp_x_509_cert: str=None, sp_private_key: str=None):
+                                  idp_username_attribute: Optional[str]=None, idp_entity_id:
+                                  Optional[str]=None, sp_x_509_cert: Optional[str]=None,
+                                  sp_private_key: Optional[str]=None):
         """
-        Prefix: ``dashboard sso setup saml2``
-        
         Setup SAML2 Single Sign-On
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard sso setup saml2 --ceph_dashboard_base_url=string --idp_metadata=string --idp_username_attribute=string --idp_entity_id=string --sp_x_509_cert=string --sp_private_key=string
         
         module=mgr perm=w flags=mgr
         
@@ -2046,9 +2765,13 @@ class MonCommandApi(object):
     
     def dashboard_sso_show_saml2(self):
         """
-        Prefix: ``dashboard sso show saml2``
-        
         Show SAML2 configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard sso show saml2
         
         module=mgr perm=r flags=mgr
         """
@@ -2058,9 +2781,13 @@ class MonCommandApi(object):
     
     def dashboard_sso_status(self):
         """
-        Prefix: ``dashboard sso status``
-        
         Get Single Sign-On status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard sso status
         
         module=mgr perm=r flags=mgr
         """
@@ -2070,9 +2797,13 @@ class MonCommandApi(object):
     
     def deepsea_config_set(self, key: str, value: str):
         """
-        Prefix: ``deepsea config-set``
-        
         Set a configuration value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph deepsea config-set --key=string --value=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2085,9 +2816,13 @@ class MonCommandApi(object):
     
     def deepsea_config_show(self):
         """
-        Prefix: ``deepsea config-show``
-        
         Show current configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph deepsea config-show
         
         module=mgr perm=r flags=mgr
         """
@@ -2097,9 +2832,13 @@ class MonCommandApi(object):
     
     def device_check_health(self):
         """
-        Prefix: ``device check-health``
-        
         Check life expectancy of devices
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device check-health
         
         module=mgr perm=rw flags=mgr
         """
@@ -2109,9 +2848,13 @@ class MonCommandApi(object):
     
     def device_debug_metrics_forced(self):
         """
-        Prefix: ``device debug metrics-forced``
-        
         Run metrics agent forced
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device debug metrics-forced
         
         module=mgr perm=r flags=mgr
         """
@@ -2121,9 +2864,13 @@ class MonCommandApi(object):
     
     def device_debug_smart_forced(self):
         """
-        Prefix: ``device debug smart-forced``
-        
         Run smart agent forced
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device debug smart-forced
         
         module=mgr perm=r flags=mgr
         """
@@ -2133,9 +2880,13 @@ class MonCommandApi(object):
     
     def device_get_health_metrics(self, devid: str, sample: str):
         """
-        Prefix: ``device get-health-metrics``
-        
         Show stored device metrics for the device
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device get-health-metrics --devid=string --sample=string
         
         module=mgr perm=r flags=mgr
         
@@ -2148,9 +2899,13 @@ class MonCommandApi(object):
     
     def device_info(self, devid: str):
         """
-        Prefix: ``device info``
-        
         Show information about a device
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device info --devid=string
         
         module=mgr perm=r flags=mgr
         
@@ -2162,9 +2917,13 @@ class MonCommandApi(object):
     
     def device_ls(self):
         """
-        Prefix: ``device ls``
-        
         Show devices
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device ls
         
         module=mgr perm=r flags=mgr
         """
@@ -2174,9 +2933,13 @@ class MonCommandApi(object):
     
     def device_ls_by_daemon(self, who: str):
         """
-        Prefix: ``device ls-by-daemon``
-        
         Show devices associated with a daemon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device ls-by-daemon --who=string
         
         module=mgr perm=r flags=mgr
         
@@ -2188,9 +2951,13 @@ class MonCommandApi(object):
     
     def device_ls_by_host(self, host: str):
         """
-        Prefix: ``device ls-by-host``
-        
         Show devices on a host
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device ls-by-host --host=string
         
         module=mgr perm=r flags=mgr
         
@@ -2202,9 +2969,13 @@ class MonCommandApi(object):
     
     def device_monitoring_off(self):
         """
-        Prefix: ``device monitoring off``
-        
         Disable device health monitoring
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device monitoring off
         
         module=mgr perm=rw flags=mgr
         """
@@ -2214,9 +2985,13 @@ class MonCommandApi(object):
     
     def device_monitoring_on(self):
         """
-        Prefix: ``device monitoring on``
-        
         Enable device health monitoring
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device monitoring on
         
         module=mgr perm=rw flags=mgr
         """
@@ -2226,9 +3001,13 @@ class MonCommandApi(object):
     
     def device_predict_life_expectancy(self, devid: str):
         """
-        Prefix: ``device predict-life-expectancy``
-        
         Predict life expectancy with local predictor
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device predict-life-expectancy --devid=string
         
         module=mgr perm=r flags=mgr
         
@@ -2240,9 +3019,13 @@ class MonCommandApi(object):
     
     def device_query_daemon_health_metrics(self, who: str):
         """
-        Prefix: ``device query-daemon-health-metrics``
-        
         Get device health metrics for a given daemon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device query-daemon-health-metrics --who=string
         
         module=mgr perm=r flags=mgr
         
@@ -2254,9 +3037,13 @@ class MonCommandApi(object):
     
     def device_rm_life_expectancy(self, devid: str):
         """
-        Prefix: ``device rm-life-expectancy``
-        
         Clear predicted device life expectancy
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device rm-life-expectancy --devid=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2268,9 +3055,13 @@ class MonCommandApi(object):
     
     def device_scrape_daemon_health_metrics(self, who: str):
         """
-        Prefix: ``device scrape-daemon-health-metrics``
-        
         Scrape and store device health metrics for a given daemon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device scrape-daemon-health-metrics --who=string
         
         module=mgr perm=r flags=mgr
         
@@ -2282,9 +3073,13 @@ class MonCommandApi(object):
     
     def device_scrape_health_metrics(self, devid: str):
         """
-        Prefix: ``device scrape-health-metrics``
-        
         Scrape and store health metrics
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device scrape-health-metrics --devid=string
         
         module=mgr perm=r flags=mgr
         
@@ -2295,11 +3090,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def device_set_cloud_prediction_config(self, server: str, user: str, password: str, certfile: str,
-                                           port: str=None):
+                                           port: Optional[str]=None):
         """
-        Prefix: ``device set-cloud-prediction-config``
-        
         Configure Disk Prediction service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device set-cloud-prediction-config --server=string --user=string --password=string --certfile=string --port=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2316,9 +3115,13 @@ class MonCommandApi(object):
     
     def device_set_life_expectancy(self, devid: str, from_1: str, to: str):
         """
-        Prefix: ``device set-life-expectancy``
-        
         Set predicted device life expectancy
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device set-life-expectancy --devid=string --from=string --to=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2332,9 +3135,13 @@ class MonCommandApi(object):
     
     def device_show_prediction_config(self):
         """
-        Prefix: ``device show-prediction-config``
-        
         Prints diskprediction configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device show-prediction-config
         
         module=mgr perm=r flags=mgr
         """
@@ -2342,11 +3149,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def df(self, detail: str=None):
+    def df(self, detail: Optional[str]=None):
         """
-        Prefix: ``df``
-        
         show cluster free space stats
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph df --detail=choice
         
         module=mon perm=r flags=
         
@@ -2358,9 +3169,13 @@ class MonCommandApi(object):
     
     def diskprediction_cloud_status(self):
         """
-        Prefix: ``diskprediction_cloud status``
-        
         Check diskprediction_cloud status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph diskprediction_cloud status
         
         module=mgr perm=r flags=mgr
         """
@@ -2370,9 +3185,13 @@ class MonCommandApi(object):
     
     def features(self):
         """
-        Prefix: ``features``
-        
         report of connected features
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph features
         
         module=mon perm=r flags=
         """
@@ -2382,9 +3201,13 @@ class MonCommandApi(object):
     
     def fs_add_data_pool(self, fs_name: str, pool: str):
         """
-        Prefix: ``fs add_data_pool``
-        
         add data pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs add_data_pool --fs_name=string --pool=string
         
         module=mds perm=rw flags=
         
@@ -2397,10 +3220,14 @@ class MonCommandApi(object):
     
     def fs_authorize(self, filesystem: str, entity: str, caps: List[str]):
         """
-        Prefix: ``fs authorize``
-        
         add auth for <entity> to access file system <filesystem> based on
         following directory and permissions pairs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs authorize --filesystem=string --entity=string --caps=string
         
         module=auth perm=rwx flags=
         
@@ -2412,11 +3239,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'filesystem': filesystem, 'entity': entity, 'caps': caps}
         return self._mon_command(_args)
     
-    def fs_dump(self, epoch: int=None):
+    def fs_dump(self, epoch: Optional[int]=None):
         """
-        Prefix: ``fs dump``
-        
         dump all CephFS status, optionally from epoch
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs dump --epoch=1
         
         module=mds perm=r flags=
         
@@ -2428,9 +3259,13 @@ class MonCommandApi(object):
     
     def fs_fail(self, fs_name: str):
         """
-        Prefix: ``fs fail``
-        
         bring the file system down and all of its ranks
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs fail --fs_name=string
         
         module=fs perm=rw flags=
         
@@ -2441,11 +3276,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_flag_set(self, flag_name: str, val: str, yes_i_really_mean_it:
-                    bool=None):
+                    Optional[bool]=None):
         """
-        Prefix: ``fs flag set``
-        
         Set a global CephFS flag
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs flag set --flag_name=choice --val=string --yes_i_really_mean_it=true
         
         module=fs perm=rw flags=
         
@@ -2460,9 +3299,13 @@ class MonCommandApi(object):
     
     def fs_get(self, fs_name: str):
         """
-        Prefix: ``fs get``
-        
         get info about one filesystem
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs get --fs_name=string
         
         module=fs perm=r flags=
         
@@ -2474,9 +3317,13 @@ class MonCommandApi(object):
     
     def fs_ls(self):
         """
-        Prefix: ``fs ls``
-        
         list filesystems
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs ls
         
         module=fs perm=r flags=
         """
@@ -2485,11 +3332,16 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_new(self, fs_name: str, metadata: str, data: str, force:
-               bool=None, allow_dangerous_metadata_overlay: bool=None):
+               Optional[bool]=None, allow_dangerous_metadata_overlay:
+               Optional[bool]=None):
         """
-        Prefix: ``fs new``
-        
         make new filesystem using named pools <metadata> and <data>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs new --fs_name=string --metadata=string --data=string --force=true --allow_dangerous_metadata_overlay=true
         
         module=fs perm=rw flags=
         
@@ -2505,11 +3357,16 @@ class MonCommandApi(object):
                  allow_dangerous_metadata_overlay}
         return self._mon_command(_args)
     
-    def fs_reset(self, fs_name: str, yes_i_really_mean_it: bool=None):
+    def fs_reset(self, fs_name: str, yes_i_really_mean_it:
+                 Optional[bool]=None):
         """
-        Prefix: ``fs reset``
-        
         disaster recovery only: reset to a single-MDS map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs reset --fs_name=string --yes_i_really_mean_it=true
         
         module=fs perm=rw flags=
         
@@ -2521,11 +3378,16 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def fs_rm(self, fs_name: str, yes_i_really_mean_it: bool=None):
+    def fs_rm(self, fs_name: str, yes_i_really_mean_it:
+              Optional[bool]=None):
         """
-        Prefix: ``fs rm``
-        
         disable the named filesystem
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs rm --fs_name=string --yes_i_really_mean_it=true
         
         module=fs perm=rw flags=
         
@@ -2539,9 +3401,13 @@ class MonCommandApi(object):
     
     def fs_rm_data_pool(self, fs_name: str, pool: str):
         """
-        Prefix: ``fs rm_data_pool``
-        
         remove data pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs rm_data_pool --fs_name=string --pool=string
         
         module=mds perm=rw flags=
         
@@ -2553,11 +3419,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_set(self, fs_name: str, var: str, val: str,
-               yes_i_really_mean_it: bool=None):
+               yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``fs set``
-        
         set fs parameter <var> to <val>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs set --fs_name=string --var=choice --val=string --yes_i_really_mean_it=true
         
         module=mds perm=rw flags=
         
@@ -2573,43 +3443,55 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs_name': fs_name, 'var': var, 'val': val,
                  'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
+    # 
+    # @overload  # todo
+    # def fs_set_default(self, fs_name: str):
+    #     """
+    #     set the default to the named filesystem
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph fs set-default --fs_name=string
+    #     
+    #     module=fs perm=rw flags=
+    #     
+    #     :param fs_name:
+    #     """
+    #     prefix = 'fs set-default'
+    #     _args = {'prefix': prefix, 'fs_name': fs_name}
+    #     return self._mon_command(_args)
+    # 
+    # @deprecated
+    # @overload  # todo
+    # def fs_set_default(self, fs_name: str):
+    #     """
+    #     set the default to the named filesystem
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph fs set_default --fs_name=string
+    #     
+    #     module=fs perm=rw flags=deprecated
+    #     
+    #     :param fs_name:
+    #     """
+    #     prefix = 'fs set_default'
+    #     _args = {'prefix': prefix, 'fs_name': fs_name}
+    #     return self._mon_command(_args)
     
-    @overload  # Python 3 only
-    def fs_set_default(self, fs_name: str):
+    def fs_status(self, fs: Optional[str]=None):
         """
-        Prefix: ``fs set-default``
-        
-        set the default to the named filesystem
-        
-        module=fs perm=rw flags=
-        
-        :param fs_name:
-        """
-        prefix = 'fs set-default'
-        _args = {'prefix': prefix, 'fs_name': fs_name}
-        return self._mon_command(_args)
-    
-    @deprecated
-    @overload  # Python 3 only
-    def fs_set_default(self, fs_name: str):
-        """
-        Prefix: ``fs set_default``
-        
-        set the default to the named filesystem
-        
-        module=fs perm=rw flags=deprecated
-        
-        :param fs_name:
-        """
-        prefix = 'fs set_default'
-        _args = {'prefix': prefix, 'fs_name': fs_name}
-        return self._mon_command(_args)
-    
-    def fs_status(self, fs: str=None):
-        """
-        Prefix: ``fs status``
-        
         Show the status of a CephFS filesystem
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs status --fs=string
         
         module=mgr perm=r flags=mgr
         
@@ -2619,14 +3501,19 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'fs': fs}
         return self._mon_command(_args)
     
-    def fs_subvolume_create(self, vol_name: str, sub_name: str, size: int=None,
-                            group_name: str=None, pool_layout: str=None, mode: str=None):
+    def fs_subvolume_create(self, vol_name: str, sub_name: str, size:
+                            Optional[int]=None, group_name: Optional[str]=None,
+                            pool_layout: Optional[str]=None, mode: Optional[str]=None):
         """
-        Prefix: ``fs subvolume create``
-        
         Create a CephFS subvolume in a volume, and optionally, with a specific
         size (in bytes), a specific data pool layout, a specific mode, and in
         a specific subvolume group
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume create --vol_name=string --sub_name=string --size=1 --group_name=string --pool_layout=string --mode=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2643,12 +3530,17 @@ class MonCommandApi(object):
                  'mode': mode}
         return self._mon_command(_args)
     
-    def fs_subvolume_getpath(self, vol_name: str, sub_name: str, group_name: str=None):
+    def fs_subvolume_getpath(self, vol_name: str, sub_name: str, group_name:
+                             Optional[str]=None):
         """
-        Prefix: ``fs subvolume getpath``
-        
         Get the mountpath of a CephFS subvolume in a volume, and optionally,
         in a specific subvolume group
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume getpath --vol_name=string --sub_name=string --group_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2661,13 +3553,17 @@ class MonCommandApi(object):
                  group_name}
         return self._mon_command(_args)
     
-    def fs_subvolume_rm(self, vol_name: str, sub_name: str, group_name: str=None,
-                        force: bool=None):
+    def fs_subvolume_rm(self, vol_name: str, sub_name: str, group_name:
+                        Optional[str]=None, force: Optional[bool]=None):
         """
-        Prefix: ``fs subvolume rm``
-        
         Delete a CephFS subvolume in a volume, and optionally, in a specific
         subvolume group
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume rm --vol_name=string --sub_name=string --group_name=string --force=true
         
         module=mgr perm=rw flags=mgr
         
@@ -2682,12 +3578,16 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_subvolume_snapshot_create(self, vol_name: str, sub_name: str, snap_name: str,
-                                     group_name: str=None):
+                                     group_name: Optional[str]=None):
         """
-        Prefix: ``fs subvolume snapshot create``
-        
         Create a snapshot of a CephFS subvolume in a volume, and optionally,
         in a specific subvolume group
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume snapshot create --vol_name=string --sub_name=string --snap_name=string --group_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2702,12 +3602,16 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_subvolume_snapshot_rm(self, vol_name: str, sub_name: str, snap_name: str,
-                                 group_name: str=None, force: bool=None):
+                                 group_name: Optional[str]=None, force: Optional[bool]=None):
         """
-        Prefix: ``fs subvolume snapshot rm``
-        
         Delete a snapshot of a CephFS subvolume in a volume, and optionally,
         in a specific subvolume group
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume snapshot rm --vol_name=string --sub_name=string --snap_name=string --group_name=string --force=true
         
         module=mgr perm=rw flags=mgr
         
@@ -2722,13 +3626,17 @@ class MonCommandApi(object):
                  snap_name, 'group_name': group_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_create(self, vol_name: str, group_name: str, pool_layout: str=None,
-                                 mode: str=None):
+    def fs_subvolumegroup_create(self, vol_name: str, group_name: str, pool_layout:
+                                 Optional[str]=None, mode: Optional[str]=None):
         """
-        Prefix: ``fs subvolumegroup create``
-        
         Create a CephFS subvolume group in a volume, and optionally, with a
         specific data pool layout, and a specific numeric mode
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup create --vol_name=string --group_name=string --pool_layout=string --mode=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2742,11 +3650,35 @@ class MonCommandApi(object):
                  'pool_layout': pool_layout, 'mode': mode}
         return self._mon_command(_args)
     
-    def fs_subvolumegroup_rm(self, vol_name: str, group_name: str, force: bool=None):
+    def fs_subvolumegroup_getpath(self, vol_name: str, group_name: str):
         """
-        Prefix: ``fs subvolumegroup rm``
+        Get the mountpath of a CephFS subvolume group in a volume
         
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup getpath --vol_name=string --group_name=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param vol_name:
+        :param group_name:
+        """
+        prefix = 'fs subvolumegroup getpath'
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name}
+        return self._mon_command(_args)
+    
+    def fs_subvolumegroup_rm(self, vol_name: str, group_name: str, force:
+                             Optional[bool]=None):
+        """
         Delete a CephFS subvolume group in a volume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup rm --vol_name=string --group_name=string --force=true
         
         module=mgr perm=rw flags=mgr
         
@@ -2761,9 +3693,13 @@ class MonCommandApi(object):
     
     def fs_subvolumegroup_snapshot_create(self, vol_name: str, group_name: str, snap_name: str):
         """
-        Prefix: ``fs subvolumegroup snapshot create``
-        
         Create a snapshot of a CephFS subvolume group in a volume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup snapshot create --vol_name=string --group_name=string --snap_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2777,11 +3713,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_subvolumegroup_snapshot_rm(self, vol_name: str, group_name: str, snap_name: str, force:
-                                      bool=None):
+                                      Optional[bool]=None):
         """
-        Prefix: ``fs subvolumegroup snapshot rm``
-        
         Delete a snapshot of a CephFS subvolume group in a volume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup snapshot rm --vol_name=string --group_name=string --snap_name=string --force=true
         
         module=mgr perm=rw flags=mgr
         
@@ -2795,26 +3735,33 @@ class MonCommandApi(object):
                  snap_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_volume_create(self, name: str, size: str=None):
+    def fs_volume_create(self, name: str):
         """
-        Prefix: ``fs volume create``
-        
         Create a CephFS volume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs volume create --name=string
         
         module=mgr perm=rw flags=mgr
         
         :param name:
-        :param size:
         """
         prefix = 'fs volume create'
-        _args = {'prefix': prefix, 'name': name, 'size': size}
+        _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
     def fs_volume_ls(self):
         """
-        Prefix: ``fs volume ls``
-        
         List volumes
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs volume ls
         
         module=mgr perm=r flags=mgr
         """
@@ -2824,9 +3771,13 @@ class MonCommandApi(object):
     
     def fs_volume_rm(self, vol_name: str):
         """
-        Prefix: ``fs volume rm``
-        
         Delete a CephFS volume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs volume rm --vol_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2838,9 +3789,13 @@ class MonCommandApi(object):
     
     def fsid(self):
         """
-        Prefix: ``fsid``
-        
         show cluster FSID/UUID
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fsid
         
         module=mon perm=r flags=
         """
@@ -2848,11 +3803,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def health(self, detail: str=None):
+    def health(self, detail: Optional[str]=None):
         """
-        Prefix: ``health``
-        
         show cluster health
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph health --detail=choice
         
         module=mon perm=r flags=
         
@@ -2862,11 +3821,54 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'detail': detail}
         return self._mon_command(_args)
     
+    def health_mute(self, code: str, ttl: Optional[str]=None, sticky:
+                    Optional[bool]=None):
+        """
+        mute health alert
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph health mute --code=string --ttl=string --sticky=true
+        
+        module=mon perm=w flags=
+        
+        :param code:
+        :param ttl:
+        :param sticky: CephBool
+        """
+        prefix = 'health mute'
+        _args = {'prefix': prefix, 'code': code, 'ttl': ttl, 'sticky': sticky}
+        return self._mon_command(_args)
+    
+    def health_unmute(self, code: Optional[str]=None):
+        """
+        unmute existing health alert mute(s)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph health unmute --code=string
+        
+        module=mon perm=w flags=
+        
+        :param code:
+        """
+        prefix = 'health unmute'
+        _args = {'prefix': prefix, 'code': code}
+        return self._mon_command(_args)
+    
     def heap(self, heapcmd: str):
         """
-        Prefix: ``heap``
-        
         show heap usage info (available only if compiled with tcmalloc)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph heap --heapcmd=choice
         
         module=mon perm=rw flags=no_forward
         
@@ -2877,11 +3879,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'heapcmd': heapcmd}
         return self._mon_command(_args)
     
-    def hello(self, person_name: str=None):
+    def hello(self, person_name: Optional[str]=None):
         """
-        Prefix: ``hello``
+        Say hello
         
-        Prints hello world to mgr.x.log
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph hello --person_name=string
         
         module=mgr perm=r flags=mgr
         
@@ -2893,9 +3899,13 @@ class MonCommandApi(object):
     
     def influx_config_set(self, key: str, value: str):
         """
-        Prefix: ``influx config-set``
-        
         Set a configuration value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph influx config-set --key=string --value=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2908,9 +3918,13 @@ class MonCommandApi(object):
     
     def influx_config_show(self):
         """
-        Prefix: ``influx config-show``
-        
         Show current configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph influx config-show
         
         module=mgr perm=r flags=mgr
         """
@@ -2920,9 +3934,13 @@ class MonCommandApi(object):
     
     def influx_send(self):
         """
-        Prefix: ``influx send``
-        
         Force sending data to Influx
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph influx send
         
         module=mgr perm=rw flags=mgr
         """
@@ -2932,9 +3950,13 @@ class MonCommandApi(object):
     
     def injectargs(self, injected_args: List[str]):
         """
-        Prefix: ``injectargs``
-        
         inject config arguments into monitor
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph injectargs --injected_args=string
         
         module=mon perm=rw flags=no_forward
         
@@ -2946,9 +3968,13 @@ class MonCommandApi(object):
     
     def insights(self):
         """
-        Prefix: ``insights``
-        
         Retrieve insights report
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph insights
         
         module=mgr perm=r flags=mgr
         """
@@ -2958,9 +3984,13 @@ class MonCommandApi(object):
     
     def insights_prune_health(self, hours: str):
         """
-        Prefix: ``insights prune-health``
-        
         Remove health history older than <hours> hours
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph insights prune-health --hours=string
         
         module=mgr perm=rw flags=mgr
         
@@ -2972,11 +4002,15 @@ class MonCommandApi(object):
     
     def iostat(self):
         """
-        Prefix: ``iostat``
-        
         Get IO rates
         
-        module=mgr perm=r flags=poll, mgr
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph iostat
+        
+        module=mgr perm=r flags=mgr, poll
         """
         prefix = 'iostat'
         _args = {'prefix': prefix, }
@@ -2984,9 +4018,13 @@ class MonCommandApi(object):
     
     def log(self, logtext: List[str]):
         """
-        Prefix: ``log``
-        
         log supplied text to the monitor log
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph log --logtext=string
         
         module=mon perm=rw flags=
         
@@ -2996,11 +4034,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'logtext': logtext}
         return self._mon_command(_args)
     
-    def log_last(self, num: int=None, level: str=None, channel: str=None):
+    def log_last(self, num: Optional[int]=None, level: Optional[str]=None,
+                 channel: Optional[str]=None):
         """
-        Prefix: ``log last``
-        
         print last few lines of the cluster log
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph log last --num=1 --level=choice --channel=choice
         
         module=mon perm=r flags=
         
@@ -3015,9 +4058,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_add_data_pool(self, pool: str):
         """
-        Prefix: ``mds add_data_pool``
-        
         add data pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds add_data_pool --pool=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3030,9 +4077,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_cluster_down(self):
         """
-        Prefix: ``mds cluster_down``
-        
         take MDS cluster down
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds cluster_down
         
         module=mds perm=rw flags=obsolete
         """
@@ -3043,9 +4094,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_cluster_up(self):
         """
-        Prefix: ``mds cluster_up``
-        
         bring MDS cluster up
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds cluster_up
         
         module=mds perm=rw flags=obsolete
         """
@@ -3055,9 +4110,13 @@ class MonCommandApi(object):
     
     def mds_compat_rm_compat(self, feature: int):
         """
-        Prefix: ``mds compat rm_compat``
-        
         remove compatible feature
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds compat rm_compat --feature=1
         
         module=mds perm=rw flags=
         
@@ -3069,9 +4128,13 @@ class MonCommandApi(object):
     
     def mds_compat_rm_incompat(self, feature: int):
         """
-        Prefix: ``mds compat rm_incompat``
-        
         remove incompatible feature
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds compat rm_incompat --feature=1
         
         module=mds perm=rw flags=
         
@@ -3083,9 +4146,13 @@ class MonCommandApi(object):
     
     def mds_compat_show(self):
         """
-        Prefix: ``mds compat show``
-        
         show mds compatibility settings
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds compat show
         
         module=mds perm=r flags=
         """
@@ -3095,9 +4162,13 @@ class MonCommandApi(object):
     
     def mds_count_metadata(self, property_1: str):
         """
-        Prefix: ``mds count-metadata``
-        
         count MDSs by metadata field property
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds count-metadata --property=string
         
         module=mds perm=r flags=
         
@@ -3110,9 +4181,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_deactivate(self, role: str):
         """
-        Prefix: ``mds deactivate``
-        
         clean up specified MDS rank (use with `set max_mds` to shrink cluster)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds deactivate --role=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3123,11 +4198,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_dump(self, epoch: int=None):
+    def mds_dump(self, epoch: Optional[int]=None):
         """
-        Prefix: ``mds dump``
-        
         dump legacy MDS cluster info, optionally from epoch
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds dump --epoch=1
         
         module=mds perm=r flags=obsolete
         
@@ -3139,9 +4218,13 @@ class MonCommandApi(object):
     
     def mds_fail(self, role_or_gid: str):
         """
-        Prefix: ``mds fail``
-        
         Mark MDS failed: trigger a failover if a standby is available
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds fail --role_or_gid=string
         
         module=mds perm=rw flags=
         
@@ -3153,9 +4236,13 @@ class MonCommandApi(object):
     
     def mds_freeze(self, role_or_gid: str, val: str):
         """
-        Prefix: ``mds freeze``
-        
         freeze MDS yes/no
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds freeze --role_or_gid=string --val=string
         
         module=mds perm=rw flags=hidden
         
@@ -3167,11 +4254,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_getmap(self, epoch: int=None):
+    def mds_getmap(self, epoch: Optional[int]=None):
         """
-        Prefix: ``mds getmap``
-        
         get MDS map, optionally from epoch
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds getmap --epoch=1
         
         module=mds perm=r flags=obsolete
         
@@ -3181,11 +4272,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mds_metadata(self, who: str=None):
+    def mds_metadata(self, who: Optional[str]=None):
         """
-        Prefix: ``mds metadata``
-        
         fetch metadata for mds <role>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds metadata --who=string
         
         module=mds perm=r flags=
         
@@ -3197,11 +4292,15 @@ class MonCommandApi(object):
     
     @deprecated
     def mds_newfs(self, metadata: int, data: int, yes_i_really_mean_it:
-                  bool=None):
+                  Optional[bool]=None):
         """
-        Prefix: ``mds newfs``
-        
         make new filesystem using pools <metadata> and <data>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds newfs --metadata=1 --data=1 --yes_i_really_mean_it=true
         
         module=mds perm=rw flags=obsolete
         
@@ -3216,10 +4315,14 @@ class MonCommandApi(object):
     
     def mds_ok_to_stop(self, ids: List[str]):
         """
-        Prefix: ``mds ok-to-stop``
-        
         check whether stopping the specified MDS would reduce immediate
         availability
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds ok-to-stop --ids=string
         
         module=mds perm=r flags=
         
@@ -3232,9 +4335,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_remove_data_pool(self, pool: str):
         """
-        Prefix: ``mds remove_data_pool``
-        
         remove data pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds remove_data_pool --pool=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3246,9 +4353,13 @@ class MonCommandApi(object):
     
     def mds_repaired(self, role: str):
         """
-        Prefix: ``mds repaired``
-        
         mark a damaged MDS rank as no longer damaged
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds repaired --role=string
         
         module=mds perm=rw flags=
         
@@ -3260,9 +4371,13 @@ class MonCommandApi(object):
     
     def mds_rm(self, gid: int):
         """
-        Prefix: ``mds rm``
-        
         remove nonactive mds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds rm --gid=1
         
         module=mds perm=rw flags=
         
@@ -3275,9 +4390,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_rm_data_pool(self, pool: str):
         """
-        Prefix: ``mds rm_data_pool``
-        
         remove data pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds rm_data_pool --pool=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3287,11 +4406,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def mds_rmfailed(self, role: str, yes_i_really_mean_it: bool=None):
+    def mds_rmfailed(self, role: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``mds rmfailed``
-        
         remove failed rank
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds rmfailed --role=string --yes_i_really_mean_it=true
         
         module=mds perm=rw flags=hidden
         
@@ -3303,11 +4426,16 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def mds_set(self, var: str, val: str, yes_i_really_mean_it: bool=None):
+    def mds_set(self, var: str, val: str, yes_i_really_mean_it:
+                Optional[bool]=None):
         """
-        Prefix: ``mds set``
-        
         set mds parameter <var> to <val>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds set --var=choice --val=string --yes_i_really_mean_it=true
         
         module=mds perm=rw flags=obsolete
         
@@ -3324,9 +4452,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_set_max_mds(self, maxmds: int):
         """
-        Prefix: ``mds set_max_mds``
-        
         set max MDS index
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds set_max_mds --maxmds=1
         
         module=mds perm=rw flags=obsolete
         
@@ -3338,9 +4470,13 @@ class MonCommandApi(object):
     
     def mds_set_state(self, gid: int, state: int):
         """
-        Prefix: ``mds set_state``
-        
         set mds state of <gid> to <numeric-state>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds set_state --gid=1 --state=1
         
         module=mds perm=rw flags=hidden
         
@@ -3353,9 +4489,13 @@ class MonCommandApi(object):
     
     def mds_stat(self):
         """
-        Prefix: ``mds stat``
-        
         show MDS status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds stat
         
         module=mds perm=r flags=hidden
         """
@@ -3366,9 +4506,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_stop(self, role: str):
         """
-        Prefix: ``mds stop``
-        
         stop mds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds stop --role=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3381,9 +4525,13 @@ class MonCommandApi(object):
     @deprecated
     def mds_tell(self, who: str, args: List[str]):
         """
-        Prefix: ``mds tell``
-        
         send command to particular mds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds tell --who=string --args=string
         
         module=mds perm=rw flags=obsolete
         
@@ -3396,9 +4544,13 @@ class MonCommandApi(object):
     
     def mds_versions(self):
         """
-        Prefix: ``mds versions``
-        
         check running versions of MDSs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mds versions
         
         module=mds perm=r flags=
         """
@@ -3408,9 +4560,13 @@ class MonCommandApi(object):
     
     def mgr_count_metadata(self, property_1: str):
         """
-        Prefix: ``mgr count-metadata``
-        
         count ceph-mgr daemons by metadata field property
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr count-metadata --property=string
         
         module=mgr perm=r flags=
         
@@ -3420,11 +4576,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'property': property_1}
         return self._mon_command(_args)
     
-    def mgr_dump(self, epoch: int=None):
+    def mgr_dump(self, epoch: Optional[int]=None):
         """
-        Prefix: ``mgr dump``
-        
         dump the latest MgrMap
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr dump --epoch=1
         
         module=mgr perm=r flags=
         
@@ -3436,9 +4596,13 @@ class MonCommandApi(object):
     
     def mgr_fail(self, who: str):
         """
-        Prefix: ``mgr fail``
-        
         treat the named manager daemon as failed
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr fail --who=string
         
         module=mgr perm=rw flags=
         
@@ -3448,11 +4612,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def mgr_metadata(self, who: str=None):
+    def mgr_metadata(self, who: Optional[str]=None):
         """
-        Prefix: ``mgr metadata``
-        
         dump metadata for all daemons or a specific daemon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr metadata --who=string
         
         module=mgr perm=r flags=
         
@@ -3464,9 +4632,13 @@ class MonCommandApi(object):
     
     def mgr_module_disable(self, module: str):
         """
-        Prefix: ``mgr module disable``
-        
         disable mgr module
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr module disable --module=string
         
         module=mgr perm=rw flags=
         
@@ -3476,11 +4648,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'module': module}
         return self._mon_command(_args)
     
-    def mgr_module_enable(self, module: str, force: str=None):
+    def mgr_module_enable(self, module: str, force: Optional[str]=None):
         """
-        Prefix: ``mgr module enable``
-        
         enable mgr module
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr module enable --module=string --force=choice
         
         module=mgr perm=rw flags=
         
@@ -3493,9 +4669,13 @@ class MonCommandApi(object):
     
     def mgr_module_ls(self):
         """
-        Prefix: ``mgr module ls``
-        
         list active mgr modules
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr module ls
         
         module=mgr perm=r flags=
         """
@@ -3505,9 +4685,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_background_start(self, workload: str):
         """
-        Prefix: ``mgr self-test background start``
-        
         Activate a background workload (one of command_spam, throw_exception)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test background start --workload=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3519,9 +4703,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_background_stop(self):
         """
-        Prefix: ``mgr self-test background stop``
-        
         Stop background workload if any is running
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test background stop
         
         module=mgr perm=rw flags=mgr
         """
@@ -3531,9 +4719,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_cluster_log(self, channel: str, priority: str, message: str):
         """
-        Prefix: ``mgr self-test cluster-log``
-        
         Create an audit log record.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test cluster-log --channel=string --priority=string --message=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3547,9 +4739,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_config_get(self, key: str):
         """
-        Prefix: ``mgr self-test config get``
-        
         Peek at a configuration value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test config get --key=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3561,9 +4757,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_config_get_localized(self, key: str):
         """
-        Prefix: ``mgr self-test config get_localized``
-        
         Peek at a configuration value (localized variant)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test config get_localized --key=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3575,9 +4775,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_health_clear(self, checks: List[str]):
         """
-        Prefix: ``mgr self-test health clear``
-        
         Clear health checks by name. If no names provided, clear all.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test health clear --checks=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3589,9 +4793,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_health_set(self, checks: str):
         """
-        Prefix: ``mgr self-test health set``
-        
         Set a health check from a JSON-formatted description.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test health set --checks=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3603,9 +4811,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_insights_set_now_offset(self, hours: str):
         """
-        Prefix: ``mgr self-test insights_set_now_offset``
-        
         Set the now time for the insights module.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test insights_set_now_offset --hours=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3617,9 +4829,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_module(self, module: str):
         """
-        Prefix: ``mgr self-test module``
-        
         Run another module's self_test() method
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test module --module=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3631,9 +4847,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_remote(self):
         """
-        Prefix: ``mgr self-test remote``
-        
         Test inter-module calls
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test remote
         
         module=mgr perm=rw flags=mgr
         """
@@ -3643,9 +4863,13 @@ class MonCommandApi(object):
     
     def mgr_self_test_run(self):
         """
-        Prefix: ``mgr self-test run``
-        
         Run mgr python interface tests
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr self-test run
         
         module=mgr perm=rw flags=mgr
         """
@@ -3655,9 +4879,13 @@ class MonCommandApi(object):
     
     def mgr_services(self):
         """
-        Prefix: ``mgr services``
-        
         list service endpoints provided by mgr modules
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr services
         
         module=mgr perm=r flags=
         """
@@ -3667,9 +4895,13 @@ class MonCommandApi(object):
     
     def mgr_versions(self):
         """
-        Prefix: ``mgr versions``
-        
         check running versions of ceph-mgr daemons
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mgr versions
         
         module=mgr perm=r flags=
         """
@@ -3679,9 +4911,13 @@ class MonCommandApi(object):
     
     def mon_add(self, name: str, addr: str):
         """
-        Prefix: ``mon add``
-        
         add new monitor named <name> at <addr>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon add --name=string --addr=0.0.0.0
         
         module=mon perm=rw flags=
         
@@ -3694,9 +4930,13 @@ class MonCommandApi(object):
     
     def mon_compact(self):
         """
-        Prefix: ``mon compact``
-        
         cause compaction of monitor's leveldb/rocksdb storage
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon compact
         
         module=mon perm=rw flags=no_forward
         """
@@ -3706,9 +4946,13 @@ class MonCommandApi(object):
     
     def mon_count_metadata(self, property_1: str):
         """
-        Prefix: ``mon count-metadata``
-        
         count mons by metadata field property
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon count-metadata --property=string
         
         module=mon perm=r flags=
         
@@ -3718,11 +4962,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'property': property_1}
         return self._mon_command(_args)
     
-    def mon_dump(self, epoch: int=None):
+    def mon_dump(self, epoch: Optional[int]=None):
         """
-        Prefix: ``mon dump``
-        
         dump formatted monmap (optionally from epoch)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon dump --epoch=1
         
         module=mon perm=r flags=
         
@@ -3734,9 +4982,13 @@ class MonCommandApi(object):
     
     def mon_enable_msgr2(self):
         """
-        Prefix: ``mon enable-msgr2``
-        
         enable the msgr2 protocol on port 3300
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon enable-msgr2
         
         module=mon perm=rw flags=
         """
@@ -3744,11 +4996,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_feature_ls(self, with_value: str=None):
+    def mon_feature_ls(self, with_value: Optional[str]=None):
         """
-        Prefix: ``mon feature ls``
-        
         list available mon map features to be set/unset
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon feature ls --with_value=choice
         
         module=mon perm=r flags=
         
@@ -3758,11 +5014,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'with_value': with_value}
         return self._mon_command(_args)
     
-    def mon_feature_set(self, feature_name: str, yes_i_really_mean_it: bool=None):
+    def mon_feature_set(self, feature_name: str, yes_i_really_mean_it:
+                        Optional[bool]=None):
         """
-        Prefix: ``mon feature set``
-        
         set provided feature on mon map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon feature set --feature_name=string --yes_i_really_mean_it=true
         
         module=mon perm=rw flags=
         
@@ -3774,11 +5035,15 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def mon_getmap(self, epoch: int=None):
+    def mon_getmap(self, epoch: Optional[int]=None):
         """
-        Prefix: ``mon getmap``
-        
         get monmap
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon getmap --epoch=1
         
         module=mon perm=r flags=
         
@@ -3788,11 +5053,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def mon_metadata(self, id_1: str=None):
+    def mon_metadata(self, id_1: Optional[str]=None):
         """
-        Prefix: ``mon metadata``
-        
         fetch metadata for mon <id>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon metadata --id=string
         
         module=mon perm=r flags=
         
@@ -3804,9 +5073,13 @@ class MonCommandApi(object):
     
     def mon_ok_to_add_offline(self):
         """
-        Prefix: ``mon ok-to-add-offline``
-        
         check whether adding a mon and not starting it would break quorum
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon ok-to-add-offline
         
         module=mon perm=r flags=
         """
@@ -3816,9 +5089,13 @@ class MonCommandApi(object):
     
     def mon_ok_to_rm(self, id_1: str):
         """
-        Prefix: ``mon ok-to-rm``
-        
         check whether removing the specified mon would break quorum
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon ok-to-rm --id=string
         
         module=mon perm=r flags=
         
@@ -3830,10 +5107,14 @@ class MonCommandApi(object):
     
     def mon_ok_to_stop(self, ids: List[str]):
         """
-        Prefix: ``mon ok-to-stop``
-        
         check whether mon(s) can be safely stopped without reducing immediate
         availability
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon ok-to-stop --ids=string
         
         module=mon perm=r flags=
         
@@ -3846,9 +5127,13 @@ class MonCommandApi(object):
     @deprecated
     def mon_remove(self, name: str):
         """
-        Prefix: ``mon remove``
-        
         remove monitor named <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon remove --name=string
         
         module=mon perm=rw flags=deprecated
         
@@ -3860,9 +5145,13 @@ class MonCommandApi(object):
     
     def mon_rm(self, name: str):
         """
-        Prefix: ``mon rm``
-        
         remove monitor named <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon rm --name=string
         
         module=mon perm=rw flags=
         
@@ -3874,9 +5163,13 @@ class MonCommandApi(object):
     
     def mon_scrub(self):
         """
-        Prefix: ``mon scrub``
-        
         scrub the monitor stores
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon scrub
         
         module=mon perm=rw flags=
         """
@@ -3886,9 +5179,13 @@ class MonCommandApi(object):
     
     def mon_set_addrs(self, name: str, addrs: str):
         """
-        Prefix: ``mon set-addrs``
-        
         set the addrs (IPs and ports) a specific monitor binds to
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon set-addrs --name=string --addrs=string
         
         module=mon perm=rw flags=
         
@@ -3901,9 +5198,13 @@ class MonCommandApi(object):
     
     def mon_set_rank(self, name: str, rank: int):
         """
-        Prefix: ``mon set-rank``
-        
         set the rank for the specified mon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon set-rank --name=string --rank=1
         
         module=mon perm=rw flags=
         
@@ -3916,9 +5217,13 @@ class MonCommandApi(object):
     
     def mon_set_weight(self, name: str, weight: int):
         """
-        Prefix: ``mon set-weight``
-        
         set the weight for the specified mon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon set-weight --name=string --weight=1
         
         module=mon perm=rw flags=
         
@@ -3931,9 +5236,13 @@ class MonCommandApi(object):
     
     def mon_stat(self):
         """
-        Prefix: ``mon stat``
-        
         summarize monitor status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon stat
         
         module=mon perm=r flags=
         """
@@ -3941,12 +5250,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_sync_force(self, yes_i_really_mean_it: bool=None,
-                       i_know_what_i_am_doing: bool=None):
+    def mon_sync_force(self, yes_i_really_mean_it: Optional[bool]=None,
+                       i_know_what_i_am_doing: Optional[bool]=None):
         """
-        Prefix: ``mon sync force``
-        
         force sync of and clear monitor store
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon sync force --yes_i_really_mean_it=true --i_know_what_i_am_doing=true
         
         module=mon perm=rw flags=no_forward
         
@@ -3960,9 +5273,13 @@ class MonCommandApi(object):
     
     def mon_versions(self):
         """
-        Prefix: ``mon versions``
-        
         check running versions of monitors
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon versions
         
         module=mon perm=r flags=
         """
@@ -3972,9 +5289,13 @@ class MonCommandApi(object):
     
     def mon_status(self):
         """
-        Prefix: ``mon_status``
-        
         report status of monitors
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph mon_status
         
         module=mon perm=r flags=no_forward
         """
@@ -3982,11 +5303,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def node_ls(self, type_1: str=None):
+    def node_ls(self, type_1: Optional[str]=None):
         """
-        Prefix: ``node ls``
-        
         list all nodes in cluster [type]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph node ls --type=choice
         
         module=mon perm=r flags=
         
@@ -3997,12 +5322,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'type': type_1}
         return self._mon_command(_args)
     
-    def orchestrator_device_ls(self, host: List[str]=None, format: str=None, refresh:
-                               bool=None):
+    def orchestrator_device_ls(self, host: Optional[List[str]]=None, format:
+                               Optional[str]=None, refresh: Optional[bool]=None):
         """
-        Prefix: ``orchestrator device ls``
-        
         List devices on a node
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator device ls --host=string --format=choice --refresh=true
         
         module=mgr perm=r flags=mgr
         
@@ -4016,9 +5345,13 @@ class MonCommandApi(object):
     
     def orchestrator_host_add(self, host: str):
         """
-        Prefix: ``orchestrator host add``
-        
         Add a host
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator host add --host=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4030,9 +5363,13 @@ class MonCommandApi(object):
     
     def orchestrator_host_ls(self):
         """
-        Prefix: ``orchestrator host ls``
-        
         List hosts
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator host ls
         
         module=mgr perm=r flags=mgr
         """
@@ -4042,9 +5379,13 @@ class MonCommandApi(object):
     
     def orchestrator_host_rm(self, host: str):
         """
-        Prefix: ``orchestrator host rm``
-        
         Remove a host
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator host rm --host=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4056,9 +5397,13 @@ class MonCommandApi(object):
     
     def orchestrator_mds_add(self, svc_arg: str):
         """
-        Prefix: ``orchestrator mds add``
-        
         Create an MDS service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator mds add --svc_arg=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4070,9 +5415,13 @@ class MonCommandApi(object):
     
     def orchestrator_mds_rm(self, svc_id: str):
         """
-        Prefix: ``orchestrator mds rm``
-        
         Remove an MDS service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator mds rm --svc_id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4082,11 +5431,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_mgr_update(self, num: int, hosts: List[str]=None):
+    def orchestrator_mgr_update(self, num: int, hosts: Optional[List[str]]=None):
         """
-        Prefix: ``orchestrator mgr update``
-        
         Update the number of manager instances
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator mgr update --num=1 --hosts=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4097,11 +5450,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_mon_update(self, num: int, hosts: List[str]=None):
+    def orchestrator_mon_update(self, num: int, hosts: Optional[List[str]]=None):
         """
-        Prefix: ``orchestrator mon update``
-        
         Update the number of monitor instances
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator mon update --num=1 --hosts=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4112,11 +5469,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace: str=None):
+    def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace: Optional[str]=None):
         """
-        Prefix: ``orchestrator nfs add``
-        
         Create an NFS service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator nfs add --svc_arg=string --pool=string --namespace=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4130,9 +5491,13 @@ class MonCommandApi(object):
     
     def orchestrator_nfs_rm(self, svc_id: str):
         """
-        Prefix: ``orchestrator nfs rm``
-        
         Remove an NFS service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator nfs rm --svc_id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4144,9 +5509,13 @@ class MonCommandApi(object):
     
     def orchestrator_nfs_update(self, svc_id: str, num: int):
         """
-        Prefix: ``orchestrator nfs update``
-        
         Scale an NFS service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator nfs update --svc_id=string --num=1
         
         module=mgr perm=rw flags=mgr
         
@@ -4157,12 +5526,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id, 'num': num}
         return self._mon_command(_args)
     
-    def orchestrator_osd_create(self, svc_arg: str=None):
+    def orchestrator_osd_create(self, svc_arg: Optional[str]=None):
         """
-        Prefix: ``orchestrator osd create``
-        
         Create an OSD service. Either --svc_arg=host:drives or -i
         <drive_group>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator osd create --svc_arg=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4174,9 +5547,13 @@ class MonCommandApi(object):
     
     def orchestrator_osd_rm(self, svc_id: List[str]):
         """
-        Prefix: ``orchestrator osd rm``
-        
         Remove OSD services
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator osd rm --svc_id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4186,25 +5563,34 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_rgw_add(self, svc_arg: str):
+    def orchestrator_rgw_add(self, zone_name: Optional[str]=None):
         """
-        Prefix: ``orchestrator rgw add``
+        Create an RGW service. A complete <rgw_spec> can be provided using
+        <-i> to customize completelly the RGW service
         
-        Create an RGW service
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rgw add --zone_name=string
         
         module=mgr perm=rw flags=mgr
         
-        :param svc_arg:
+        :param zone_name:
         """
         prefix = 'orchestrator rgw add'
-        _args = {'prefix': prefix, 'svc_arg': svc_arg}
+        _args = {'prefix': prefix, 'zone_name': zone_name}
         return self._mon_command(_args)
     
     def orchestrator_rgw_rm(self, svc_id: str):
         """
-        Prefix: ``orchestrator rgw rm``
-        
         Remove an RGW service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rgw rm --svc_id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4216,9 +5602,13 @@ class MonCommandApi(object):
     
     def orchestrator_service(self, action: str, svc_type: str, svc_name: str):
         """
-        Prefix: ``orchestrator service``
-        
         Start, stop or reload an entire service (i.e. all daemons)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator service --action=choice --svc_type=string --svc_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4230,31 +5620,41 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'action': action, 'svc_type': svc_type, 'svc_name': svc_name}
         return self._mon_command(_args)
     
-    def orchestrator_service_ls(self, host: str=None, svc_type: str=None, svc_id: str=None,
-                                format: str=None):
+    def orchestrator_service_ls(self, host: Optional[str]=None, svc_type:
+                                Optional[str]=None, svc_id: Optional[str]=None, format:
+                                Optional[str]=None, refresh: Optional[bool]=None):
         """
-        Prefix: ``orchestrator service ls``
-        
         List services known to orchestrator
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator service ls --host=string --svc_type=choice --svc_id=string --format=choice --refresh=true
         
         module=mgr perm=r flags=mgr
         
         :param host:
-        :param svc_type: CephChoices strings=mon|mgr|osd|mds|nfs|rgw|rbd-
-            mirror
+        :param svc_type: CephChoices
+            strings=mon|mgr|osd|mds|iscsi|nfs|rgw|rbd-mirror
         :param svc_id:
         :param format: CephChoices strings=json|plain
+        :param refresh: CephBool
         """
         prefix = 'orchestrator service ls'
         _args = {'prefix': prefix, 'host': host, 'svc_type': svc_type, 'svc_id': svc_id,
-                 'format': format}
+                 'format': format, 'refresh': refresh}
         return self._mon_command(_args)
     
     def orchestrator_service_instance(self, action: str, svc_type: str, svc_id: str):
         """
-        Prefix: ``orchestrator service-instance``
-        
         Start, stop or reload a specific service instance
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator service-instance --action=choice --svc_type=string --svc_id=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4268,9 +5668,13 @@ class MonCommandApi(object):
     
     def orchestrator_set_backend(self, module_name: str):
         """
-        Prefix: ``orchestrator set backend``
-        
         Select orchestrator module backend
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator set backend --module_name=string
         
         module=mgr perm=rw flags=mgr
         
@@ -4282,9 +5686,13 @@ class MonCommandApi(object):
     
     def orchestrator_status(self):
         """
-        Prefix: ``orchestrator status``
-        
         Report configured backend and its status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator status
         
         module=mgr perm=r flags=mgr
         """
@@ -4295,10 +5703,14 @@ class MonCommandApi(object):
     @deprecated
     def osd_add_nodown(self, ids: List[str]):
         """
-        Prefix: ``osd add-nodown``
-        
         mark osd(s) <id> [<id>...] as nodown, or use <all|any> to mark all
         osds as nodown
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd add-nodown --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -4311,10 +5723,14 @@ class MonCommandApi(object):
     @deprecated
     def osd_add_noin(self, ids: List[str]):
         """
-        Prefix: ``osd add-noin``
-        
         mark osd(s) <id> [<id>...] as noin, or use <all|any> to mark all osds
         as noin
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd add-noin --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -4327,10 +5743,14 @@ class MonCommandApi(object):
     @deprecated
     def osd_add_noout(self, ids: List[str]):
         """
-        Prefix: ``osd add-noout``
-        
         mark osd(s) <id> [<id>...] as noout, or use <all|any> to mark all osds
         as noout
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd add-noout --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -4343,10 +5763,14 @@ class MonCommandApi(object):
     @deprecated
     def osd_add_noup(self, ids: List[str]):
         """
-        Prefix: ``osd add-noup``
-        
         mark osd(s) <id> [<id>...] as noup, or use <all|any> to mark all osds
         as noup
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd add-noup --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -4356,12 +5780,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_blacklist(self, blacklistop: str, addr: str, expire: float=None):
+    def osd_blacklist(self, blacklistop: str, addr: str, expire:
+                      Optional[float]=None):
         """
-        Prefix: ``osd blacklist``
-        
         add (optionally until <expire> seconds from now) or remove <addr> from
         blacklist
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd blacklist --blacklistop=choice --addr=entityaddr --expire=0.0
         
         module=osd perm=rw flags=
         
@@ -4375,9 +5804,13 @@ class MonCommandApi(object):
     
     def osd_blacklist_clear(self):
         """
-        Prefix: ``osd blacklist clear``
-        
         clear all blacklisted clients
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd blacklist clear
         
         module=osd perm=rw flags=
         """
@@ -4387,9 +5820,13 @@ class MonCommandApi(object):
     
     def osd_blacklist_ls(self):
         """
-        Prefix: ``osd blacklist ls``
-        
         show blacklisted clients
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd blacklist ls
         
         module=osd perm=r flags=
         """
@@ -4399,9 +5836,13 @@ class MonCommandApi(object):
     
     def osd_blocked_by(self):
         """
-        Prefix: ``osd blocked-by``
-        
         print histogram of which OSDs are blocking their peers
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd blocked-by
         
         module=osd perm=r flags=mgr
         """
@@ -4411,9 +5852,13 @@ class MonCommandApi(object):
     
     def osd_count_metadata(self, property_1: str):
         """
-        Prefix: ``osd count-metadata``
-        
         count OSDs by metadata field property
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd count-metadata --property=string
         
         module=osd perm=r flags=
         
@@ -4424,11 +5869,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_create(self, uuid: str=None, id_1: str=None):
+    def osd_create(self, uuid: Optional[str]=None, id_1: Optional[str]=None):
         """
-        Prefix: ``osd create``
-        
         create new osd (with optional UUID and ID)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd create --uuid=uuid --id=osd.0
         
         module=osd perm=rw flags=deprecated
         
@@ -4441,10 +5890,14 @@ class MonCommandApi(object):
     
     def osd_crush_add(self, id_1: str, weight: float, args: List[str]):
         """
-        Prefix: ``osd crush add``
-        
         add or update crushmap position and weight for <name> with <weight>
         and location <args>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush add --id=osd.0 --weight=0.0 --args=string
         
         module=osd perm=rw flags=
         
@@ -4456,12 +5909,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1, 'weight': weight, 'args': args}
         return self._mon_command(_args)
     
-    def osd_crush_add_bucket(self, name: str, type_1: str, args: List[str]=None):
+    def osd_crush_add_bucket(self, name: str, type_1: str, args: Optional[List[str]]=None):
         """
-        Prefix: ``osd crush add-bucket``
-        
         add no-parent (probably root) crush bucket <name> of type <type> to
         location <args>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush add-bucket --name=string --type=string --args=string
         
         module=osd perm=rw flags=
         
@@ -4475,9 +5932,13 @@ class MonCommandApi(object):
     
     def osd_crush_class_create(self, class_1: str):
         """
-        Prefix: ``osd crush class create``
-        
         create crush device class <class>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush class create --class=string
         
         module=osd perm=rw flags=
         
@@ -4489,9 +5950,13 @@ class MonCommandApi(object):
     
     def osd_crush_class_ls(self):
         """
-        Prefix: ``osd crush class ls``
-        
         list all crush device classes
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush class ls
         
         module=osd perm=r flags=
         """
@@ -4501,9 +5966,13 @@ class MonCommandApi(object):
     
     def osd_crush_class_ls_osd(self, class_1: str):
         """
-        Prefix: ``osd crush class ls-osd``
-        
         list all osds belonging to the specific <class>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush class ls-osd --class=string
         
         module=osd perm=r flags=
         
@@ -4515,9 +5984,13 @@ class MonCommandApi(object):
     
     def osd_crush_class_rename(self, srcname: str, dstname: str):
         """
-        Prefix: ``osd crush class rename``
-        
         rename crush device class <srcname> to <dstname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush class rename --srcname=string --dstname=string
         
         module=osd perm=rw flags=
         
@@ -4530,9 +6003,13 @@ class MonCommandApi(object):
     
     def osd_crush_class_rm(self, class_1: str):
         """
-        Prefix: ``osd crush class rm``
-        
         remove crush device class <class>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush class rm --class=string
         
         module=osd perm=rw flags=
         
@@ -4544,10 +6021,14 @@ class MonCommandApi(object):
     
     def osd_crush_create_or_move(self, id_1: str, weight: float, args: List[str]):
         """
-        Prefix: ``osd crush create-or-move``
-        
         create entry or move existing entry for <name> <weight> at/to location
         <args>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush create-or-move --id=osd.0 --weight=0.0 --args=string
         
         module=osd perm=rw flags=
         
@@ -4561,9 +6042,13 @@ class MonCommandApi(object):
     
     def osd_crush_dump(self):
         """
-        Prefix: ``osd crush dump``
-        
         dump crush map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush dump
         
         module=osd perm=r flags=
         """
@@ -4573,9 +6058,13 @@ class MonCommandApi(object):
     
     def osd_crush_get_device_class(self, ids: List[str]):
         """
-        Prefix: ``osd crush get-device-class``
-        
         get classes of specified osd(s) <id> [<id>...]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush get-device-class --ids=string
         
         module=osd perm=r flags=
         
@@ -4587,9 +6076,13 @@ class MonCommandApi(object):
     
     def osd_crush_get_tunable(self, tunable: str):
         """
-        Prefix: ``osd crush get-tunable``
-        
         get crush tunable <tunable>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush get-tunable --tunable=choice
         
         module=osd perm=r flags=
         
@@ -4601,9 +6094,13 @@ class MonCommandApi(object):
     
     def osd_crush_link(self, name: str, args: List[str]):
         """
-        Prefix: ``osd crush link``
-        
         link existing entry for <name> under location <args>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush link --name=string --args=string
         
         module=osd perm=rw flags=
         
@@ -4616,9 +6113,13 @@ class MonCommandApi(object):
     
     def osd_crush_ls(self, node: str):
         """
-        Prefix: ``osd crush ls``
-        
         list items beneath a node in the CRUSH tree
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush ls --node=string
         
         module=osd perm=r flags=
         
@@ -4630,9 +6131,13 @@ class MonCommandApi(object):
     
     def osd_crush_move(self, name: str, args: List[str]):
         """
-        Prefix: ``osd crush move``
-        
         move existing entry for <name> to location <args>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush move --name=string --args=string
         
         module=osd perm=rw flags=
         
@@ -4644,11 +6149,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_crush_remove(self, name: str, ancestor: str=None):
+    def osd_crush_remove(self, name: str, ancestor: Optional[str]=None):
         """
-        Prefix: ``osd crush remove``
-        
         remove <name> from crush map (everywhere, or just at <ancestor>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush remove --name=string --ancestor=string
         
         module=osd perm=rw flags=deprecated
         
@@ -4661,9 +6170,13 @@ class MonCommandApi(object):
     
     def osd_crush_rename_bucket(self, srcname: str, dstname: str):
         """
-        Prefix: ``osd crush rename-bucket``
-        
         rename bucket <srcname> to <dstname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rename-bucket --srcname=string --dstname=string
         
         module=osd perm=rw flags=
         
@@ -4676,9 +6189,13 @@ class MonCommandApi(object):
     
     def osd_crush_reweight(self, name: str, weight: float):
         """
-        Prefix: ``osd crush reweight``
-        
         change <name>'s weight to <weight> in crush map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush reweight --name=string --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -4691,9 +6208,13 @@ class MonCommandApi(object):
     
     def osd_crush_reweight_all(self):
         """
-        Prefix: ``osd crush reweight-all``
-        
         recalculate the weights for the tree to ensure they sum correctly
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush reweight-all
         
         module=osd perm=rw flags=
         """
@@ -4703,9 +6224,13 @@ class MonCommandApi(object):
     
     def osd_crush_reweight_subtree(self, name: str, weight: float):
         """
-        Prefix: ``osd crush reweight-subtree``
-        
         change all leaf items beneath <name> to <weight> in crush map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush reweight-subtree --name=string --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -4716,11 +6241,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_crush_rm(self, name: str, ancestor: str=None):
+    def osd_crush_rm(self, name: str, ancestor: Optional[str]=None):
         """
-        Prefix: ``osd crush rm``
-        
         remove <name> from crush map (everywhere, or just at <ancestor>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rm --name=string --ancestor=string
         
         module=osd perm=rw flags=
         
@@ -4733,10 +6262,14 @@ class MonCommandApi(object):
     
     def osd_crush_rm_device_class(self, ids: List[str]):
         """
-        Prefix: ``osd crush rm-device-class``
-        
         remove class of the osd(s) <id> [<id>...],or use <all|any> to remove
         all.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rm-device-class --ids=string
         
         module=osd perm=rw flags=
         
@@ -4746,12 +6279,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_erasure(self, name: str, profile: str=None):
+    def osd_crush_rule_create_erasure(self, name: str, profile: Optional[str]=None):
         """
-        Prefix: ``osd crush rule create-erasure``
-        
         create crush rule <name> for erasure coded pool created with <profile>
         (default default)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule create-erasure --name=string --profile=string
         
         module=osd perm=rw flags=
         
@@ -4762,13 +6299,18 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'profile': profile}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_replicated(self, name: str, root: str, type_1: str, class_1: str=None):
+    def osd_crush_rule_create_replicated(self, name: str, root: str, type_1: str, class_1:
+                                         Optional[str]=None):
         """
-        Prefix: ``osd crush rule create-replicated``
-        
         create crush rule <name> for replicated pool to start from <root>,
         replicate across buckets of type <type>, use devices of type <class>
         (ssd or hdd)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule create-replicated --name=string --root=string --type=string --class=string
         
         module=osd perm=rw flags=
         
@@ -4781,13 +6323,18 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'root': root, 'type': type_1, 'class': class_1}
         return self._mon_command(_args)
     
-    def osd_crush_rule_create_simple(self, name: str, root: str, type_1: str, mode: str=None):
+    def osd_crush_rule_create_simple(self, name: str, root: str, type_1: str, mode:
+                                     Optional[str]=None):
         """
-        Prefix: ``osd crush rule create-simple``
-        
         create crush rule <name> to start from <root>, replicate across
         buckets of type <type>, using a choose mode of <firstn|indep> (default
         firstn; indep best for erasure pools)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule create-simple --name=string --root=string --type=string --mode=choice
         
         module=osd perm=rw flags=
         
@@ -4800,11 +6347,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'root': root, 'type': type_1, 'mode': mode}
         return self._mon_command(_args)
     
-    def osd_crush_rule_dump(self, name: str=None):
+    def osd_crush_rule_dump(self, name: Optional[str]=None):
         """
-        Prefix: ``osd crush rule dump``
-        
         dump crush rule <name> (default all)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule dump --name=string
         
         module=osd perm=r flags=
         
@@ -4817,9 +6368,13 @@ class MonCommandApi(object):
     @deprecated
     def osd_crush_rule_list(self):
         """
-        Prefix: ``osd crush rule list``
-        
         list crush rules
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule list
         
         module=osd perm=r flags=deprecated
         """
@@ -4829,9 +6384,13 @@ class MonCommandApi(object):
     
     def osd_crush_rule_ls(self):
         """
-        Prefix: ``osd crush rule ls``
-        
         list crush rules
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule ls
         
         module=osd perm=r flags=
         """
@@ -4841,9 +6400,13 @@ class MonCommandApi(object):
     
     def osd_crush_rule_ls_by_class(self, class_1: str):
         """
-        Prefix: ``osd crush rule ls-by-class``
-        
         list all crush rules that reference the same <class>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule ls-by-class --class=string
         
         module=osd perm=r flags=
         
@@ -4855,9 +6418,13 @@ class MonCommandApi(object):
     
     def osd_crush_rule_rename(self, srcname: str, dstname: str):
         """
-        Prefix: ``osd crush rule rename``
-        
         rename crush rule <srcname> to <dstname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule rename --srcname=string --dstname=string
         
         module=osd perm=rw flags=
         
@@ -4870,9 +6437,13 @@ class MonCommandApi(object):
     
     def osd_crush_rule_rm(self, name: str):
         """
-        Prefix: ``osd crush rule rm``
-        
         remove crush rule <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush rule rm --name=string
         
         module=osd perm=rw flags=
         
@@ -4881,45 +6452,57 @@ class MonCommandApi(object):
         prefix = 'osd crush rule rm'
         _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def osd_crush_set(self, prior_version: int=None):
-        """
-        Prefix: ``osd crush set``
-        
-        set crush map from input file
-        
-        module=osd perm=rw flags=
-        
-        :param prior_version: CephInt
-        """
-        prefix = 'osd crush set'
-        _args = {'prefix': prefix, 'prior_version': prior_version}
-        return self._mon_command(_args)
-    
-    @overload  # Python 3 only
-    def osd_crush_set(self, id_1: str, weight: float, args: List[str]):
-        """
-        Prefix: ``osd crush set``
-        
-        update crushmap position and weight for <name> to <weight> with
-        location <args>
-        
-        module=osd perm=rw flags=
-        
-        :param id_1: CephOsdName Real name is ``id``
-        :param weight: CephFloat range= ``0.0``
-        :param args: goodchars= ``[A-Za-z0-9-_.=]``
-        """
-        prefix = 'osd crush set'
-        _args = {'prefix': prefix, 'id': id_1, 'weight': weight, 'args': args}
-        return self._mon_command(_args)
+    # 
+    # @overload  # todo
+    # def osd_crush_set(self, prior_version: Optional[int]=None):
+    #     """
+    #     set crush map from input file
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph osd crush set --prior_version=1
+    #     
+    #     module=osd perm=rw flags=
+    #     
+    #     :param prior_version: CephInt
+    #     """
+    #     prefix = 'osd crush set'
+    #     _args = {'prefix': prefix, 'prior_version': prior_version}
+    #     return self._mon_command(_args)
+    # 
+    # @overload  # todo
+    # def osd_crush_set(self, id_1: str, weight: float, args: List[str]):
+    #     """
+    #     update crushmap position and weight for <name> to <weight> with
+    #     location <args>
+    #     
+    #     Example command:
+    #     
+    #     .. code-block:: bash
+    #     
+    #         ceph osd crush set --id=osd.0 --weight=0.0 --args=string
+    #     
+    #     module=osd perm=rw flags=
+    #     
+    #     :param id_1: CephOsdName Real name is ``id``
+    #     :param weight: CephFloat range= ``0.0``
+    #     :param args: goodchars= ``[A-Za-z0-9-_.=]``
+    #     """
+    #     prefix = 'osd crush set'
+    #     _args = {'prefix': prefix, 'id': id_1, 'weight': weight, 'args': args}
+    #     return self._mon_command(_args)
     
     def osd_crush_set_all_straw_buckets_to_straw2(self):
         """
-        Prefix: ``osd crush set-all-straw-buckets-to-straw2``
-        
         convert all CRUSH current straw buckets to use the straw2 algorithm
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush set-all-straw-buckets-to-straw2
         
         module=osd perm=rw flags=
         """
@@ -4929,10 +6512,14 @@ class MonCommandApi(object):
     
     def osd_crush_set_device_class(self, class_1: str, ids: List[str]):
         """
-        Prefix: ``osd crush set-device-class``
-        
         set the <class> of the osd(s) <id> [<id>...],or use <all|any> to set
         all.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush set-device-class --class=string --ids=string
         
         module=osd perm=rw flags=
         
@@ -4945,9 +6532,13 @@ class MonCommandApi(object):
     
     def osd_crush_set_tunable(self, tunable: str, value: int):
         """
-        Prefix: ``osd crush set-tunable``
-        
         set crush tunable <tunable> to <value>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush set-tunable --tunable=choice --value=1
         
         module=osd perm=rw flags=
         
@@ -4960,9 +6551,13 @@ class MonCommandApi(object):
     
     def osd_crush_show_tunables(self):
         """
-        Prefix: ``osd crush show-tunables``
-        
         show current crush tunables
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush show-tunables
         
         module=osd perm=r flags=
         """
@@ -4971,12 +6566,16 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def osd_crush_swap_bucket(self, source: str, dest: str, yes_i_really_mean_it:
-                              bool=None):
+                              Optional[bool]=None):
         """
-        Prefix: ``osd crush swap-bucket``
-        
         swap existing bucket contents from (orphan) bucket <source> and
         <target>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush swap-bucket --source=string --dest=string --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -4989,11 +6588,15 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_crush_tree(self, shadow: str=None):
+    def osd_crush_tree(self, shadow: Optional[str]=None):
         """
-        Prefix: ``osd crush tree``
-        
         dump crush buckets and items in a tree view
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush tree --shadow=choice
         
         module=osd perm=r flags=
         
@@ -5005,9 +6608,13 @@ class MonCommandApi(object):
     
     def osd_crush_tunables(self, profile: str):
         """
-        Prefix: ``osd crush tunables``
-        
         set crush tunables values to <profile>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush tunables --profile=choice
         
         module=osd perm=rw flags=
         
@@ -5018,11 +6625,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'profile': profile}
         return self._mon_command(_args)
     
-    def osd_crush_unlink(self, name: str, ancestor: str=None):
+    def osd_crush_unlink(self, name: str, ancestor: Optional[str]=None):
         """
-        Prefix: ``osd crush unlink``
-        
         unlink <name> from crush map (everywhere, or just at <ancestor>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush unlink --name=string --ancestor=string
         
         module=osd perm=rw flags=
         
@@ -5035,9 +6646,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_create(self, pool: str, mode: str):
         """
-        Prefix: ``osd crush weight-set create``
-        
         create a weight-set for a given pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set create --pool=poolname --mode=choice
         
         module=osd perm=rw flags=
         
@@ -5050,9 +6665,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_create_compat(self):
         """
-        Prefix: ``osd crush weight-set create-compat``
-        
         create a default backward-compatible weight-set
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set create-compat
         
         module=osd perm=rw flags=
         """
@@ -5062,9 +6681,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_dump(self):
         """
-        Prefix: ``osd crush weight-set dump``
-        
         dump crush weight sets
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set dump
         
         module=osd perm=r flags=
         """
@@ -5074,9 +6697,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_ls(self):
         """
-        Prefix: ``osd crush weight-set ls``
-        
         list crush weight sets
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set ls
         
         module=osd perm=r flags=
         """
@@ -5086,9 +6713,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_reweight(self, pool: str, item: str, weight: List[float]):
         """
-        Prefix: ``osd crush weight-set reweight``
-        
         set weight for an item (bucket or osd) in a pool's weight-set
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set reweight --pool=poolname --item=string --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -5102,10 +6733,14 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_reweight_compat(self, item: str, weight: List[float]):
         """
-        Prefix: ``osd crush weight-set reweight-compat``
-        
         set weight for an item (bucket or osd) in the backward-compatible
         weight-set
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set reweight-compat --item=string --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -5118,9 +6753,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_rm(self, pool: str):
         """
-        Prefix: ``osd crush weight-set rm``
-        
         remove the weight-set for a given pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set rm --pool=poolname
         
         module=osd perm=rw flags=
         
@@ -5132,9 +6771,13 @@ class MonCommandApi(object):
     
     def osd_crush_weight_set_rm_compat(self):
         """
-        Prefix: ``osd crush weight-set rm-compat``
-        
         remove the backward-compatible weight-set
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd crush weight-set rm-compat
         
         module=osd perm=rw flags=
         """
@@ -5144,9 +6787,13 @@ class MonCommandApi(object):
     
     def osd_deep_scrub(self, who: str):
         """
-        Prefix: ``osd deep-scrub``
-        
         initiate deep scrub on osd <who>, or use <all|any> to deep scrub all
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd deep-scrub --who=string
         
         module=osd perm=rw flags=mgr
         
@@ -5156,14 +6803,18 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_destroy(self, id_1: str, force: bool=None, yes_i_really_mean_it:
-                    bool=None):
+    def osd_destroy(self, id_1: str, force: Optional[bool]=None,
+                    yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd destroy``
-        
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but
         removes cephx keys, config-key data and lockbox keys, rendering data
         permanently unreadable.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd destroy --id=osd.0 --force=true --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=mgr
         
@@ -5176,13 +6827,17 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_destroy_actual(self, id_1: str, yes_i_really_mean_it: bool=None):
+    def osd_destroy_actual(self, id_1: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd destroy-actual``
-        
         mark osd as being destroyed. Keeps the ID intact (allowing reuse), but
         removes cephx keys, config-key data and lockbox keys, rendering data
         permanently unreadable.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd destroy-actual --id=osd.0 --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=hidden
         
@@ -5193,12 +6848,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_df(self, output_method: str=None, filter_by: str=None, filter:
-               str=None):
+    def osd_df(self, output_method: Optional[str]=None, filter_by:
+               Optional[str]=None, filter: Optional[str]=None):
         """
-        Prefix: ``osd df``
-        
         show OSD utilization
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd df --output_method=choice --filter_by=choice --filter=string
         
         module=osd perm=r flags=mgr
         
@@ -5211,25 +6870,34 @@ class MonCommandApi(object):
                  'filter': filter}
         return self._mon_command(_args)
     
-    def osd_down(self, ids: List[str]):
+    def osd_down(self, ids: List[str], definitely_dead: Optional[bool]=None):
         """
-        Prefix: ``osd down``
-        
         set osd(s) <id> [<id>...] down, or use <any|all> to set all osds down
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd down --ids=string --definitely_dead=true
         
         module=osd perm=rw flags=
         
         :param ids:
+        :param definitely_dead: CephBool
         """
         prefix = 'osd down'
-        _args = {'prefix': prefix, 'ids': ids}
+        _args = {'prefix': prefix, 'ids': ids, 'definitely_dead': definitely_dead}
         return self._mon_command(_args)
     
-    def osd_dump(self, epoch: int=None):
+    def osd_dump(self, epoch: Optional[int]=None):
         """
-        Prefix: ``osd dump``
-        
         print summary of OSD map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd dump --epoch=1
         
         module=osd perm=r flags=
         
@@ -5241,9 +6909,13 @@ class MonCommandApi(object):
     
     def osd_erasure_code_profile_get(self, name: str):
         """
-        Prefix: ``osd erasure-code-profile get``
-        
         get erasure code profile <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd erasure-code-profile get --name=string
         
         module=osd perm=r flags=
         
@@ -5255,9 +6927,13 @@ class MonCommandApi(object):
     
     def osd_erasure_code_profile_ls(self):
         """
-        Prefix: ``osd erasure-code-profile ls``
-        
         list all erasure code profiles
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd erasure-code-profile ls
         
         module=osd perm=r flags=
         """
@@ -5267,9 +6943,13 @@ class MonCommandApi(object):
     
     def osd_erasure_code_profile_rm(self, name: str):
         """
-        Prefix: ``osd erasure-code-profile rm``
-        
         remove erasure code profile <name>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd erasure-code-profile rm --name=string
         
         module=osd perm=rw flags=
         
@@ -5279,12 +6959,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
-    def osd_erasure_code_profile_set(self, name: str, profile: List[str]=None, force: bool=None):
+    def osd_erasure_code_profile_set(self, name: str, profile: Optional[List[str]]=None, force:
+                                     Optional[bool]=None):
         """
-        Prefix: ``osd erasure-code-profile set``
-        
         create erasure code profile <name> with [<key[=value]> ...] pairs. Add
         a --force at the end to override an existing profile (VERY DANGEROUS)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd erasure-code-profile set --name=string --profile=string --force=true
         
         module=osd perm=rw flags=
         
@@ -5298,9 +6983,13 @@ class MonCommandApi(object):
     
     def osd_find(self, id_1: str):
         """
-        Prefix: ``osd find``
-        
         find osd <id> in the CRUSH map and show its location
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd find --id=osd.0
         
         module=osd perm=r flags=
         
@@ -5310,11 +6999,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1}
         return self._mon_command(_args)
     
-    def osd_force_create_pg(self, pgid: str, yes_i_really_mean_it: bool=None):
+    def osd_force_create_pg(self, pgid: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd force-create-pg``
-        
         force creation of pg <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd force-create-pg --pgid=0 --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -5327,9 +7020,13 @@ class MonCommandApi(object):
     
     def osd_get_require_min_compat_client(self):
         """
-        Prefix: ``osd get-require-min-compat-client``
-        
         get the minimum client version we will maintain compatibility with
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd get-require-min-compat-client
         
         module=osd perm=r flags=
         """
@@ -5337,11 +7034,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_getcrushmap(self, epoch: int=None):
+    def osd_getcrushmap(self, epoch: Optional[int]=None):
         """
-        Prefix: ``osd getcrushmap``
-        
         get CRUSH map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd getcrushmap --epoch=1
         
         module=osd perm=r flags=
         
@@ -5351,11 +7052,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def osd_getmap(self, epoch: int=None):
+    def osd_getmap(self, epoch: Optional[int]=None):
         """
-        Prefix: ``osd getmap``
-        
         get OSD map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd getmap --epoch=1
         
         module=osd perm=r flags=
         
@@ -5367,9 +7072,13 @@ class MonCommandApi(object):
     
     def osd_getmaxosd(self):
         """
-        Prefix: ``osd getmaxosd``
-        
         show largest OSD id
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd getmaxosd
         
         module=osd perm=r flags=
         """
@@ -5379,10 +7088,14 @@ class MonCommandApi(object):
     
     def osd_in(self, ids: List[str]):
         """
-        Prefix: ``osd in``
-        
         set osd(s) <id> [<id>...] in, can use <any|all> to automatically set
         all previously out osds in
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd in --ids=string
         
         module=osd perm=rw flags=
         
@@ -5392,11 +7105,33 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
+    def osd_info(self, id_1: Optional[str]=None):
+        """
+        print osd's {id} information (instead of all osds from map)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd info --id=osd.0
+        
+        module=osd perm=r flags=
+        
+        :param id_1: CephOsdName Real name is ``id``
+        """
+        prefix = 'osd info'
+        _args = {'prefix': prefix, 'id': id_1}
+        return self._mon_command(_args)
+    
     def osd_last_stat_seq(self, id_1: str):
         """
-        Prefix: ``osd last-stat-seq``
-        
         get the last pg stats sequence number reported for this osd
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd last-stat-seq --id=osd.0
         
         module=osd perm=r flags=
         
@@ -5406,12 +7141,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1}
         return self._mon_command(_args)
     
-    def osd_lost(self, id_1: str, yes_i_really_mean_it: bool=None):
+    def osd_lost(self, id_1: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd lost``
-        
         mark osd as permanently lost. THIS DESTROYS DATA IF NO MORE REPLICAS
         EXIST, BE CAREFUL
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd lost --id=osd.0 --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -5422,11 +7161,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_ls(self, epoch: int=None):
+    def osd_ls(self, epoch: Optional[int]=None):
         """
-        Prefix: ``osd ls``
-        
         show all OSD ids
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd ls --epoch=1
         
         module=osd perm=r flags=
         
@@ -5436,11 +7179,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch}
         return self._mon_command(_args)
     
-    def osd_ls_tree(self, name: str, epoch: int=None):
+    def osd_ls_tree(self, name: str, epoch: Optional[int]=None):
         """
-        Prefix: ``osd ls-tree``
-        
         show OSD ids under bucket <name> in the CRUSH map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd ls-tree --name=string --epoch=1
         
         module=osd perm=r flags=
         
@@ -5454,9 +7201,13 @@ class MonCommandApi(object):
     @deprecated
     def osd_lspools(self):
         """
-        Prefix: ``osd lspools``
-        
         list pools
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd lspools
         
         module=osd perm=r flags=deprecated
         """
@@ -5464,11 +7215,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_map(self, pool: str, object: str, nspace: str=None):
+    def osd_map(self, pool: str, object: str, nspace: Optional[str]=None):
         """
-        Prefix: ``osd map``
-        
         find pg for <object> in <pool> with [namespace]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd map --pool=poolname --object=objectname --nspace=string
         
         module=osd perm=r flags=
         
@@ -5480,11 +7235,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'object': object, 'nspace': nspace}
         return self._mon_command(_args)
     
-    def osd_metadata(self, id_1: str=None):
+    def osd_metadata(self, id_1: Optional[str]=None):
         """
-        Prefix: ``osd metadata``
-        
         fetch metadata for osd {id} (default all)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd metadata --id=osd.0
         
         module=osd perm=r flags=
         
@@ -5494,13 +7253,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1}
         return self._mon_command(_args)
     
-    def osd_new(self, uuid: str, id_1: str=None):
+    def osd_new(self, uuid: str, id_1: Optional[str]=None):
         """
-        Prefix: ``osd new``
-        
         Create a new OSD. If supplied, the `id` to be replaced needs to exist
         and have been previously destroyed. Reads secrets from JSON file via
         `-i <file>` (see man page).
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd new --uuid=uuid --id=osd.0
         
         module=osd perm=rw flags=
         
@@ -5513,9 +7276,13 @@ class MonCommandApi(object):
     
     def osd_numa_status(self):
         """
-        Prefix: ``osd numa-status``
-        
         show NUMA status of OSDs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd numa-status
         
         module=osd perm=r flags=
         """
@@ -5525,10 +7292,14 @@ class MonCommandApi(object):
     
     def osd_ok_to_stop(self, ids: List[str]):
         """
-        Prefix: ``osd ok-to-stop``
-        
         check whether osd(s) can be safely stopped without reducing immediate
         data availability
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd ok-to-stop --ids=string
         
         module=osd perm=r flags=mgr
         
@@ -5540,9 +7311,13 @@ class MonCommandApi(object):
     
     def osd_out(self, ids: List[str]):
         """
-        Prefix: ``osd out``
-        
         set osd(s) <id> [<id>...] out, or use <any|all> to set all osds out
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd out --ids=string
         
         module=osd perm=rw flags=
         
@@ -5554,9 +7329,13 @@ class MonCommandApi(object):
     
     def osd_pause(self):
         """
-        Prefix: ``osd pause``
-        
         pause osd
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pause
         
         module=osd perm=rw flags=
         """
@@ -5566,9 +7345,13 @@ class MonCommandApi(object):
     
     def osd_perf(self):
         """
-        Prefix: ``osd perf``
-        
         print dump of OSD perf summary stats
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd perf
         
         module=osd perm=r flags=mgr
         """
@@ -5578,9 +7361,13 @@ class MonCommandApi(object):
     
     def osd_perf_counters_get(self, query_id: int):
         """
-        Prefix: ``osd perf counters get``
-        
         fetch osd perf counters
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd perf counters get --query_id=1
         
         module=mgr perm=w flags=mgr
         
@@ -5592,9 +7379,13 @@ class MonCommandApi(object):
     
     def osd_perf_query_add(self, query: str):
         """
-        Prefix: ``osd perf query add``
-        
         add osd perf query
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd perf query add --query=choice
         
         module=mgr perm=w flags=mgr
         
@@ -5606,9 +7397,13 @@ class MonCommandApi(object):
     
     def osd_perf_query_remove(self, query_id: int):
         """
-        Prefix: ``osd perf query remove``
-        
         remove osd perf query
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd perf query remove --query_id=1
         
         module=mgr perm=w flags=mgr
         
@@ -5618,11 +7413,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'query_id': query_id}
         return self._mon_command(_args)
     
-    def osd_pg_temp(self, pgid: str, id_1: List[str]=None):
+    def osd_pg_temp(self, pgid: str, id_1: Optional[List[str]]=None):
         """
-        Prefix: ``osd pg-temp``
-        
         set pg_temp mapping pgid:[<id> [<id>...]] (developers only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pg-temp --pgid=0 --id=osd.0
         
         module=osd perm=rw flags=
         
@@ -5635,9 +7434,13 @@ class MonCommandApi(object):
     
     def osd_pg_upmap(self, pgid: str, id_1: List[str]):
         """
-        Prefix: ``osd pg-upmap``
-        
         set pg_upmap mapping <pgid>:[<id> [<id>...]] (developers only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pg-upmap --pgid=0 --id=osd.0
         
         module=osd perm=rw flags=
         
@@ -5650,10 +7453,14 @@ class MonCommandApi(object):
     
     def osd_pg_upmap_items(self, pgid: str, id_1: List[str]):
         """
-        Prefix: ``osd pg-upmap-items``
-        
         set pg_upmap_items mapping <pgid>:{<id> to <id>, [...]} (developers
         only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pg-upmap-items --pgid=0 --id=osd.0
         
         module=osd perm=rw flags=
         
@@ -5664,11 +7471,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_1}
         return self._mon_command(_args)
     
-    def osd_pool_application_disable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
+    def osd_pool_application_disable(self, pool: str, app: str, yes_i_really_mean_it:
+                                     Optional[bool]=None):
         """
-        Prefix: ``osd pool application disable``
-        
         disables use of an application <app> on pool <poolname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool application disable --pool=poolname --app=string --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -5681,11 +7493,16 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_pool_application_enable(self, pool: str, app: str, yes_i_really_mean_it: bool=None):
+    def osd_pool_application_enable(self, pool: str, app: str, yes_i_really_mean_it:
+                                    Optional[bool]=None):
         """
-        Prefix: ``osd pool application enable``
-        
         enable use of an application <app> [cephfs,rbd,rgw] on pool <poolname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool application enable --pool=poolname --app=string --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -5698,11 +7515,16 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_pool_application_get(self, pool: str, app: str=None, key: str=None):
+    def osd_pool_application_get(self, pool: str, app: Optional[str]=None, key:
+                                 Optional[str]=None):
         """
-        Prefix: ``osd pool application get``
-        
         get value of key <key> of application <app> on pool <poolname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool application get --pool=poolname --app=string --key=string
         
         module=osd perm=r flags=
         
@@ -5716,9 +7538,13 @@ class MonCommandApi(object):
     
     def osd_pool_application_rm(self, pool: str, app: str, key: str):
         """
-        Prefix: ``osd pool application rm``
-        
         removes application <app> metadata key <key> on pool <poolname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool application rm --pool=poolname --app=string --key=string
         
         module=osd perm=rw flags=
         
@@ -5732,10 +7558,14 @@ class MonCommandApi(object):
     
     def osd_pool_application_set(self, pool: str, app: str, key: str, value: str):
         """
-        Prefix: ``osd pool application set``
-        
         sets application <app> metadata key <key> to <value> on pool
         <poolname>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool application set --pool=poolname --app=string --key=string --value=string
         
         module=osd perm=rw flags=
         
@@ -5750,9 +7580,13 @@ class MonCommandApi(object):
     
     def osd_pool_autoscale_status(self):
         """
-        Prefix: ``osd pool autoscale-status``
-        
         report on pool pg_num sizing recommendation and intent
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool autoscale-status
         
         module=mgr perm=r flags=mgr
         """
@@ -5762,9 +7596,13 @@ class MonCommandApi(object):
     
     def osd_pool_cancel_force_backfill(self, who: List[str]):
         """
-        Prefix: ``osd pool cancel-force-backfill``
-        
         restore normal recovery priority of specified pool <who>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool cancel-force-backfill --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5776,9 +7614,13 @@ class MonCommandApi(object):
     
     def osd_pool_cancel_force_recovery(self, who: List[str]):
         """
-        Prefix: ``osd pool cancel-force-recovery``
-        
         restore normal recovery priority of specified pool <who>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool cancel-force-recovery --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5788,15 +7630,21 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_create(self, pool: str, pg_num: int, pgp_num: int=None, pool_type:
-                        str=None, erasure_code_profile: str=None, rule: str=None,
-                        expected_num_objects: int=None, size: int=None, pg_num_min:
-                        int=None, target_size_bytes: int=None, target_size_ratio:
-                        float=None):
+    def osd_pool_create(self, pool: str, pg_num: int, pgp_num: Optional[int]=None,
+                        pool_type: Optional[str]=None, erasure_code_profile:
+                        Optional[str]=None, rule: Optional[str]=None,
+                        expected_num_objects: Optional[int]=None, size:
+                        Optional[int]=None, pg_num_min: Optional[int]=None,
+                        target_size_bytes: Optional[int]=None, target_size_ratio:
+                        Optional[float]=None):
         """
-        Prefix: ``osd pool create``
-        
         create pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool create --pool=poolname --pg_num=1 --pgp_num=1 --pool_type=choice --erasure_code_profile=string --rule=string --expected_num_objects=1 --size=1 --pg_num_min=1 --target_size_bytes=1 --target_size_ratio=0.0
         
         module=osd perm=rw flags=
         
@@ -5823,9 +7671,13 @@ class MonCommandApi(object):
     
     def osd_pool_deep_scrub(self, who: List[str]):
         """
-        Prefix: ``osd pool deep-scrub``
-        
         initiate deep-scrub on pool <who>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool deep-scrub --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5836,13 +7688,17 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def osd_pool_delete(self, pool: str, pool2: str=None,
-                        yes_i_really_really_mean_it: bool=None,
-                        yes_i_really_really_mean_it_not_faking: bool=None):
+    def osd_pool_delete(self, pool: str, pool2: Optional[str]=None,
+                        yes_i_really_really_mean_it: Optional[bool]=None,
+                        yes_i_really_really_mean_it_not_faking: Optional[bool]=None):
         """
-        Prefix: ``osd pool delete``
-        
         delete pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool delete --pool=poolname --pool2=poolname --yes_i_really_really_mean_it=true --yes_i_really_really_mean_it_not_faking=true
         
         module=osd perm=rw flags=deprecated
         
@@ -5860,9 +7716,13 @@ class MonCommandApi(object):
     
     def osd_pool_force_backfill(self, who: List[str]):
         """
-        Prefix: ``osd pool force-backfill``
-        
         force backfill of specified pool <who> first
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool force-backfill --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5874,9 +7734,13 @@ class MonCommandApi(object):
     
     def osd_pool_force_recovery(self, who: List[str]):
         """
-        Prefix: ``osd pool force-recovery``
-        
         force recovery of specified pool <who> first
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool force-recovery --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5888,9 +7752,13 @@ class MonCommandApi(object):
     
     def osd_pool_get(self, pool: str, var: str):
         """
-        Prefix: ``osd pool get``
-        
         get pool parameter <var>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool get --pool=poolname --var=choice
         
         module=osd perm=r flags=
         
@@ -5916,9 +7784,13 @@ class MonCommandApi(object):
     
     def osd_pool_get_quota(self, pool: str):
         """
-        Prefix: ``osd pool get-quota``
-        
         obtain object or byte limits for pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool get-quota --pool=poolname
         
         module=osd perm=r flags=
         
@@ -5928,11 +7800,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool}
         return self._mon_command(_args)
     
-    def osd_pool_ls(self, detail: str=None):
+    def osd_pool_ls(self, detail: Optional[str]=None):
         """
-        Prefix: ``osd pool ls``
-        
         list pools
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool ls --detail=choice
         
         module=osd perm=r flags=
         
@@ -5944,9 +7820,13 @@ class MonCommandApi(object):
     
     def osd_pool_mksnap(self, pool: str, snap: str):
         """
-        Prefix: ``osd pool mksnap``
-        
         make snapshot <snap> in <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool mksnap --pool=poolname --snap=string
         
         module=osd perm=rw flags=
         
@@ -5959,9 +7839,13 @@ class MonCommandApi(object):
     
     def osd_pool_rename(self, srcpool: str, destpool: str):
         """
-        Prefix: ``osd pool rename``
-        
         rename <srcpool> to <destpool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool rename --srcpool=poolname --destpool=poolname
         
         module=osd perm=rw flags=
         
@@ -5974,9 +7858,13 @@ class MonCommandApi(object):
     
     def osd_pool_repair(self, who: List[str]):
         """
-        Prefix: ``osd pool repair``
-        
         initiate repair on pool <who>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool repair --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -5986,13 +7874,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_rm(self, pool: str, pool2: str=None,
-                    yes_i_really_really_mean_it: bool=None,
-                    yes_i_really_really_mean_it_not_faking: bool=None):
+    def osd_pool_rm(self, pool: str, pool2: Optional[str]=None,
+                    yes_i_really_really_mean_it: Optional[bool]=None,
+                    yes_i_really_really_mean_it_not_faking: Optional[bool]=None):
         """
-        Prefix: ``osd pool rm``
-        
         remove pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool rm --pool=poolname --pool2=poolname --yes_i_really_really_mean_it=true --yes_i_really_really_mean_it_not_faking=true
         
         module=osd perm=rw flags=
         
@@ -6010,9 +7902,13 @@ class MonCommandApi(object):
     
     def osd_pool_rmsnap(self, pool: str, snap: str):
         """
-        Prefix: ``osd pool rmsnap``
-        
         remove snapshot <snap> from <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool rmsnap --pool=poolname --snap=string
         
         module=osd perm=rw flags=
         
@@ -6025,9 +7921,13 @@ class MonCommandApi(object):
     
     def osd_pool_scrub(self, who: List[str]):
         """
-        Prefix: ``osd pool scrub``
-        
         initiate scrub on pool <who>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool scrub --who=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -6038,11 +7938,15 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def osd_pool_set(self, pool: str, var: str, val: str, yes_i_really_mean_it:
-                     bool=None):
+                     Optional[bool]=None):
         """
-        Prefix: ``osd pool set``
-        
         set pool parameter <var> to <val>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool set --pool=poolname --var=choice --val=string --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6070,9 +7974,13 @@ class MonCommandApi(object):
     
     def osd_pool_set_quota(self, pool: str, field: str, val: str):
         """
-        Prefix: ``osd pool set-quota``
-        
         set object or byte limit on pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool set-quota --pool=poolname --field=choice --val=string
         
         module=osd perm=rw flags=
         
@@ -6084,11 +7992,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'field': field, 'val': val}
         return self._mon_command(_args)
     
-    def osd_pool_stats(self, pool_name: str=None):
+    def osd_pool_stats(self, pool_name: Optional[str]=None):
         """
-        Prefix: ``osd pool stats``
-        
         obtain stats from all pools, or from specified pool
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd pool stats --pool_name=poolname
         
         module=osd perm=r flags=mgr
         
@@ -6100,9 +8012,13 @@ class MonCommandApi(object):
     
     def osd_primary_affinity(self, id_1: str, weight: float):
         """
-        Prefix: ``osd primary-affinity``
-        
         adjust osd primary-affinity from 0.0 <= <weight> <= 1.0
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd primary-affinity --id=osd.0 --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -6115,9 +8031,13 @@ class MonCommandApi(object):
     
     def osd_primary_temp(self, pgid: str, id_1: str):
         """
-        Prefix: ``osd primary-temp``
-        
         set primary_temp mapping pgid:<id>|-1 (developers only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd primary-temp --pgid=0 --id=osd.0
         
         module=osd perm=rw flags=
         
@@ -6128,13 +8048,17 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid, 'id': id_1}
         return self._mon_command(_args)
     
-    def osd_purge(self, id_1: str, force: bool=None, yes_i_really_mean_it:
-                  bool=None):
+    def osd_purge(self, id_1: str, force: Optional[bool]=None,
+                  yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd purge``
-        
         purge all osd data from the monitors including the OSD id and CRUSH
         position
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd purge --id=osd.0 --force=true --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=mgr
         
@@ -6147,12 +8071,16 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_purge_actual(self, id_1: str, yes_i_really_mean_it: bool=None):
+    def osd_purge_actual(self, id_1: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd purge-actual``
-        
         purge all osd data from the monitors. Combines `osd destroy`, `osd
         rm`, and `osd crush rm`.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd purge-actual --id=osd.0 --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=hidden
         
@@ -6163,12 +8091,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1, 'yes_i_really_mean_it': yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_purge_new(self, id_1: str, yes_i_really_mean_it: bool=None):
+    def osd_purge_new(self, id_1: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd purge-new``
-        
         purge all traces of an OSD that was partially created but never
         started
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd purge-new --id=osd.0 --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6181,9 +8113,13 @@ class MonCommandApi(object):
     
     def osd_repair(self, who: str):
         """
-        Prefix: ``osd repair``
-        
         initiate repair on osd <who>, or use <all|any> to repair all
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd repair --who=string
         
         module=osd perm=rw flags=mgr
         
@@ -6193,11 +8129,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_require_osd_release(self, release: str, yes_i_really_mean_it: bool=None):
+    def osd_require_osd_release(self, release: str, yes_i_really_mean_it:
+                                Optional[bool]=None):
         """
-        Prefix: ``osd require-osd-release``
-        
         set the minimum allowed OSD release to participate in the cluster
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd require-osd-release --release=choice --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6211,9 +8152,13 @@ class MonCommandApi(object):
     
     def osd_reweight(self, id_1: str, weight: float):
         """
-        Prefix: ``osd reweight``
-        
         reweight osd to 0.0 < <weight> < 1.0
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd reweight --id=osd.0 --weight=0.0
         
         module=osd perm=rw flags=
         
@@ -6224,13 +8169,18 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'id': id_1, 'weight': weight}
         return self._mon_command(_args)
     
-    def osd_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds:
-                           int=None, pools: List[str]=None):
+    def osd_reweight_by_pg(self, oload: Optional[int]=None, max_change:
+                           Optional[float]=None, max_osds: Optional[int]=None, pools:
+                           Optional[List[str]]=None):
         """
-        Prefix: ``osd reweight-by-pg``
-        
         reweight OSDs by PG distribution [overload-percentage-for-
         consideration, default 120]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd reweight-by-pg --oload=1 --max_change=0.0 --max_osds=1 --pools=poolname
         
         module=osd perm=rw flags=mgr
         
@@ -6244,13 +8194,18 @@ class MonCommandApi(object):
                  max_osds, 'pools': pools}
         return self._mon_command(_args)
     
-    def osd_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds:
-                                    int=None, no_increasing: str=None):
+    def osd_reweight_by_utilization(self, oload: Optional[int]=None, max_change:
+                                    Optional[float]=None, max_osds: Optional[int]=None,
+                                    no_increasing: Optional[str]=None):
         """
-        Prefix: ``osd reweight-by-utilization``
-        
         reweight OSDs by utilization [overload-percentage-for-consideration,
         default 120]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd reweight-by-utilization --oload=1 --max_change=0.0 --max_osds=1 --no_increasing=choice
         
         module=osd perm=rw flags=mgr
         
@@ -6266,9 +8221,13 @@ class MonCommandApi(object):
     
     def osd_reweightn(self, weights: str):
         """
-        Prefix: ``osd reweightn``
-        
         reweight osds with {<id>: <weight>,...})
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd reweightn --weights=string
         
         module=osd perm=rw flags=
         
@@ -6281,9 +8240,13 @@ class MonCommandApi(object):
     @deprecated
     def osd_rm(self, ids: List[str]):
         """
-        Prefix: ``osd rm``
-        
         remove osd(s) <id> [<id>...], or use <any|all> to remove all osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -6296,11 +8259,15 @@ class MonCommandApi(object):
     @deprecated
     def osd_rm_nodown(self, ids: List[str]):
         """
-        Prefix: ``osd rm-nodown``
-        
         allow osd(s) <id> [<id>...] to be marked down (if they are currently
         marked as nodown), can use <all|any> to automatically filter out all
         nodown osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-nodown --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -6313,11 +8280,15 @@ class MonCommandApi(object):
     @deprecated
     def osd_rm_noin(self, ids: List[str]):
         """
-        Prefix: ``osd rm-noin``
-        
         allow osd(s) <id> [<id>...] to be marked in (if they are currently
         marked as noin), can use <all|any> to automatically filter out all
         noin osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-noin --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -6330,11 +8301,15 @@ class MonCommandApi(object):
     @deprecated
     def osd_rm_noout(self, ids: List[str]):
         """
-        Prefix: ``osd rm-noout``
-        
         allow osd(s) <id> [<id>...] to be marked out (if they are currently
         marked as noout), can use <all|any> to automatically filter out all
         noout osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-noout --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -6347,11 +8322,15 @@ class MonCommandApi(object):
     @deprecated
     def osd_rm_noup(self, ids: List[str]):
         """
-        Prefix: ``osd rm-noup``
-        
         allow osd(s) <id> [<id>...] to be marked up (if they are currently
         marked as noup), can use <all|any> to automatically filter out all
         noup osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-noup --ids=string
         
         module=osd perm=rw flags=deprecated
         
@@ -6363,9 +8342,13 @@ class MonCommandApi(object):
     
     def osd_rm_pg_upmap(self, pgid: str):
         """
-        Prefix: ``osd rm-pg-upmap``
-        
         clear pg_upmap mapping for <pgid> (developers only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-pg-upmap --pgid=0
         
         module=osd perm=rw flags=
         
@@ -6377,9 +8360,13 @@ class MonCommandApi(object):
     
     def osd_rm_pg_upmap_items(self, pgid: str):
         """
-        Prefix: ``osd rm-pg-upmap-items``
-        
         clear pg_upmap_items mapping for <pgid> (developers only)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd rm-pg-upmap-items --pgid=0
         
         module=osd perm=rw flags=
         
@@ -6391,10 +8378,14 @@ class MonCommandApi(object):
     
     def osd_safe_to_destroy(self, ids: List[str]):
         """
-        Prefix: ``osd safe-to-destroy``
-        
         check whether osd(s) can be safely destroyed without reducing data
         durability
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd safe-to-destroy --ids=string
         
         module=osd perm=r flags=mgr
         
@@ -6406,9 +8397,13 @@ class MonCommandApi(object):
     
     def osd_scrub(self, who: str):
         """
-        Prefix: ``osd scrub``
-        
         initiate scrub on osd <who>, or use <all|any> to scrub all
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd scrub --who=string
         
         module=osd perm=rw flags=mgr
         
@@ -6418,11 +8413,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_set(self, key: str, yes_i_really_mean_it: bool=None):
+    def osd_set(self, key: str, yes_i_really_mean_it: Optional[bool]=None):
         """
-        Prefix: ``osd set``
-        
         set <key>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set --key=choice --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6437,9 +8436,13 @@ class MonCommandApi(object):
     
     def osd_set_backfillfull_ratio(self, ratio: float):
         """
-        Prefix: ``osd set-backfillfull-ratio``
-        
         set usage ratio at which OSDs are marked too full to backfill
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set-backfillfull-ratio --ratio=0.0
         
         module=osd perm=rw flags=
         
@@ -6451,9 +8454,13 @@ class MonCommandApi(object):
     
     def osd_set_full_ratio(self, ratio: float):
         """
-        Prefix: ``osd set-full-ratio``
-        
         set usage ratio at which OSDs are marked full
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set-full-ratio --ratio=0.0
         
         module=osd perm=rw flags=
         
@@ -6465,10 +8472,14 @@ class MonCommandApi(object):
     
     def osd_set_group(self, flags: str, who: List[str]):
         """
-        Prefix: ``osd set-group``
-        
         set <flags> for batch osds or crush nodes, <flags> must be a comma-
         separated subset of {noup,nodown,noin,noout}
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set-group --flags=string --who=string
         
         module=osd perm=rw flags=
         
@@ -6481,9 +8492,13 @@ class MonCommandApi(object):
     
     def osd_set_nearfull_ratio(self, ratio: float):
         """
-        Prefix: ``osd set-nearfull-ratio``
-        
         set usage ratio at which OSDs are marked near-full
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set-nearfull-ratio --ratio=0.0
         
         module=osd perm=rw flags=
         
@@ -6493,11 +8508,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ratio': ratio}
         return self._mon_command(_args)
     
-    def osd_set_require_min_compat_client(self, version: str, yes_i_really_mean_it: bool=None):
+    def osd_set_require_min_compat_client(self, version: str, yes_i_really_mean_it:
+                                          Optional[bool]=None):
         """
-        Prefix: ``osd set-require-min-compat-client``
-        
         set the minimum client version we will maintain compatibility with
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd set-require-min-compat-client --version=string --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6509,11 +8529,15 @@ class MonCommandApi(object):
                  yes_i_really_mean_it}
         return self._mon_command(_args)
     
-    def osd_setcrushmap(self, prior_version: int=None):
+    def osd_setcrushmap(self, prior_version: Optional[int]=None):
         """
-        Prefix: ``osd setcrushmap``
-        
         set crush map from input file
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd setcrushmap --prior_version=1
         
         module=osd perm=rw flags=
         
@@ -6525,9 +8549,13 @@ class MonCommandApi(object):
     
     def osd_setmaxosd(self, newmax: int):
         """
-        Prefix: ``osd setmaxosd``
-        
         set new maximum osd value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd setmaxosd --newmax=1
         
         module=osd perm=rw flags=
         
@@ -6539,9 +8567,13 @@ class MonCommandApi(object):
     
     def osd_stat(self):
         """
-        Prefix: ``osd stat``
-        
         print summary of OSD map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd stat
         
         module=osd perm=r flags=
         """
@@ -6549,11 +8581,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def osd_status(self, bucket: str=None):
+    def osd_status(self, bucket: Optional[str]=None):
         """
-        Prefix: ``osd status``
-        
         Show the status of OSDs within a bucket, or all
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd status --bucket=string
         
         module=mgr perm=r flags=mgr
         
@@ -6565,9 +8601,13 @@ class MonCommandApi(object):
     
     def osd_stop(self, ids: List[str]):
         """
-        Prefix: ``osd stop``
-        
         stop the corresponding osd daemons and mark them as down
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd stop --ids=string
         
         module=osd perm=rw flags=
         
@@ -6577,13 +8617,18 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'ids': ids}
         return self._mon_command(_args)
     
-    def osd_test_reweight_by_pg(self, oload: int=None, max_change: float=None, max_osds:
-                                int=None, pools: List[str]=None):
+    def osd_test_reweight_by_pg(self, oload: Optional[int]=None, max_change:
+                                Optional[float]=None, max_osds: Optional[int]=None, pools:
+                                Optional[List[str]]=None):
         """
-        Prefix: ``osd test-reweight-by-pg``
-        
         dry run of reweight OSDs by PG distribution [overload-percentage-for-
         consideration, default 120]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd test-reweight-by-pg --oload=1 --max_change=0.0 --max_osds=1 --pools=poolname
         
         module=osd perm=r flags=mgr
         
@@ -6597,13 +8642,18 @@ class MonCommandApi(object):
                  max_osds, 'pools': pools}
         return self._mon_command(_args)
     
-    def osd_test_reweight_by_utilization(self, oload: int=None, max_change: float=None, max_osds:
-                                         int=None, no_increasing: bool=None):
+    def osd_test_reweight_by_utilization(self, oload: Optional[int]=None, max_change:
+                                         Optional[float]=None, max_osds: Optional[int]=None,
+                                         no_increasing: Optional[bool]=None):
         """
-        Prefix: ``osd test-reweight-by-utilization``
-        
         dry run of reweight OSDs by utilization [overload-percentage-for-
         consideration, default 120]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd test-reweight-by-utilization --oload=1 --max_change=0.0 --max_osds=1 --no_increasing=true
         
         module=osd perm=r flags=mgr
         
@@ -6617,12 +8667,17 @@ class MonCommandApi(object):
                  max_osds, 'no_increasing': no_increasing}
         return self._mon_command(_args)
     
-    def osd_tier_add(self, pool: str, tierpool: str, force_nonempty: str=None):
+    def osd_tier_add(self, pool: str, tierpool: str, force_nonempty:
+                     Optional[str]=None):
         """
-        Prefix: ``osd tier add``
-        
         add the tier <tierpool> (the second one) to base pool <pool> (the
         first one)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier add --pool=poolname --tierpool=poolname --force_nonempty=choice
         
         module=osd perm=rw flags=
         
@@ -6637,10 +8692,14 @@ class MonCommandApi(object):
     
     def osd_tier_add_cache(self, pool: str, tierpool: str, size: int):
         """
-        Prefix: ``osd tier add-cache``
-        
         add a cache <tierpool> (the second one) of size <size> to existing
         pool <pool> (the first one)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier add-cache --pool=poolname --tierpool=poolname --size=1
         
         module=osd perm=rw flags=
         
@@ -6652,11 +8711,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'tierpool': tierpool, 'size': size}
         return self._mon_command(_args)
     
-    def osd_tier_cache_mode(self, pool: str, mode: str, yes_i_really_mean_it: bool=None):
+    def osd_tier_cache_mode(self, pool: str, mode: str, yes_i_really_mean_it:
+                            Optional[bool]=None):
         """
-        Prefix: ``osd tier cache-mode``
-        
         specify the caching mode for cache tier <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier cache-mode --pool=poolname --mode=choice --yes_i_really_mean_it=true
         
         module=osd perm=rw flags=
         
@@ -6673,10 +8737,14 @@ class MonCommandApi(object):
     @deprecated
     def osd_tier_remove(self, pool: str, tierpool: str):
         """
-        Prefix: ``osd tier remove``
-        
         remove the tier <tierpool> (the second one) from base pool <pool> (the
         first one)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier remove --pool=poolname --tierpool=poolname
         
         module=osd perm=rw flags=deprecated
         
@@ -6690,9 +8758,13 @@ class MonCommandApi(object):
     @deprecated
     def osd_tier_remove_overlay(self, pool: str):
         """
-        Prefix: ``osd tier remove-overlay``
-        
         remove the overlay pool for base pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier remove-overlay --pool=poolname
         
         module=osd perm=rw flags=deprecated
         
@@ -6704,10 +8776,14 @@ class MonCommandApi(object):
     
     def osd_tier_rm(self, pool: str, tierpool: str):
         """
-        Prefix: ``osd tier rm``
-        
         remove the tier <tierpool> (the second one) from base pool <pool> (the
         first one)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier rm --pool=poolname --tierpool=poolname
         
         module=osd perm=rw flags=
         
@@ -6720,9 +8796,13 @@ class MonCommandApi(object):
     
     def osd_tier_rm_overlay(self, pool: str):
         """
-        Prefix: ``osd tier rm-overlay``
-        
         remove the overlay pool for base pool <pool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier rm-overlay --pool=poolname
         
         module=osd perm=rw flags=
         
@@ -6734,9 +8814,13 @@ class MonCommandApi(object):
     
     def osd_tier_set_overlay(self, pool: str, overlaypool: str):
         """
-        Prefix: ``osd tier set-overlay``
-        
         set the overlay pool for base pool <pool> to be <overlaypool>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tier set-overlay --pool=poolname --overlaypool=poolname
         
         module=osd perm=rw flags=
         
@@ -6747,11 +8831,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'overlaypool': overlaypool}
         return self._mon_command(_args)
     
-    def osd_tree(self, epoch: int=None, states: List[str]=None):
+    def osd_tree(self, epoch: Optional[int]=None, states:
+                 Optional[List[str]]=None):
         """
-        Prefix: ``osd tree``
-        
         print OSD tree
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tree --epoch=1 --states=choice
         
         module=osd perm=r flags=
         
@@ -6762,11 +8851,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'epoch': epoch, 'states': states}
         return self._mon_command(_args)
     
-    def osd_tree_from(self, bucket: str, epoch: int=None, states: List[str]=None):
+    def osd_tree_from(self, bucket: str, epoch: Optional[int]=None, states:
+                      Optional[List[str]]=None):
         """
-        Prefix: ``osd tree-from``
-        
         print OSD tree in bucket
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd tree-from --bucket=string --epoch=1 --states=choice
         
         module=osd perm=r flags=
         
@@ -6780,9 +8874,13 @@ class MonCommandApi(object):
     
     def osd_unpause(self):
         """
-        Prefix: ``osd unpause``
-        
         unpause osd
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd unpause
         
         module=osd perm=rw flags=
         """
@@ -6792,9 +8890,13 @@ class MonCommandApi(object):
     
     def osd_unset(self, key: str):
         """
-        Prefix: ``osd unset``
-        
         unset <key>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd unset --key=choice
         
         module=osd perm=rw flags=
         
@@ -6808,10 +8910,14 @@ class MonCommandApi(object):
     
     def osd_unset_group(self, flags: str, who: List[str]):
         """
-        Prefix: ``osd unset-group``
-        
         unset <flags> for batch osds or crush nodes, <flags> must be a comma-
         separated subset of {noup,nodown,noin,noout}
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd unset-group --flags=string --who=string
         
         module=osd perm=rw flags=
         
@@ -6824,9 +8930,13 @@ class MonCommandApi(object):
     
     def osd_utilization(self):
         """
-        Prefix: ``osd utilization``
-        
         get basic pg distribution stats
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd utilization
         
         module=osd perm=r flags=
         """
@@ -6836,9 +8946,13 @@ class MonCommandApi(object):
     
     def osd_versions(self):
         """
-        Prefix: ``osd versions``
-        
         check running versions of OSDs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph osd versions
         
         module=osd perm=r flags=
         """
@@ -6848,9 +8962,13 @@ class MonCommandApi(object):
     
     def pg_cancel_force_backfill(self, pgid: List[str]):
         """
-        Prefix: ``pg cancel-force-backfill``
-        
         restore normal backfill priority of <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg cancel-force-backfill --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -6862,9 +8980,13 @@ class MonCommandApi(object):
     
     def pg_cancel_force_recovery(self, pgid: List[str]):
         """
-        Prefix: ``pg cancel-force-recovery``
-        
         restore normal recovery priority of <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg cancel-force-recovery --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -6876,9 +8998,13 @@ class MonCommandApi(object):
     
     def pg_debug(self, debugop: str):
         """
-        Prefix: ``pg debug``
-        
         show debug info about pgs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg debug --debugop=choice
         
         module=pg perm=r flags=mgr
         
@@ -6891,9 +9017,13 @@ class MonCommandApi(object):
     
     def pg_deep_scrub(self, pgid: str):
         """
-        Prefix: ``pg deep-scrub``
-        
         start deep-scrub on <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg deep-scrub --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -6903,11 +9033,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pgid': pgid}
         return self._mon_command(_args)
     
-    def pg_dump(self, dumpcontents: List[str]=None):
+    def pg_dump(self, dumpcontents: Optional[List[str]]=None):
         """
-        Prefix: ``pg dump``
-        
         show human-readable versions of pg map (only 'all' valid with plain)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg dump --dumpcontents=choice
         
         module=pg perm=r flags=mgr
         
@@ -6918,11 +9052,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'dumpcontents': dumpcontents}
         return self._mon_command(_args)
     
-    def pg_dump_json(self, dumpcontents: List[str]=None):
+    def pg_dump_json(self, dumpcontents: Optional[List[str]]=None):
         """
-        Prefix: ``pg dump_json``
-        
         show human-readable version of pg map in json only
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg dump_json --dumpcontents=choice
         
         module=pg perm=r flags=mgr
         
@@ -6935,9 +9073,13 @@ class MonCommandApi(object):
     
     def pg_dump_pools_json(self):
         """
-        Prefix: ``pg dump_pools_json``
-        
         show pg pools info in json only
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg dump_pools_json
         
         module=pg perm=r flags=mgr
         """
@@ -6945,11 +9087,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def pg_dump_stuck(self, stuckops: List[str]=None, threshold: int=None):
+    def pg_dump_stuck(self, stuckops: Optional[List[str]]=None, threshold:
+                      Optional[int]=None):
         """
-        Prefix: ``pg dump_stuck``
-        
         show information about stuck pgs
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg dump_stuck --stuckops=choice --threshold=1
         
         module=pg perm=r flags=mgr
         
@@ -6963,9 +9110,13 @@ class MonCommandApi(object):
     
     def pg_force_backfill(self, pgid: List[str]):
         """
-        Prefix: ``pg force-backfill``
-        
         force backfill of <pgid> first
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg force-backfill --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -6977,9 +9128,13 @@ class MonCommandApi(object):
     
     def pg_force_recovery(self, pgid: List[str]):
         """
-        Prefix: ``pg force-recovery``
-        
         force recovery of <pgid> first
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg force-recovery --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -6991,9 +9146,13 @@ class MonCommandApi(object):
     
     def pg_getmap(self):
         """
-        Prefix: ``pg getmap``
-        
         get binary pg map to -o/stdout
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg getmap
         
         module=pg perm=r flags=mgr
         """
@@ -7001,11 +9160,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def pg_ls(self, pool: int=None, states: List[str]=None):
+    def pg_ls(self, pool: Optional[int]=None, states:
+              Optional[List[str]]=None):
         """
-        Prefix: ``pg ls``
-        
         list pg with specific pool, osd, state
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg ls --pool=1 --states=string
         
         module=pg perm=r flags=mgr
         
@@ -7016,11 +9180,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool': pool, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_osd(self, osd: str, pool: int=None, states: List[str]=None):
+    def pg_ls_by_osd(self, osd: str, pool: Optional[int]=None, states:
+                     Optional[List[str]]=None):
         """
-        Prefix: ``pg ls-by-osd``
-        
         list pg on osd [osd]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg ls-by-osd --osd=osd.0 --pool=1 --states=string
         
         module=pg perm=r flags=mgr
         
@@ -7032,11 +9201,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'osd': osd, 'pool': pool, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_pool(self, poolstr: str, states: List[str]=None):
+    def pg_ls_by_pool(self, poolstr: str, states: Optional[List[str]]=None):
         """
-        Prefix: ``pg ls-by-pool``
-        
         list pg with pool = [poolname]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg ls-by-pool --poolstr=string --states=string
         
         module=pg perm=r flags=mgr
         
@@ -7047,11 +9220,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'poolstr': poolstr, 'states': states}
         return self._mon_command(_args)
     
-    def pg_ls_by_primary(self, osd: str, pool: int=None, states: List[str]=None):
+    def pg_ls_by_primary(self, osd: str, pool: Optional[int]=None, states:
+                         Optional[List[str]]=None):
         """
-        Prefix: ``pg ls-by-primary``
-        
         list pg with primary = [osd]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg ls-by-primary --osd=osd.0 --pool=1 --states=string
         
         module=pg perm=r flags=mgr
         
@@ -7065,9 +9243,13 @@ class MonCommandApi(object):
     
     def pg_map(self, pgid: str):
         """
-        Prefix: ``pg map``
-        
         show mapping of pg to osds
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg map --pgid=0
         
         module=pg perm=r flags=
         
@@ -7079,9 +9261,13 @@ class MonCommandApi(object):
     
     def pg_repair(self, pgid: str):
         """
-        Prefix: ``pg repair``
-        
         start repair on <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg repair --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -7093,9 +9279,13 @@ class MonCommandApi(object):
     
     def pg_repeer(self, pgid: str):
         """
-        Prefix: ``pg repeer``
-        
         force a PG to repeer
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg repeer --pgid=0
         
         module=osd perm=rw flags=
         
@@ -7107,9 +9297,13 @@ class MonCommandApi(object):
     
     def pg_scrub(self, pgid: str):
         """
-        Prefix: ``pg scrub``
-        
         start scrub on <pgid>
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg scrub --pgid=0
         
         module=pg perm=rw flags=mgr
         
@@ -7121,9 +9315,13 @@ class MonCommandApi(object):
     
     def pg_stat(self):
         """
-        Prefix: ``pg stat``
-        
         show placement group status.
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph pg stat
         
         module=pg perm=r flags=mgr
         """
@@ -7133,9 +9331,13 @@ class MonCommandApi(object):
     
     def progress(self):
         """
-        Prefix: ``progress``
-        
         Show progress of recovery operations
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph progress
         
         module=mgr perm=r flags=mgr
         """
@@ -7145,9 +9347,13 @@ class MonCommandApi(object):
     
     def progress_clear(self):
         """
-        Prefix: ``progress clear``
-        
         Reset progress tracking
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph progress clear
         
         module=mgr perm=rw flags=mgr
         """
@@ -7157,9 +9363,13 @@ class MonCommandApi(object):
     
     def progress_json(self):
         """
-        Prefix: ``progress json``
-        
         Show machine readable progress information
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph progress json
         
         module=mgr perm=r flags=mgr
         """
@@ -7169,9 +9379,13 @@ class MonCommandApi(object):
     
     def prometheus_file_sd_config(self):
         """
-        Prefix: ``prometheus file_sd_config``
-        
         Return file_sd compatible prometheus config for mgr cluster
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph prometheus file_sd_config
         
         module=mgr perm=r flags=mgr
         """
@@ -7181,9 +9395,13 @@ class MonCommandApi(object):
     
     def quorum(self, quorumcmd: str):
         """
-        Prefix: ``quorum``
-        
         enter or exit quorum
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph quorum --quorumcmd=choice
         
         module=mon perm=rw flags=
         
@@ -7195,9 +9413,13 @@ class MonCommandApi(object):
     
     def quorum_status(self):
         """
-        Prefix: ``quorum_status``
-        
         report status of monitor quorum
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph quorum_status
         
         module=mon perm=r flags=
         """
@@ -7205,11 +9427,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def rbd_perf_image_counters(self, pool_spec: str=None, sort_by: str=None):
+    def rbd_perf_image_counters(self, pool_spec: Optional[str]=None, sort_by:
+                                Optional[str]=None):
         """
-        Prefix: ``rbd perf image counters``
-        
         Retrieve current RBD IO performance counters
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd perf image counters --pool_spec=string --sort_by=choice
         
         module=mgr perm=r flags=mgr
         
@@ -7221,11 +9448,16 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool_spec': pool_spec, 'sort_by': sort_by}
         return self._mon_command(_args)
     
-    def rbd_perf_image_stats(self, pool_spec: str=None, sort_by: str=None):
+    def rbd_perf_image_stats(self, pool_spec: Optional[str]=None, sort_by:
+                             Optional[str]=None):
         """
-        Prefix: ``rbd perf image stats``
-        
         Retrieve current RBD IO performance stats
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd perf image stats --pool_spec=string --sort_by=choice
         
         module=mgr perm=r flags=mgr
         
@@ -7237,11 +9469,159 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'pool_spec': pool_spec, 'sort_by': sort_by}
         return self._mon_command(_args)
     
-    def report(self, tags: List[str]=None):
+    def rbd_task_add_flatten(self, image_spec: str):
         """
-        Prefix: ``report``
+        Flatten a cloned image asynchronously in the background
         
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add flatten --image_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_spec:
+        """
+        prefix = 'rbd task add flatten'
+        _args = {'prefix': prefix, 'image_spec': image_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_add_migration_abort(self, image_spec: str):
+        """
+        Abort a prepared migration asynchronously in the background
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add migration abort --image_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_spec:
+        """
+        prefix = 'rbd task add migration abort'
+        _args = {'prefix': prefix, 'image_spec': image_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_add_migration_commit(self, image_spec: str):
+        """
+        Commit an executed migration asynchronously in the background
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add migration commit --image_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_spec:
+        """
+        prefix = 'rbd task add migration commit'
+        _args = {'prefix': prefix, 'image_spec': image_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_add_migration_execute(self, image_spec: str):
+        """
+        Execute an image migration asynchronously in the background
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add migration execute --image_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_spec:
+        """
+        prefix = 'rbd task add migration execute'
+        _args = {'prefix': prefix, 'image_spec': image_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_add_remove(self, image_spec: str):
+        """
+        Remove an image asynchronously in the background
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add remove --image_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_spec:
+        """
+        prefix = 'rbd task add remove'
+        _args = {'prefix': prefix, 'image_spec': image_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_add_trash_remove(self, image_id_spec: str):
+        """
+        Remove an image from the trash asynchronously in the background
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task add trash remove --image_id_spec=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param image_id_spec:
+        """
+        prefix = 'rbd task add trash remove'
+        _args = {'prefix': prefix, 'image_id_spec': image_id_spec}
+        return self._mon_command(_args)
+    
+    def rbd_task_cancel(self, task_id: str):
+        """
+        Cancel a pending or running asynchronous task
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task cancel --task_id=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param task_id:
+        """
+        prefix = 'rbd task cancel'
+        _args = {'prefix': prefix, 'task_id': task_id}
+        return self._mon_command(_args)
+    
+    def rbd_task_list(self, task_id: Optional[str]=None):
+        """
+        List pending or running asynchronous tasks
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph rbd task list --task_id=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param task_id:
+        """
+        prefix = 'rbd task list'
+        _args = {'prefix': prefix, 'task_id': task_id}
+        return self._mon_command(_args)
+    
+    def report(self, tags: Optional[List[str]]=None):
+        """
         report full status of cluster, optional title tag strings
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph report --tags=string
         
         module=mon perm=r flags=
         
@@ -7254,9 +9634,13 @@ class MonCommandApi(object):
     @deprecated
     def scrub(self):
         """
-        Prefix: ``scrub``
-        
         scrub the monitor stores
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph scrub
         
         module=mon perm=rw flags=deprecated
         """
@@ -7266,9 +9650,13 @@ class MonCommandApi(object):
     
     def service_dump(self):
         """
-        Prefix: ``service dump``
-        
         dump service map
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph service dump
         
         module=service perm=r flags=mgr
         """
@@ -7278,9 +9666,13 @@ class MonCommandApi(object):
     
     def service_status(self):
         """
-        Prefix: ``service status``
-        
         dump service state
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph service status
         
         module=service perm=r flags=mgr
         """
@@ -7288,11 +9680,15 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def smart(self, devid: str=None):
+    def smart(self, devid: Optional[str]=None):
         """
-        Prefix: ``smart``
-        
         Query health metrics for underlying device
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph smart --devid=string
         
         module=mon perm=rw flags=hidden
         
@@ -7304,9 +9700,13 @@ class MonCommandApi(object):
     
     def ssh_clear_ssh_config(self):
         """
-        Prefix: ``ssh clear-ssh-config``
-        
         Clear the ssh_config file
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph ssh clear-ssh-config
         
         module=mgr perm=rw flags=mgr
         """
@@ -7316,9 +9716,13 @@ class MonCommandApi(object):
     
     def ssh_set_ssh_config(self):
         """
-        Prefix: ``ssh set-ssh-config``
-        
         Set the ssh_config file (use -i <ssh_config>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph ssh set-ssh-config
         
         module=mgr perm=rw flags=mgr
         """
@@ -7328,9 +9732,13 @@ class MonCommandApi(object):
     
     def status(self):
         """
-        Prefix: ``status``
-        
         show cluster status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph status
         
         module=mon perm=r flags=
         """
@@ -7339,14 +9747,18 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     @deprecated
-    def sync_force(self, yes_i_really_mean_it: bool=None,
-                   i_know_what_i_am_doing: bool=None):
+    def sync_force(self, yes_i_really_mean_it: Optional[bool]=None,
+                   i_know_what_i_am_doing: Optional[bool]=None):
         """
-        Prefix: ``sync force``
-        
         force sync of and clear monitor store
         
-        module=mon perm=rw flags=no_forward, deprecated
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph sync force --yes_i_really_mean_it=true --i_know_what_i_am_doing=true
+        
+        module=mon perm=rw flags=deprecated, no_forward
         
         :param yes_i_really_mean_it: CephBool
         :param i_know_what_i_am_doing: CephBool
@@ -7358,9 +9770,13 @@ class MonCommandApi(object):
     
     def telegraf_config_set(self, key: str, value: str):
         """
-        Prefix: ``telegraf config-set``
-        
         Set a configuration value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telegraf config-set --key=string --value=string
         
         module=mgr perm=rw flags=mgr
         
@@ -7373,9 +9789,13 @@ class MonCommandApi(object):
     
     def telegraf_config_show(self):
         """
-        Prefix: ``telegraf config-show``
-        
         Show current configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telegraf config-show
         
         module=mgr perm=r flags=mgr
         """
@@ -7385,9 +9805,13 @@ class MonCommandApi(object):
     
     def telegraf_send(self):
         """
-        Prefix: ``telegraf send``
-        
         Force sending data to Telegraf
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telegraf send
         
         module=mgr perm=rw flags=mgr
         """
@@ -7397,9 +9821,13 @@ class MonCommandApi(object):
     
     def telemetry_off(self):
         """
-        Prefix: ``telemetry off``
-        
         Disable telemetry reports from this cluster
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telemetry off
         
         module=mgr perm=rw flags=mgr
         """
@@ -7407,23 +9835,33 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def telemetry_on(self):
+    def telemetry_on(self, license: Optional[str]=None):
         """
-        Prefix: ``telemetry on``
-        
         Enable telemetry reports from this cluster
         
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telemetry on --license=string
+        
         module=mgr perm=rw flags=mgr
+        
+        :param license:
         """
         prefix = 'telemetry on'
-        _args = {'prefix': prefix, }
+        _args = {'prefix': prefix, 'license': license}
         return self._mon_command(_args)
     
     def telemetry_send(self):
         """
-        Prefix: ``telemetry send``
-        
         Force sending data to Ceph telemetry
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telemetry send
         
         module=mgr perm=rw flags=mgr
         """
@@ -7431,23 +9869,33 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def telemetry_show(self):
+    def telemetry_show(self, channels: List[str]):
         """
-        Prefix: ``telemetry show``
-        
         Show last report or report to be sent
         
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telemetry show --channels=string
+        
         module=mgr perm=r flags=mgr
+        
+        :param channels:
         """
         prefix = 'telemetry show'
-        _args = {'prefix': prefix, }
+        _args = {'prefix': prefix, 'channels': channels}
         return self._mon_command(_args)
     
     def telemetry_status(self):
         """
-        Prefix: ``telemetry status``
-        
         Show current configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph telemetry status
         
         module=mgr perm=r flags=mgr
         """
@@ -7457,9 +9905,13 @@ class MonCommandApi(object):
     
     def tell(self, target: str, args: List[str]):
         """
-        Prefix: ``tell``
-        
         send a command to a specific daemon
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph tell --target=name --args=string
         
         module=mon perm=rw flags=
         
@@ -7470,11 +9922,31 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'target': target, 'args': args}
         return self._mon_command(_args)
     
+    def test_orchestrator_load_data(self):
+        """
+        load dummy data into test orchestrator
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph test_orchestrator load_data
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'test_orchestrator load_data'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def time_sync_status(self):
         """
-        Prefix: ``time-sync-status``
-        
         show time sync status
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph time-sync-status
         
         module=mon perm=r flags=
         """
@@ -7484,9 +9956,13 @@ class MonCommandApi(object):
     
     def version(self):
         """
-        Prefix: ``version``
-        
         show mon daemon version
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph version
         
         module=mon perm=r flags=no_forward
         """
@@ -7496,9 +9972,13 @@ class MonCommandApi(object):
     
     def versions(self):
         """
-        Prefix: ``versions``
-        
         check running versions of ceph daemons
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph versions
         
         module=mon perm=r flags=
         """
@@ -7508,9 +9988,13 @@ class MonCommandApi(object):
     
     def zabbix_config_set(self, key: str, value: str):
         """
-        Prefix: ``zabbix config-set``
-        
         Set a configuration value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph zabbix config-set --key=string --value=string
         
         module=mgr perm=rw flags=mgr
         
@@ -7523,9 +10007,13 @@ class MonCommandApi(object):
     
     def zabbix_config_show(self):
         """
-        Prefix: ``zabbix config-show``
-        
         Show current configuration
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph zabbix config-show
         
         module=mgr perm=r flags=mgr
         """
@@ -7535,9 +10023,13 @@ class MonCommandApi(object):
     
     def zabbix_discovery(self):
         """
-        Prefix: ``zabbix discovery``
-        
         Discovering Zabbix data
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph zabbix discovery
         
         module=mgr perm=r flags=mgr
         """
@@ -7547,9 +10039,13 @@ class MonCommandApi(object):
     
     def zabbix_send(self):
         """
-        Prefix: ``zabbix send``
-        
         Force sending data to Zabbix
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph zabbix send
         
         module=mgr perm=rw flags=mgr
         """

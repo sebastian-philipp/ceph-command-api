@@ -3,3 +3,7 @@ docs/build/
 venv
 .idea
 ceph_command_api.egg-info
+.eggs
+.mypy_cache
+build/
+dist/
