@@ -3735,7 +3735,7 @@ class MonCommandApi(object):
                  snap_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_volume_create(self, name: str):
+    def fs_volume_create(self, name: str, size: Optional[str]=None):
         """
         Create a CephFS volume
         
@@ -3743,14 +3743,15 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph fs volume create --name=string
+            ceph fs volume create --name=string --size=string
         
         module=mgr perm=rw flags=mgr
         
         :param name:
+        :param size:
         """
         prefix = 'fs volume create'
-        _args = {'prefix': prefix, 'name': name}
+        _args = {'prefix': prefix, 'name': name, 'size': size}
         return self._mon_command(_args)
     
     def fs_volume_ls(self):
@@ -4013,6 +4014,110 @@ class MonCommandApi(object):
         module=mgr perm=r flags=mgr, poll
         """
         prefix = 'iostat'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def k8sevents_ceph(self):
+        """
+        List Ceph events tracked & sent to the kubernetes cluster
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents ceph
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'k8sevents ceph'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def k8sevents_clear_config(self):
+        """
+        Clear external kubernetes configuration settings
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents clear-config
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'k8sevents clear-config'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def k8sevents_ls(self):
+        """
+        List all current Kuberenetes events from the Ceph namespace
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents ls
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'k8sevents ls'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def k8sevents_set_access(self, key: str):
+        """
+        Set kubernetes access credentials. <key> must be cacrt or token and
+        use -i <filename> syntax. e.g. ceph k8sevents set-access cacrt -i
+        /root/ca.crt
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents set-access --key=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param key:
+        """
+        prefix = 'k8sevents set-access'
+        _args = {'prefix': prefix, 'key': key}
+        return self._mon_command(_args)
+    
+    def k8sevents_set_config(self, key: str, value: str):
+        """
+        Set kubernetes config paramters. <key> must be server or namespace.
+        e.g. ceph k8sevents set-config server https://localhost:30433
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents set-config --key=string --value=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param key:
+        :param value:
+        """
+        prefix = 'k8sevents set-config'
+        _args = {'prefix': prefix, 'key': key, 'value': value}
+        return self._mon_command(_args)
+    
+    def k8sevents_status(self):
+        """
+        Show the status of the data gathering threads
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph k8sevents status
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'k8sevents status'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     

@@ -105,7 +105,7 @@ class Flags:
     def __str__(self):
         keys = Flags.VALS.keys()
         es = {Flags.VALS[k] for k in keys if self.fs & k == k}
-        return ', '.join(es)
+        return ', '.join(sorted(es))
 
 
 
