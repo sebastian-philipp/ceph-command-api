@@ -124,6 +124,7 @@ class Param(object):
         'CephName': 'str',
         'CephBool': 'bool',
         'CephFloat': 'float',
+        'CephFilepath': 'str',
     }
 
     bash_example = {
@@ -140,6 +141,7 @@ class Param(object):
         'CephName': 'name',
         'CephBool': 'true',
         'CephFloat': '0.0',
+        'CephFilepath': '/path/to/file',
     }
 
 
@@ -156,8 +158,9 @@ class Param(object):
         assert who == None
 
     def safe_name(self):
+        name = self.name.replace('-', '_')
         unsafe = ['from', 'class', 'id', 'type', 'property']
-        return self.name + '_1' if self.name in unsafe else self.name
+        return name + '_1' if name in unsafe else name
 
     def help(self):
         advanced = ''

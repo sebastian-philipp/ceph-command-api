@@ -50,6 +50,59 @@ class MonCommandApi(object):
         res = self._rados.mon_command(json.dumps(cmd), inbuf=inbuf, target=target)
         return CommandResult(*res)
     
+    def add_bootstrap_peer_hint(self, addr: str):
+        """
+        add peer address as potential bootstrap peer for cluster bringup
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph add_bootstrap_peer_hint --addr=0.0.0.0
+        
+        module=mon perm=rw flags=hidden, no_forward
+        
+        :param addr: CephIPAddr
+        """
+        prefix = 'add_bootstrap_peer_hint'
+        _args = {'prefix': prefix, 'addr': addr}
+        return self._mon_command(_args)
+    
+    def add_bootstrap_peer_hintv(self, addrv: str):
+        """
+        add peer address vector as potential bootstrap peer for cluster
+        bringup
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph add_bootstrap_peer_hintv --addrv=string
+        
+        module=mon perm=rw flags=hidden, no_forward
+        
+        :param addrv:
+        """
+        prefix = 'add_bootstrap_peer_hintv'
+        _args = {'prefix': prefix, 'addrv': addrv}
+        return self._mon_command(_args)
+    
+    def alerts_send(self):
+        """
+        (re)send alerts immediately
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph alerts send
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'alerts send'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def ansible_set_ssl_certificate(self, mgr_id: Optional[str]=None):
         """
         Example command:
@@ -621,7 +674,120 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    @deprecated
+    def cephadm_check_host(self, host: str):
+        """
+        Check whether we can access and manage a remote host
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm check-host --host=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param host:
+        """
+        prefix = 'cephadm check-host'
+        _args = {'prefix': prefix, 'host': host}
+        return self._mon_command(_args)
+    
+    def cephadm_clear_key(self):
+        """
+        Clear cluster SSH key
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm clear-key
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'cephadm clear-key'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def cephadm_clear_ssh_config(self):
+        """
+        Clear the ssh_config file
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm clear-ssh-config
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'cephadm clear-ssh-config'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def cephadm_generate_key(self):
+        """
+        Generate a cluster SSH key (if not present)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm generate-key
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'cephadm generate-key'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def cephadm_get_pub_key(self):
+        """
+        Show SSH public key for connecting to cluster hosts
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm get-pub-key
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'cephadm get-pub-key'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def cephadm_get_user(self):
+        """
+        Show user for SSHing to cluster hosts
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm get-user
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'cephadm get-user'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def cephadm_set_ssh_config(self):
+        """
+        Set the ssh_config file (use -i <ssh_config>)
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph cephadm set-ssh-config
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'cephadm set-ssh-config'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def compact(self):
         """
         cause compaction of monitor's leveldb/rocksdb storage
@@ -632,7 +798,7 @@ class MonCommandApi(object):
         
             ceph compact
         
-        module=mon perm=rw flags=deprecated, no_forward
+        module=mon perm=rw flags=hidden, no_forward
         """
         prefix = 'compact'
         _args = {'prefix': prefix, }
@@ -1320,7 +1486,9 @@ class MonCommandApi(object):
     
     def dashboard_ac_user_create(self, username: str, password: Optional[str]=None, rolename:
                                  Optional[str]=None, name: Optional[str]=None, email:
-                                 Optional[str]=None, enabled: Optional[bool]=None):
+                                 Optional[str]=None, enabled: Optional[bool]=None,
+                                 force_password: Optional[bool]=None, pwd_expiration_date:
+                                 Optional[int]=None):
         """
         Create a user
         
@@ -1328,7 +1496,7 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph dashboard ac-user-create --username=string --password=string --rolename=string --name=string --email=string --enabled=true
+            ceph dashboard ac-user-create --username=string --password=string --rolename=string --name=string --email=string --enabled=true --force_password=true --pwd_expiration_date=1
         
         module=mgr perm=w flags=mgr
         
@@ -1338,10 +1506,14 @@ class MonCommandApi(object):
         :param name:
         :param email:
         :param enabled: CephBool
+        :param force_password: CephBool
+        :param pwd_expiration_date: CephInt
         """
         prefix = 'dashboard ac-user-create'
         _args = {'prefix': prefix, 'username': username, 'password': password, 'rolename':
-                 rolename, 'name': name, 'email': email, 'enabled': enabled}
+                 rolename, 'name': name, 'email': email, 'enabled': enabled,
+                 'force_password': force_password, 'pwd_expiration_date':
+                 pwd_expiration_date}
         return self._mon_command(_args)
     
     def dashboard_ac_user_del_roles(self, username: str, roles: List[str]):
@@ -1437,7 +1609,8 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'username': username, 'name': name, 'email': email}
         return self._mon_command(_args)
     
-    def dashboard_ac_user_set_password(self, username: str, password: str):
+    def dashboard_ac_user_set_password(self, username: str, password: str, force_password:
+                                       Optional[bool]=None):
         """
         Set user password
         
@@ -1445,15 +1618,17 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph dashboard ac-user-set-password --username=string --password=string
+            ceph dashboard ac-user-set-password --username=string --password=string --force_password=true
         
         module=mgr perm=w flags=mgr
         
         :param username:
         :param password:
+        :param force_password: CephBool
         """
         prefix = 'dashboard ac-user-set-password'
-        _args = {'prefix': prefix, 'username': username, 'password': password}
+        _args = {'prefix': prefix, 'username': username, 'password': password,
+                 'force_password': force_password}
         return self._mon_command(_args)
     
     def dashboard_ac_user_set_password_hash(self, username: str, hashed_password: str):
@@ -1526,6 +1701,24 @@ class MonCommandApi(object):
         """
         prefix = 'dashboard create-self-signed-cert'
         _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_debug(self, action: str):
+        """
+        Control and report debug status in Ceph-Dashboard
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard debug --action=choice
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param action: CephChoices strings=enable|disable|status
+        """
+        prefix = 'dashboard debug'
+        _args = {'prefix': prefix, 'action': action}
         return self._mon_command(_args)
     
     def dashboard_feature(self, action: str, features: Optional[List[str]]=None):
@@ -1640,6 +1833,22 @@ class MonCommandApi(object):
         module=mgr perm=r flags=mgr
         """
         prefix = 'dashboard get-grafana-api-password'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_get_grafana_api_ssl_verify(self):
+        """
+        Get the GRAFANA_API_SSL_VERIFY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-grafana-api-ssl-verify
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'dashboard get-grafana-api-ssl-verify'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
@@ -1883,6 +2092,54 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
+    def dashboard_get_user_pwd_expiration_span(self):
+        """
+        Get the USER_PWD_EXPIRATION_SPAN option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-user-pwd-expiration-span
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'dashboard get-user-pwd-expiration-span'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_get_user_pwd_expiration_warning_1(self):
+        """
+        Get the USER_PWD_EXPIRATION_WARNING_1 option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-user-pwd-expiration-warning-1
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'dashboard get-user-pwd-expiration-warning-1'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_get_user_pwd_expiration_warning_2(self):
+        """
+        Get the USER_PWD_EXPIRATION_WARNING_2 option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard get-user-pwd-expiration-warning-2
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'dashboard get-user-pwd-expiration-warning-2'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def dashboard_grafana_dashboards_update(self):
         """
         Push dashboards to Grafana
@@ -2045,6 +2302,22 @@ class MonCommandApi(object):
         module=mgr perm=w flags=mgr
         """
         prefix = 'dashboard reset-grafana-api-password'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_reset_grafana_api_ssl_verify(self):
+        """
+        Reset the GRAFANA_API_SSL_VERIFY option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-grafana-api-ssl-verify
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'dashboard reset-grafana-api-ssl-verify'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
@@ -2272,6 +2545,54 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
+    def dashboard_reset_user_pwd_expiration_span(self):
+        """
+        Reset the USER_PWD_EXPIRATION_SPAN option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-user-pwd-expiration-span
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'dashboard reset-user-pwd-expiration-span'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_reset_user_pwd_expiration_warning_1(self):
+        """
+        Reset the USER_PWD_EXPIRATION_WARNING_1 option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-user-pwd-expiration-warning-1
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'dashboard reset-user-pwd-expiration-warning-1'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dashboard_reset_user_pwd_expiration_warning_2(self):
+        """
+        Reset the USER_PWD_EXPIRATION_WARNING_2 option to its default value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard reset-user-pwd-expiration-warning-2
+        
+        module=mgr perm=w flags=mgr
+        """
+        prefix = 'dashboard reset-user-pwd-expiration-warning-2'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def dashboard_set_alertmanager_api_host(self, value: str):
         """
         Set the ALERTMANAGER_API_HOST option value
@@ -2377,6 +2698,24 @@ class MonCommandApi(object):
         :param value:
         """
         prefix = 'dashboard set-grafana-api-password'
+        _args = {'prefix': prefix, 'value': value}
+        return self._mon_command(_args)
+    
+    def dashboard_set_grafana_api_ssl_verify(self, value: str):
+        """
+        Set the GRAFANA_API_SSL_VERIFY option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-grafana-api-ssl-verify --value=string
+        
+        module=mgr perm=w flags=mgr
+        
+        :param value:
+        """
+        prefix = 'dashboard set-grafana-api-ssl-verify'
         _args = {'prefix': prefix, 'value': value}
         return self._mon_command(_args)
     
@@ -2701,6 +3040,60 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'mgr_id': mgr_id}
         return self._mon_command(_args)
     
+    def dashboard_set_user_pwd_expiration_span(self, value: int):
+        """
+        Set the USER_PWD_EXPIRATION_SPAN option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-user-pwd-expiration-span --value=1
+        
+        module=mgr perm=w flags=mgr
+        
+        :param value: CephInt
+        """
+        prefix = 'dashboard set-user-pwd-expiration-span'
+        _args = {'prefix': prefix, 'value': value}
+        return self._mon_command(_args)
+    
+    def dashboard_set_user_pwd_expiration_warning_1(self, value: int):
+        """
+        Set the USER_PWD_EXPIRATION_WARNING_1 option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-user-pwd-expiration-warning-1 --value=1
+        
+        module=mgr perm=w flags=mgr
+        
+        :param value: CephInt
+        """
+        prefix = 'dashboard set-user-pwd-expiration-warning-1'
+        _args = {'prefix': prefix, 'value': value}
+        return self._mon_command(_args)
+    
+    def dashboard_set_user_pwd_expiration_warning_2(self, value: int):
+        """
+        Set the USER_PWD_EXPIRATION_WARNING_2 option value
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dashboard set-user-pwd-expiration-warning-2 --value=1
+        
+        module=mgr perm=w flags=mgr
+        
+        :param value: CephInt
+        """
+        prefix = 'dashboard set-user-pwd-expiration-warning-2'
+        _args = {'prefix': prefix, 'value': value}
+        return self._mon_command(_args)
+    
     def dashboard_sso_disable(self):
         """
         Disable Single Sign-On
@@ -2744,7 +3137,7 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph dashboard sso setup saml2 --ceph_dashboard_base_url=string --idp_metadata=string --idp_username_attribute=string --idp_entity_id=string --sp_x_509_cert=string --sp_private_key=string
+            ceph dashboard sso setup saml2 --ceph_dashboard_base_url=string --idp_metadata=string --idp_username_attribute=string --idp_entity_id=string --sp_x_509_cert=/path/to/file --sp_private_key=/path/to/file
         
         module=mgr perm=w flags=mgr
         
@@ -2752,8 +3145,8 @@ class MonCommandApi(object):
         :param idp_metadata:
         :param idp_username_attribute:
         :param idp_entity_id:
-        :param sp_x_509_cert:
-        :param sp_private_key:
+        :param sp_x_509_cert: CephFilepath
+        :param sp_private_key: CephFilepath
         """
         prefix = 'dashboard sso setup saml2'
         _args = {'prefix': prefix, 'ceph_dashboard_base_url': ceph_dashboard_base_url,
@@ -2915,6 +3308,30 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'devid': devid}
         return self._mon_command(_args)
     
+    def device_light(self, enable: str, devid: str, light_type:
+                     Optional[str]=None, force: Optional[bool]=None):
+        """
+        Enable or disable the device light. Default type is `ident` Usage:
+        device light (on|off) <devid> [ident|fault] [--force]
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device light --enable=choice --devid=string --light_type=choice --force=true
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param enable: CephChoices strings=on|off
+        :param devid:
+        :param light_type: CephChoices strings=ident|fault
+        :param force: CephBool
+        """
+        prefix = 'device light'
+        _args = {'prefix': prefix, 'enable': enable, 'devid': devid, 'light_type': light_type,
+                 'force': force}
+        return self._mon_command(_args)
+    
     def device_ls(self):
         """
         Show devices
@@ -2965,6 +3382,22 @@ class MonCommandApi(object):
         """
         prefix = 'device ls-by-host'
         _args = {'prefix': prefix, 'host': host}
+        return self._mon_command(_args)
+    
+    def device_ls_lights(self):
+        """
+        List currently active device indicator lights
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph device ls-lights
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'device ls-lights'
+        _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
     def device_monitoring_off(self):
@@ -3180,6 +3613,22 @@ class MonCommandApi(object):
         module=mgr perm=r flags=mgr
         """
         prefix = 'diskprediction_cloud status'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def dump_historic_ops(self):
+        """
+        dump_historic_ops
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph dump_historic_ops
+        
+        module=mon perm=r flags=hidden, no_forward
+        """
+        prefix = 'dump_historic_ops'
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
@@ -3419,7 +3868,8 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_set(self, fs_name: str, var: str, val: str,
-               yes_i_really_mean_it: Optional[bool]=None):
+               yes_i_really_mean_it: Optional[bool]=None,
+               yes_i_really_really_mean_it: Optional[bool]=None):
         """
         set fs parameter <var> to <val>
         
@@ -3427,7 +3877,7 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph fs set --fs_name=string --var=choice --val=string --yes_i_really_mean_it=true
+            ceph fs set --fs_name=string --var=choice --val=string --yes_i_really_mean_it=true --yes_i_really_really_mean_it=true
         
         module=mds perm=rw flags=
         
@@ -3438,10 +3888,12 @@ class MonCommandApi(object):
             in_compat_client
         :param val:
         :param yes_i_really_mean_it: CephBool
+        :param yes_i_really_really_mean_it: CephBool
         """
         prefix = 'fs set'
         _args = {'prefix': prefix, 'fs_name': fs_name, 'var': var, 'val': val,
-                 'yes_i_really_mean_it': yes_i_really_mean_it}
+                 'yes_i_really_mean_it': yes_i_really_mean_it,
+                 'yes_i_really_really_mean_it': yes_i_really_really_mean_it}
         return self._mon_command(_args)
     # 
     # @overload  # todo
@@ -3503,7 +3955,8 @@ class MonCommandApi(object):
     
     def fs_subvolume_create(self, vol_name: str, sub_name: str, size:
                             Optional[int]=None, group_name: Optional[str]=None,
-                            pool_layout: Optional[str]=None, mode: Optional[str]=None):
+                            pool_layout: Optional[str]=None, uid: Optional[int]=None,
+                            gid: Optional[int]=None, mode: Optional[str]=None):
         """
         Create a CephFS subvolume in a volume, and optionally, with a specific
         size (in bytes), a specific data pool layout, a specific mode, and in
@@ -3513,7 +3966,7 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph fs subvolume create --vol_name=string --sub_name=string --size=1 --group_name=string --pool_layout=string --mode=string
+            ceph fs subvolume create --vol_name=string --sub_name=string --size=1 --group_name=string --pool_layout=string --uid=1 --gid=1 --mode=string
         
         module=mgr perm=rw flags=mgr
         
@@ -3522,12 +3975,14 @@ class MonCommandApi(object):
         :param size: CephInt
         :param group_name:
         :param pool_layout:
+        :param uid: CephInt
+        :param gid: CephInt
         :param mode:
         """
         prefix = 'fs subvolume create'
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'size': size,
-                 'group_name': group_name, 'pool_layout': pool_layout,
-                 'mode': mode}
+                 'group_name': group_name, 'pool_layout': pool_layout, 'uid':
+                 uid, 'gid': gid, 'mode': mode}
         return self._mon_command(_args)
     
     def fs_subvolume_getpath(self, vol_name: str, sub_name: str, group_name:
@@ -3551,6 +4006,50 @@ class MonCommandApi(object):
         prefix = 'fs subvolume getpath'
         _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'group_name':
                  group_name}
+        return self._mon_command(_args)
+    
+    def fs_subvolume_ls(self, vol_name: str, group_name: Optional[str]=None):
+        """
+        List subvolumes
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume ls --vol_name=string --group_name=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param vol_name:
+        :param group_name:
+        """
+        prefix = 'fs subvolume ls'
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name}
+        return self._mon_command(_args)
+    
+    def fs_subvolume_resize(self, vol_name: str, sub_name: str, new_size: str,
+                            group_name: Optional[str]=None, no_shrink:
+                            Optional[bool]=None):
+        """
+        Resize a CephFS subvolume
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume resize --vol_name=string --sub_name=string --new_size=string --group_name=string --no_shrink=true
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param vol_name:
+        :param sub_name:
+        :param new_size:
+        :param group_name:
+        :param no_shrink: CephBool
+        """
+        prefix = 'fs subvolume resize'
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'new_size':
+                 new_size, 'group_name': group_name, 'no_shrink': no_shrink}
         return self._mon_command(_args)
     
     def fs_subvolume_rm(self, vol_name: str, sub_name: str, group_name:
@@ -3601,6 +4100,28 @@ class MonCommandApi(object):
                  snap_name, 'group_name': group_name}
         return self._mon_command(_args)
     
+    def fs_subvolume_snapshot_ls(self, vol_name: str, sub_name: str, group_name:
+                                 Optional[str]=None):
+        """
+        List subvolume snapshots
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolume snapshot ls --vol_name=string --sub_name=string --group_name=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param vol_name:
+        :param sub_name:
+        :param group_name:
+        """
+        prefix = 'fs subvolume snapshot ls'
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'sub_name': sub_name, 'group_name':
+                 group_name}
+        return self._mon_command(_args)
+    
     def fs_subvolume_snapshot_rm(self, vol_name: str, sub_name: str, snap_name: str,
                                  group_name: Optional[str]=None, force: Optional[bool]=None):
         """
@@ -3627,7 +4148,8 @@ class MonCommandApi(object):
         return self._mon_command(_args)
     
     def fs_subvolumegroup_create(self, vol_name: str, group_name: str, pool_layout:
-                                 Optional[str]=None, mode: Optional[str]=None):
+                                 Optional[str]=None, uid: Optional[int]=None, gid:
+                                 Optional[int]=None, mode: Optional[str]=None):
         """
         Create a CephFS subvolume group in a volume, and optionally, with a
         specific data pool layout, and a specific numeric mode
@@ -3636,18 +4158,21 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph fs subvolumegroup create --vol_name=string --group_name=string --pool_layout=string --mode=string
+            ceph fs subvolumegroup create --vol_name=string --group_name=string --pool_layout=string --uid=1 --gid=1 --mode=string
         
         module=mgr perm=rw flags=mgr
         
         :param vol_name:
         :param group_name:
         :param pool_layout:
+        :param uid: CephInt
+        :param gid: CephInt
         :param mode:
         """
         prefix = 'fs subvolumegroup create'
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name,
-                 'pool_layout': pool_layout, 'mode': mode}
+                 'pool_layout': pool_layout, 'uid': uid, 'gid': gid, 'mode':
+                 mode}
         return self._mon_command(_args)
     
     def fs_subvolumegroup_getpath(self, vol_name: str, group_name: str):
@@ -3667,6 +4192,24 @@ class MonCommandApi(object):
         """
         prefix = 'fs subvolumegroup getpath'
         _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name}
+        return self._mon_command(_args)
+    
+    def fs_subvolumegroup_ls(self, vol_name: str):
+        """
+        List subvolumegroups
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup ls --vol_name=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param vol_name:
+        """
+        prefix = 'fs subvolumegroup ls'
+        _args = {'prefix': prefix, 'vol_name': vol_name}
         return self._mon_command(_args)
     
     def fs_subvolumegroup_rm(self, vol_name: str, group_name: str, force:
@@ -3712,6 +4255,25 @@ class MonCommandApi(object):
                  snap_name}
         return self._mon_command(_args)
     
+    def fs_subvolumegroup_snapshot_ls(self, vol_name: str, group_name: str):
+        """
+        List subvolumegroup snapshots
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph fs subvolumegroup snapshot ls --vol_name=string --group_name=string
+        
+        module=mgr perm=r flags=mgr
+        
+        :param vol_name:
+        :param group_name:
+        """
+        prefix = 'fs subvolumegroup snapshot ls'
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'group_name': group_name}
+        return self._mon_command(_args)
+    
     def fs_subvolumegroup_snapshot_rm(self, vol_name: str, group_name: str, snap_name: str, force:
                                       Optional[bool]=None):
         """
@@ -3735,7 +4297,7 @@ class MonCommandApi(object):
                  snap_name, 'force': force}
         return self._mon_command(_args)
     
-    def fs_volume_create(self, name: str, size: Optional[str]=None):
+    def fs_volume_create(self, name: str):
         """
         Create a CephFS volume
         
@@ -3743,15 +4305,14 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph fs volume create --name=string --size=string
+            ceph fs volume create --name=string
         
         module=mgr perm=rw flags=mgr
         
         :param name:
-        :param size:
         """
         prefix = 'fs volume create'
-        _args = {'prefix': prefix, 'name': name, 'size': size}
+        _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
     def fs_volume_ls(self):
@@ -3770,22 +4331,25 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def fs_volume_rm(self, vol_name: str):
+    def fs_volume_rm(self, vol_name: str, yes_i_really_mean_it:
+                     Optional[str]=None):
         """
-        Delete a CephFS volume
+        Delete a FS volume by passing --yes-i-really-mean-it flag
         
         Example command:
         
         .. code-block:: bash
         
-            ceph fs volume rm --vol_name=string
+            ceph fs volume rm --vol_name=string --yes-i-really-mean-it=string
         
         module=mgr perm=rw flags=mgr
         
         :param vol_name:
+        :param yes_i_really_mean_it: Real name is ``yes-i-really-mean-it``
         """
         prefix = 'fs volume rm'
-        _args = {'prefix': prefix, 'vol_name': vol_name}
+        _args = {'prefix': prefix, 'vol_name': vol_name, 'yes-i-really-mean-it':
+                 yes_i_really_mean_it}
         return self._mon_command(_args)
     
     def fsid(self):
@@ -3861,7 +4425,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'code': code}
         return self._mon_command(_args)
     
-    def heap(self, heapcmd: str):
+    def heap(self, heapcmd: str, value: Optional[str]=None):
         """
         show heap usage info (available only if compiled with tcmalloc)
         
@@ -3869,15 +4433,16 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph heap --heapcmd=choice
+            ceph heap --heapcmd=choice --value=string
         
-        module=mon perm=rw flags=no_forward
+        module=mon perm=rw flags=hidden, no_forward
         
         :param heapcmd: CephChoices
             strings=dump|start_profiler|stop_profiler|release|stats
+        :param value:
         """
         prefix = 'heap'
-        _args = {'prefix': prefix, 'heapcmd': heapcmd}
+        _args = {'prefix': prefix, 'heapcmd': heapcmd, 'value': value}
         return self._mon_command(_args)
     
     def hello(self, person_name: Optional[str]=None):
@@ -3959,7 +4524,7 @@ class MonCommandApi(object):
         
             ceph injectargs --injected_args=string
         
-        module=mon perm=rw flags=no_forward
+        module=mon perm=rw flags=hidden, no_forward
         
         :param injected_args:
         """
@@ -5033,22 +5598,6 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'name': name, 'addr': addr}
         return self._mon_command(_args)
     
-    def mon_compact(self):
-        """
-        cause compaction of monitor's leveldb/rocksdb storage
-        
-        Example command:
-        
-        .. code-block:: bash
-        
-            ceph mon compact
-        
-        module=mon perm=rw flags=no_forward
-        """
-        prefix = 'mon compact'
-        _args = {'prefix': prefix, }
-        return self._mon_command(_args)
-    
     def mon_count_metadata(self, property_1: str):
         """
         count mons by metadata field property
@@ -5355,27 +5904,6 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def mon_sync_force(self, yes_i_really_mean_it: Optional[bool]=None,
-                       i_know_what_i_am_doing: Optional[bool]=None):
-        """
-        force sync of and clear monitor store
-        
-        Example command:
-        
-        .. code-block:: bash
-        
-            ceph mon sync force --yes_i_really_mean_it=true --i_know_what_i_am_doing=true
-        
-        module=mon perm=rw flags=no_forward
-        
-        :param yes_i_really_mean_it: CephBool
-        :param i_know_what_i_am_doing: CephBool
-        """
-        prefix = 'mon sync force'
-        _args = {'prefix': prefix, 'yes_i_really_mean_it': yes_i_really_mean_it,
-                 'i_know_what_i_am_doing': i_know_what_i_am_doing}
-        return self._mon_command(_args)
-    
     def mon_versions(self):
         """
         check running versions of monitors
@@ -5402,7 +5930,7 @@ class MonCommandApi(object):
         
             ceph mon_status
         
-        module=mon perm=r flags=no_forward
+        module=mon perm=r flags=hidden, no_forward
         """
         prefix = 'mon_status'
         _args = {'prefix': prefix, }
@@ -5425,6 +5953,38 @@ class MonCommandApi(object):
         """
         prefix = 'node ls'
         _args = {'prefix': prefix, 'type': type_1}
+        return self._mon_command(_args)
+    
+    def ops(self):
+        """
+        show the ops currently in flight
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph ops
+        
+        module=mon perm=r flags=hidden, no_forward
+        """
+        prefix = 'ops'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def orchestrator_cancel(self):
+        """
+        cancels ongoing operations
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator cancel
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'orchestrator cancel'
+        _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
     def orchestrator_device_ls(self, host: Optional[List[str]]=None, format:
@@ -5466,7 +6026,45 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'host': host}
         return self._mon_command(_args)
     
-    def orchestrator_host_ls(self):
+    def orchestrator_host_label_add(self, host: str, label: str):
+        """
+        Add a host label
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator host label add --host=string --label=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param host:
+        :param label:
+        """
+        prefix = 'orchestrator host label add'
+        _args = {'prefix': prefix, 'host': host, 'label': label}
+        return self._mon_command(_args)
+    
+    def orchestrator_host_label_rm(self, host: str, label: str):
+        """
+        Add a host label
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator host label rm --host=string --label=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param host:
+        :param label:
+        """
+        prefix = 'orchestrator host label rm'
+        _args = {'prefix': prefix, 'host': host, 'label': label}
+        return self._mon_command(_args)
+    
+    def orchestrator_host_ls(self, format: Optional[str]=None):
         """
         List hosts
         
@@ -5474,12 +6072,14 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator host ls
+            ceph orchestrator host ls --format=choice
         
         module=mgr perm=r flags=mgr
+        
+        :param format: CephChoices strings=json|plain
         """
         prefix = 'orchestrator host ls'
-        _args = {'prefix': prefix, }
+        _args = {'prefix': prefix, 'format': format}
         return self._mon_command(_args)
     
     def orchestrator_host_rm(self, host: str):
@@ -5500,7 +6100,8 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'host': host}
         return self._mon_command(_args)
     
-    def orchestrator_mds_add(self, svc_arg: str):
+    def orchestrator_mds_add(self, fs_name: str, num: Optional[int]=None, hosts:
+                             Optional[List[str]]=None):
         """
         Create an MDS service
         
@@ -5508,35 +6109,61 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator mds add --svc_arg=string
+            ceph orchestrator mds add --fs_name=string --num=1 --hosts=string
         
         module=mgr perm=rw flags=mgr
         
-        :param svc_arg:
+        :param fs_name:
+        :param num: CephInt
+        :param hosts:
         """
         prefix = 'orchestrator mds add'
-        _args = {'prefix': prefix, 'svc_arg': svc_arg}
+        _args = {'prefix': prefix, 'fs_name': fs_name, 'num': num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_mds_rm(self, svc_id: str):
+    def orchestrator_mds_rm(self, name: str):
         """
-        Remove an MDS service
+        Remove an MDS service (mds id or fs_name)
         
         Example command:
         
         .. code-block:: bash
         
-            ceph orchestrator mds rm --svc_id=string
+            ceph orchestrator mds rm --name=string
         
         module=mgr perm=rw flags=mgr
         
-        :param svc_id:
+        :param name:
         """
         prefix = 'orchestrator mds rm'
-        _args = {'prefix': prefix, 'svc_id': svc_id}
+        _args = {'prefix': prefix, 'name': name}
         return self._mon_command(_args)
     
-    def orchestrator_mgr_update(self, num: int, hosts: Optional[List[str]]=None):
+    def orchestrator_mds_update(self, fs_name: str, num: Optional[int]=None, hosts:
+                                Optional[List[str]]=None, label: Optional[str]=None):
+        """
+        Update the number of MDS instances for the given fs_name
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator mds update --fs_name=string --num=1 --hosts=string --label=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param fs_name:
+        :param num: CephInt
+        :param hosts:
+        :param label:
+        """
+        prefix = 'orchestrator mds update'
+        _args = {'prefix': prefix, 'fs_name': fs_name, 'num': num, 'hosts': hosts, 'label':
+                 label}
+        return self._mon_command(_args)
+    
+    def orchestrator_mgr_update(self, num: Optional[int]=None, hosts:
+                                Optional[List[str]]=None, label: Optional[str]=None):
         """
         Update the number of manager instances
         
@@ -5544,18 +6171,20 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator mgr update --num=1 --hosts=string
+            ceph orchestrator mgr update --num=1 --hosts=string --label=string
         
         module=mgr perm=rw flags=mgr
         
         :param num: CephInt
         :param hosts:
+        :param label:
         """
         prefix = 'orchestrator mgr update'
-        _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
+        _args = {'prefix': prefix, 'num': num, 'hosts': hosts, 'label': label}
         return self._mon_command(_args)
     
-    def orchestrator_mon_update(self, num: int, hosts: Optional[List[str]]=None):
+    def orchestrator_mon_update(self, num: Optional[int]=None, hosts:
+                                Optional[List[str]]=None, label: Optional[str]=None):
         """
         Update the number of monitor instances
         
@@ -5563,18 +6192,21 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator mon update --num=1 --hosts=string
+            ceph orchestrator mon update --num=1 --hosts=string --label=string
         
         module=mgr perm=rw flags=mgr
         
         :param num: CephInt
         :param hosts:
+        :param label:
         """
         prefix = 'orchestrator mon update'
-        _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
+        _args = {'prefix': prefix, 'num': num, 'hosts': hosts, 'label': label}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace: Optional[str]=None):
+    def orchestrator_nfs_add(self, svc_arg: str, pool: str, namespace:
+                             Optional[str]=None, num: Optional[int]=None, hosts:
+                             Optional[List[str]]=None, label: Optional[str]=None):
         """
         Create an NFS service
         
@@ -5582,16 +6214,20 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator nfs add --svc_arg=string --pool=string --namespace=string
+            ceph orchestrator nfs add --svc_arg=string --pool=string --namespace=string --num=1 --hosts=string --label=string
         
         module=mgr perm=rw flags=mgr
         
         :param svc_arg:
         :param pool:
         :param namespace:
+        :param num: CephInt
+        :param hosts:
+        :param label:
         """
         prefix = 'orchestrator nfs add'
-        _args = {'prefix': prefix, 'svc_arg': svc_arg, 'pool': pool, 'namespace': namespace}
+        _args = {'prefix': prefix, 'svc_arg': svc_arg, 'pool': pool, 'namespace': namespace,
+                 'num': num, 'hosts': hosts, 'label': label}
         return self._mon_command(_args)
     
     def orchestrator_nfs_rm(self, svc_id: str):
@@ -5612,7 +6248,8 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_nfs_update(self, svc_id: str, num: int):
+    def orchestrator_nfs_update(self, svc_id: str, num: Optional[int]=None, hosts:
+                                Optional[List[str]]=None, label: Optional[str]=None):
         """
         Scale an NFS service
         
@@ -5620,15 +6257,17 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator nfs update --svc_id=string --num=1
+            ceph orchestrator nfs update --svc_id=string --num=1 --hosts=string --label=string
         
         module=mgr perm=rw flags=mgr
         
         :param svc_id:
         :param num: CephInt
+        :param hosts:
+        :param label:
         """
         prefix = 'orchestrator nfs update'
-        _args = {'prefix': prefix, 'svc_id': svc_id, 'num': num}
+        _args = {'prefix': prefix, 'svc_id': svc_id, 'num': num, 'hosts': hosts, 'label': label}
         return self._mon_command(_args)
     
     def orchestrator_osd_create(self, svc_arg: Optional[str]=None):
@@ -5668,7 +6307,67 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'svc_id': svc_id}
         return self._mon_command(_args)
     
-    def orchestrator_rgw_add(self, zone_name: Optional[str]=None):
+    def orchestrator_rbd_mirror_add(self, num: Optional[int]=None, hosts:
+                                    Optional[List[str]]=None):
+        """
+        Create an rbd-mirror service
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rbd-mirror add --num=1 --hosts=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param num: CephInt
+        :param hosts:
+        """
+        prefix = 'orchestrator rbd-mirror add'
+        _args = {'prefix': prefix, 'num': num, 'hosts': hosts}
+        return self._mon_command(_args)
+    
+    def orchestrator_rbd_mirror_rm(self, name: Optional[str]=None):
+        """
+        Remove rbd-mirror service or rbd-mirror service instance
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rbd-mirror rm --name=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param name:
+        """
+        prefix = 'orchestrator rbd-mirror rm'
+        _args = {'prefix': prefix, 'name': name}
+        return self._mon_command(_args)
+    
+    def orchestrator_rbd_mirror_update(self, num: Optional[int]=None, hosts:
+                                       Optional[List[str]]=None, label: Optional[str]=None):
+        """
+        Update the number of rbd-mirror instances
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rbd-mirror update --num=1 --hosts=string --label=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param num: CephInt
+        :param hosts:
+        :param label:
+        """
+        prefix = 'orchestrator rbd-mirror update'
+        _args = {'prefix': prefix, 'num': num, 'hosts': hosts, 'label': label}
+        return self._mon_command(_args)
+    
+    def orchestrator_rgw_add(self, realm_name: str, zone_name: str, num:
+                             Optional[int]=None, hosts: Optional[List[str]]=None):
         """
         Create an RGW service. A complete <rgw_spec> can be provided using
         <-i> to customize completelly the RGW service
@@ -5677,17 +6376,21 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator rgw add --zone_name=string
+            ceph orchestrator rgw add --realm_name=string --zone_name=string --num=1 --hosts=string
         
         module=mgr perm=rw flags=mgr
         
+        :param realm_name:
         :param zone_name:
+        :param num: CephInt
+        :param hosts:
         """
         prefix = 'orchestrator rgw add'
-        _args = {'prefix': prefix, 'zone_name': zone_name}
+        _args = {'prefix': prefix, 'realm_name': realm_name, 'zone_name': zone_name, 'num':
+                 num, 'hosts': hosts}
         return self._mon_command(_args)
     
-    def orchestrator_rgw_rm(self, svc_id: str):
+    def orchestrator_rgw_rm(self, realm_name: str, zone_name: str):
         """
         Remove an RGW service
         
@@ -5695,19 +6398,46 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph orchestrator rgw rm --svc_id=string
+            ceph orchestrator rgw rm --realm_name=string --zone_name=string
         
         module=mgr perm=rw flags=mgr
         
-        :param svc_id:
+        :param realm_name:
+        :param zone_name:
         """
         prefix = 'orchestrator rgw rm'
-        _args = {'prefix': prefix, 'svc_id': svc_id}
+        _args = {'prefix': prefix, 'realm_name': realm_name, 'zone_name': zone_name}
+        return self._mon_command(_args)
+    
+    def orchestrator_rgw_update(self, zone_name: str, realm_name: str, num:
+                                Optional[int]=None, hosts: Optional[List[str]]=None, label:
+                                Optional[str]=None):
+        """
+        Update the number of RGW instances for the given zone
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph orchestrator rgw update --zone_name=string --realm_name=string --num=1 --hosts=string --label=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param zone_name:
+        :param realm_name:
+        :param num: CephInt
+        :param hosts:
+        :param label:
+        """
+        prefix = 'orchestrator rgw update'
+        _args = {'prefix': prefix, 'zone_name': zone_name, 'realm_name': realm_name, 'num':
+                 num, 'hosts': hosts, 'label': label}
         return self._mon_command(_args)
     
     def orchestrator_service(self, action: str, svc_type: str, svc_name: str):
         """
-        Start, stop or reload an entire service (i.e. all daemons)
+        Start, stop, restart, redeploy, or reconfig an entire service (i.e.
+        all daemons)
         
         Example command:
         
@@ -5717,7 +6447,8 @@ class MonCommandApi(object):
         
         module=mgr perm=rw flags=mgr
         
-        :param action: CephChoices strings=start|stop|reload
+        :param action: CephChoices
+            strings=start|stop|restart|redeploy|reconfig
         :param svc_type:
         :param svc_name:
         """
@@ -5753,7 +6484,8 @@ class MonCommandApi(object):
     
     def orchestrator_service_instance(self, action: str, svc_type: str, svc_id: str):
         """
-        Start, stop or reload a specific service instance
+        Start, stop, restart, redeploy, or reconfig a specific service
+        instance
         
         Example command:
         
@@ -5763,7 +6495,8 @@ class MonCommandApi(object):
         
         module=mgr perm=rw flags=mgr
         
-        :param action: CephChoices strings=start|stop|reload
+        :param action: CephChoices
+            strings=start|stop|restart|redeploy|reconfig
         :param svc_type:
         :param svc_id:
         """
@@ -7735,13 +8468,13 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'who': who}
         return self._mon_command(_args)
     
-    def osd_pool_create(self, pool: str, pg_num: int, pgp_num: Optional[int]=None,
-                        pool_type: Optional[str]=None, erasure_code_profile:
-                        Optional[str]=None, rule: Optional[str]=None,
-                        expected_num_objects: Optional[int]=None, size:
-                        Optional[int]=None, pg_num_min: Optional[int]=None,
-                        target_size_bytes: Optional[int]=None, target_size_ratio:
-                        Optional[float]=None):
+    def osd_pool_create(self, pool: str, pg_num: Optional[int]=None, pgp_num:
+                        Optional[int]=None, pool_type: Optional[str]=None,
+                        erasure_code_profile: Optional[str]=None, rule:
+                        Optional[str]=None, expected_num_objects:
+                        Optional[int]=None, size: Optional[int]=None, pg_num_min:
+                        Optional[int]=None, target_size_bytes: Optional[int]=None,
+                        target_size_ratio: Optional[float]=None):
         """
         create pool
         
@@ -7759,8 +8492,8 @@ class MonCommandApi(object):
         :param pool_type: CephChoices strings=replicated|erasure
         :param erasure_code_profile: goodchars= ``[A-Za-z0-9-_.]``
         :param rule:
-        :param expected_num_objects: CephInt
-        :param size: CephInt
+        :param expected_num_objects: CephInt range= ``0``
+        :param size: CephInt range= ``0``
         :param pg_num_min: CephInt range= ``0``
         :param target_size_bytes: CephInt range= ``0``
         :param target_size_ratio: CephFloat range= ``0..1``
@@ -9498,22 +10231,36 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    def quorum(self, quorumcmd: str):
+    def quorum_enter(self):
         """
-        enter or exit quorum
+        force monitor back into quorum
         
         Example command:
         
         .. code-block:: bash
         
-            ceph quorum --quorumcmd=choice
+            ceph quorum enter
         
-        module=mon perm=rw flags=
-        
-        :param quorumcmd: CephChoices strings=enter|exit
+        module=mon perm=rw flags=hidden, no_forward
         """
-        prefix = 'quorum'
-        _args = {'prefix': prefix, 'quorumcmd': quorumcmd}
+        prefix = 'quorum enter'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def quorum_exit(self):
+        """
+        force monitor out of the quorum
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph quorum exit
+        
+        module=mon perm=rw flags=hidden, no_forward
+        """
+        prefix = 'quorum exit'
+        _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
     def quorum_status(self):
@@ -9736,6 +10483,90 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'tags': tags}
         return self._mon_command(_args)
     
+    def restful_create_key(self, key_name: str):
+        """
+        Create an API key with this name
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph restful create-key --key_name=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param key_name:
+        """
+        prefix = 'restful create-key'
+        _args = {'prefix': prefix, 'key_name': key_name}
+        return self._mon_command(_args)
+    
+    def restful_create_self_signed_cert(self):
+        """
+        Create localized self signed certificate
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph restful create-self-signed-cert
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'restful create-self-signed-cert'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def restful_delete_key(self, key_name: str):
+        """
+        Delete an API key with this name
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph restful delete-key --key_name=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param key_name:
+        """
+        prefix = 'restful delete-key'
+        _args = {'prefix': prefix, 'key_name': key_name}
+        return self._mon_command(_args)
+    
+    def restful_list_keys(self):
+        """
+        List all API keys
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph restful list-keys
+        
+        module=mgr perm=r flags=mgr
+        """
+        prefix = 'restful list-keys'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
+    def restful_restart(self):
+        """
+        Restart API server
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph restful restart
+        
+        module=mgr perm=rw flags=mgr
+        """
+        prefix = 'restful restart'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     @deprecated
     def scrub(self):
         """
@@ -9747,7 +10578,7 @@ class MonCommandApi(object):
         
             ceph scrub
         
-        module=mon perm=rw flags=deprecated
+        module=mon perm=rw flags=obsolete
         """
         prefix = 'scrub'
         _args = {'prefix': prefix, }
@@ -9785,6 +10616,22 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
+    def sessions(self):
+        """
+        list existing sessions
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph sessions
+        
+        module=mon perm=r flags=hidden, no_forward
+        """
+        prefix = 'sessions'
+        _args = {'prefix': prefix, }
+        return self._mon_command(_args)
+    
     def smart(self, devid: Optional[str]=None):
         """
         Query health metrics for underlying device
@@ -9795,44 +10642,12 @@ class MonCommandApi(object):
         
             ceph smart --devid=string
         
-        module=mon perm=rw flags=hidden
+        module=mon perm=rw flags=hidden, no_forward
         
         :param devid:
         """
         prefix = 'smart'
         _args = {'prefix': prefix, 'devid': devid}
-        return self._mon_command(_args)
-    
-    def ssh_clear_ssh_config(self):
-        """
-        Clear the ssh_config file
-        
-        Example command:
-        
-        .. code-block:: bash
-        
-            ceph ssh clear-ssh-config
-        
-        module=mgr perm=rw flags=mgr
-        """
-        prefix = 'ssh clear-ssh-config'
-        _args = {'prefix': prefix, }
-        return self._mon_command(_args)
-    
-    def ssh_set_ssh_config(self):
-        """
-        Set the ssh_config file (use -i <ssh_config>)
-        
-        Example command:
-        
-        .. code-block:: bash
-        
-            ceph ssh set-ssh-config
-        
-        module=mgr perm=rw flags=mgr
-        """
-        prefix = 'ssh set-ssh-config'
-        _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
     def status(self):
@@ -9851,9 +10666,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
-    @deprecated
-    def sync_force(self, yes_i_really_mean_it: Optional[bool]=None,
-                   i_know_what_i_am_doing: Optional[bool]=None):
+    def sync_force(self, validate: Optional[str]=None):
         """
         force sync of and clear monitor store
         
@@ -9861,16 +10674,14 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph sync force --yes_i_really_mean_it=true --i_know_what_i_am_doing=true
+            ceph sync_force --validate=choice
         
-        module=mon perm=rw flags=deprecated, no_forward
+        module=mon perm=rw flags=hidden, no_forward
         
-        :param yes_i_really_mean_it: CephBool
-        :param i_know_what_i_am_doing: CephBool
+        :param validate: CephChoices strings=--yes-i-really-mean-it
         """
-        prefix = 'sync force'
-        _args = {'prefix': prefix, 'yes_i_really_mean_it': yes_i_really_mean_it,
-                 'i_know_what_i_am_doing': i_know_what_i_am_doing}
+        prefix = 'sync_force'
+        _args = {'prefix': prefix, 'validate': validate}
         return self._mon_command(_args)
     
     def telegraf_config_set(self, key: str, value: str):
@@ -9958,7 +10769,7 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, 'license': license}
         return self._mon_command(_args)
     
-    def telemetry_send(self):
+    def telemetry_send(self, endpoint: Optional[List[str]]=None):
         """
         Force sending data to Ceph telemetry
         
@@ -9966,12 +10777,14 @@ class MonCommandApi(object):
         
         .. code-block:: bash
         
-            ceph telemetry send
+            ceph telemetry send --endpoint=choice
         
         module=mgr perm=rw flags=mgr
+        
+        :param endpoint: CephChoices strings=ceph|device
         """
         prefix = 'telemetry send'
-        _args = {'prefix': prefix, }
+        _args = {'prefix': prefix, 'endpoint': endpoint}
         return self._mon_command(_args)
     
     def telemetry_show(self, channels: List[str]):
@@ -10059,6 +10872,26 @@ class MonCommandApi(object):
         _args = {'prefix': prefix, }
         return self._mon_command(_args)
     
+    def upgrade_check(self, image: Optional[str]=None, ceph_version:
+                      Optional[str]=None):
+        """
+        Check service versions vs available and target containers
+        
+        Example command:
+        
+        .. code-block:: bash
+        
+            ceph upgrade check --image=string --ceph_version=string
+        
+        module=mgr perm=rw flags=mgr
+        
+        :param image:
+        :param ceph_version:
+        """
+        prefix = 'upgrade check'
+        _args = {'prefix': prefix, 'image': image, 'ceph_version': ceph_version}
+        return self._mon_command(_args)
+    
     def version(self):
         """
         show mon daemon version
@@ -10069,7 +10902,7 @@ class MonCommandApi(object):
         
             ceph version
         
-        module=mon perm=r flags=no_forward
+        module=mon perm=r flags=hidden, no_forward
         """
         prefix = 'version'
         _args = {'prefix': prefix, }
